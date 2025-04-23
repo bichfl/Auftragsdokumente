@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Auftragsdokumente App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .layout {
+      padding: 10px;
+    }
+
+    .input-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"], select {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    #mobile-layout input[type="text"] {
+      width: 110px;
+    }
+
+    #desktop-layout input[type="text"] {
+      width: 200px;
+    }
+
+    button {
+      background-color: #9b9b9b;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      text-align: left;
+      padding-left: 16px;
+      transition-duration: 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #696969;
+    }
+
+    body.mobile button {
+      padding: 20px 16px;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    body.desktop button {
+      padding: 4.5px 16px;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .button-scroll-container {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding-bottom: 150px;
+      box-sizing: border-box;
+      height: calc(100vh - 150px);
+    }
+
+    .header-container span {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .bottom-right-info {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      text-align: right;
+      z-index: 1000;
+    }
+
+    .bottom-right-info button {
+      width: auto;
+      white-space: nowrap;
+    }
+
+    .bottom-right-info .version {
+      font-size: 14px;
+      color: #555;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    .overlay {
+      position: fixed;
+      bottom: 70px;
+      right: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1001;
+      display: none;
+      width: auto;
+      min-width: 300px;
+      max-width: 90vw;
+      max-height: 80vh;
+      flex-direction: column;
+    }
+
+    .overlay-header {
+      position: sticky;
+      top: 0;
+      background-color: #f9f9f9;
+      padding: 20px 20px 10px 20px;
+      border-bottom: 1px solid #ccc;
+      z-index: 2;
+    }
+
+    .overlay-header-top {
+      display: flex;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .overlay-header .close-btn {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: #444;
+      cursor: pointer;
+      margin: 0;
+      position: relative;
+      top: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    .overlay .input-container input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .overlay-scroll {
+      overflow-y: auto;
+      padding: 10px 20px 20px 20px;
+      max-height: calc(80vh - 90px);
+      box-sizing: border-box;
+    }
+
+    .overlay-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .overlay-buttons button {
+      white-space: normal;
+      word-break: break-word;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobiles Layout -->
+  <div id="mobile-layout" class="layout" style="display: none;">
+    <div class="header-container">
+      <span>Auftragsdokumente mobile Anwendung</span>
+    </div>
+    <div class="input-container">
+      <input type="text" id="mobileInputField" placeholder="lfd.Nr. eingeben">
+      <select id="mobileProfileSelector" onchange="loadMobileProfileButtons()">
+        <option value="profile1">OK.-Büro</option>
+        <option value="profile2">Warenwirtschaft</option>
+        <option value="profile3">Zuschnitt</option>
+        <option value="profile4">Bearbeitungszentrum</option>
+        <option value="profile5">Türstabmontage</option>
+        <option value="profile6">Verklebung</option>
+        <option value="profile7">Zusammenbau</option>
+        <option value="profile8">Verglasung</option>
+        <option value="profile9">Sonderarbeitsplatz</option>
+      </select>
+    </div>
+    <div class="button-scroll-container" id="mobileButtonContainer"></div>
+  </div>
+
+  <!-- Desktop Layout -->
+  <div id="desktop-layout" class="layout" style="display: none;">
+    <div class="header-container">
+      <span>Auftragsdokumente App</span>
+    </div>
+    <div class="input-container">
+      <input type="text" id="desktopInputField" placeholder="lfd.Nr. hier eingeben">
+      <select id="desktopProfileSelector" onchange="loadDesktopProfileButtons()">
+        <option value="profile1">OK.-Büro</option>
+        <option value="profile2">Warenwirtschaft</option>
+        <option value="profile3">Zuschnitt</option>
+        <option value="profile4">Bearbeitungszentrum</option>
+        <option value="profile5">Türstabmontage</option>
+        <option value="profile6">Verklebung</option>
+        <option value="profile7">Zusammenbau</option>
+        <option value="profile8">Verglasung</option>
+        <option value="profile9">Sonderarbeitsplatz</option>
+      </select>
+    </div>
+    <div class="button-scroll-container" id="desktopButtonContainer"></div>
+  </div>
+
+  <!-- Fester Button unten rechts -->
+  <div class="bottom-right-info">
+    <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
+    <div class="version">Programmversion 3.0</div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay">
+    <div class="overlay-header">
+      <div class="overlay-header-top">
+        <button class="close-btn" onclick="toggleOverlay()">×</button>
+      </div>
+      <div class="input-container">
+        <input type="text" id="posInputField" placeholder="Pos.Nr. eingeben">
+      </div>
+    </div>
+    <div class="overlay-scroll">
+      <div class="overlay-buttons"></div>
+    </div>
+  </div>
+
+  <script>
+    function istMobil() {
+      const ua = navigator.userAgent;
+      const istMobilUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+      const hatTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      const istKleinerBildschirm = window.innerWidth <= 768;
+      return [istMobilUA, hatTouch, istKleinerBildschirm].filter(Boolean).length >= 2;
+    }
+
+    const profiles = {
+      "profile1": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Stueckl. p. Pos Montage", "FSF_Lagerliste_Artikel", "FSF_Lieferschein_mit_Los", "FSF_Packliste Montage", "FSF_Beschr. Fertigungswagen", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Vorfertigung Zuschnitte Etiketten Bogen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung", "FSF_Begleitplan_V2106_SBZ130", "FSF_Begleitplan_V2106_SBZ140", "FSF_Verschnittoptimierung_DG244-6,0", "FSF_Verschnittoptimierung_DG244-7,5", "FSF_Gläser_Paneele", "FSF_Paneelfertigung", "FSF_Endkontrolle", "PFS_Kalkulation", "FSF_Arbeitszeiten", "PEN_CE-Leistungserklärung", "PEN_CE-Begleitdokument", "FSF_Dokumente"],
+      "profile2": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Stueckl. p. Pos Montage", "FSF_Lagerliste_Artikel", "FSF_Lieferschein_mit_Los", "FSF_Packliste Montage", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung", "FSF_Paneelfertigung", "FSF_Beschr. Fertigungswagen", "FSF_Gläser_Paneele"],
+      "profile3": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Verschnittoptimierung_DG244-6,0", "FSF_Verschnittoptimierung_DG244-7,5", "FSF_Beschr. Fertigungswagen", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Vorfertigung Zuschnitte Etiketten Bogen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"],
+      "profile4": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Begleitplan_V2106_SBZ130", "FSF_Begleitplan_V2106_SBZ140"],
+      "profile5": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel"],
+      "profile6": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel"],
+      "profile7": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel", "FSF_Endkontrolle"],
+      "profile8": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel", "FSF_Lieferschein_mit_Los", "FSF_Packliste Montage", "FSF_Gläser_Paneele", "FSF_Paneelfertigung", "FSF_Endkontrolle"],
+      "profile9": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lieferschein_mit_Los", "FSF_Lagerliste_Artikel", "FSF_Endkontrolle"]
+    };
+
+    function loadMobileProfileButtons() {
+      const profile = document.getElementById('mobileProfileSelector').value;
+      const container = document.getElementById('mobileButtonContainer');
+      container.innerHTML = "";
+      profiles[profile].forEach(name => {
+        const button = document.createElement("button");
+        button.textContent = name;
+        button.onclick = function () {
+          const eingabe = document.getElementById('mobileInputField').value;
+          const url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${eingabe}_${name}.pdf?csf=1&web=1`;
+          window.open(url, '_blank');
+        };
+        container.appendChild(button);
+      });
+    }
+
+    function loadDesktopProfileButtons() {
+      const profile = document.getElementById('desktopProfileSelector').value;
+      const container = document.getElementById('desktopButtonContainer');
+      container.innerHTML = "";
+      profiles[profile].forEach(name => {
+        const button = document.createElement("button");
+        button.textContent = name;
+        button.onclick = function () {
+          const eingabe = document.getElementById('desktopInputField').value;
+          const url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${eingabe}_${name}.pdf?csf=1&web=1`;
+          window.open(url, '_blank');
+        };
+        container.appendChild(button);
+      });
+    }
+
+    function toggleOverlay() {
+      const overlay = document.getElementById('overlay');
+      const isVisible = overlay.style.display === 'block';
+      if (!isVisible) {
+        populateOverlayButtons();
+        overlay.style.display = 'block';
+      } else {
+        overlay.style.display = 'none';
+      }
+    }
+
+    function populateOverlayButtons() {
+      const buttonContainer = document.querySelector('.overlay-buttons');
+      buttonContainer.innerHTML = '';
+      const isMobile = document.body.classList.contains('mobile');
+      const profile = document.getElementById(isMobile ? 'mobileProfileSelector' : 'desktopProfileSelector').value;
+      profiles[profile].forEach(name => {
+        const button = document.createElement("button");
+        button.textContent = name;
+        button.onclick = function () {
+          openAccessMail(name);
+        };
+        buttonContainer.appendChild(button);
+      });
+    }
+
+    function getLaufendeNummer() {
+      const mobileInput = document.getElementById('mobileInputField');
+      const desktopInput = document.getElementById('desktopInputField');
+      return mobileInput && mobileInput.offsetParent !== null ? mobileInput.value : desktopInput.value;
+    }
+
+    function openAccessMail(buttonName) {
+      const nummer = getLaufendeNummer();
+      const position = document.getElementById('posInputField').value.trim();
+      const subject = encodeURIComponent("fehlende Dokumente zu " + nummer);
+      const bodyText = position
+        ? `Zur laufenden Nummer "${nummer}", Position "${position}" fehlt folgendes Dokument:\n\n"${buttonName}"\n\nBitte legt das Dokument ab.`
+        : `Zur laufenden Nummer "${nummer}" fehlt folgendes Dokument:\n\n"${buttonName}"\n\nBitte legt das Dokument ab.`;
+      const url = `https://access.peneder.com/owa/?path=/mail/action/compose&to=ok.alu@peneder.com&subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+      window.open(url, '_blank');
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const isMobile = istMobil();
+      document.body.classList.add(isMobile ? 'mobile' : 'desktop');
+      document.getElementById(isMobile ? "mobile-layout" : "desktop-layout").style.display = "block";
+      (isMobile ? loadMobileProfileButtons : loadDesktopProfileButtons)();
+    });
+  </script>
+</body>
+</html>
