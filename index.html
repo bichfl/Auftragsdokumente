@@ -5,102 +5,59 @@
   <title>Auftragsdokumente App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .layout {
-      padding: 10px;
-    }
-
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .layout { padding: 10px; }
     .input-container {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
+      display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;
     }
-
     input[type="text"], select {
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 4px;
+      border: 1px solid #ccc; padding: 10px; border-radius: 4px;
     }
-
-    #mobile-layout input[type="text"] {
-      width: 110px;
-    }
-
-    #desktop-layout input[type="text"] {
-      width: 200px;
-    }
-
+    #mobile-layout input[type="text"] { width: 110px; }
+    #desktop-layout input[type="text"] { width: 200px; }
     button {
-      background-color: #9b9b9b;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-      text-align: left;
-      padding-left: 16px;
-      transition-duration: 0.3s;
+      background-color: #9b9b9b; color: white; border: none; cursor: pointer;
+      border-radius: 4px; text-align: left; padding-left: 16px; transition-duration: 0.3s;
       width: 100%;
     }
-
-    button:hover {
-      background-color: #696969;
-    }
-
+    button:hover { background-color: #696969; }
     body.mobile button {
-      padding: 20px 16px;
-      font-size: 20px;
-      margin-bottom: 5px;
+      padding: 4.5px 16px; font-size: 16px; margin-bottom: 5px;
     }
-
     body.desktop button {
-      padding: 4.5px 16px;
-      font-size: 16px;
-      margin-bottom: 5px;
+      padding: 4.5px 16px; font-size: 16px; margin-bottom: 5px;
     }
+    
+	
+	.button-scroll-container {
+	  display: flex;
+	  flex-direction: column;
+	  overflow-y: auto;
+	  padding-bottom: 150px;
+	  box-sizing: border-box;
+	}
 
-    .button-scroll-container {
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      padding-bottom: 150px;
-      box-sizing: border-box;
+	/* Spezifisch für mobile Ansicht */
+	body.mobile .button-scroll-container {
+	  height: calc(100vh - 220px); /* oder beliebiger Wert */
+	}
+
+	/* Spezifisch für Desktop */
+	body.desktop .button-scroll-container {
       height: calc(100vh - 150px);
-    }
+	}
+
 
     .header-container span {
-      display: block;
-      text-align: left;
-      font-weight: bold;
-      margin-bottom: 5px;
+      display: block; text-align: left; font-weight: bold; margin-bottom: 5px;
     }
-
     .bottom-right-info {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      text-align: right;
-      z-index: 1000;
+      position: fixed; bottom: 10px; right: 10px; text-align: right; z-index: 1000;
     }
-
-    .bottom-right-info button {
-      width: auto;
-      white-space: nowrap;
-    }
-
+    .bottom-right-info button { width: auto; white-space: nowrap; }
     .bottom-right-info .version {
-      font-size: 14px;
-      color: #555;
-      margin-top: 4px;
-      text-align: right;
+      font-size: 14px; color: #555; margin-top: 4px; text-align: right;
     }
-
     .overlay {
       position: fixed;
       bottom: 70px;
@@ -108,76 +65,64 @@
       background-color: #f9f9f9;
       border: 1px solid #ccc;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       z-index: 1001;
       display: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
       width: auto;
       min-width: 300px;
       max-width: 90vw;
       max-height: 80vh;
       flex-direction: column;
+      height: calc(80vh - 90px);
+    }
+
+    .overlay.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .overlay.hide {
+      opacity: 0;
     }
 
     .overlay-header {
       position: sticky;
       top: 0;
       background-color: #f9f9f9;
-      padding: 20px 20px 10px 20px;
-      border-bottom: 1px solid #ccc;
+      padding: 0px 20px 10px 20px;
+      border-radius: 10px;
       z-index: 2;
     }
 
     .overlay-header-top {
-      display: flex;
-      justify-content: flex-end;
-      position: relative;
-    }
-
-    .overlay-header .close-btn {
-      background: transparent;
-      border: none;
-      font-size: 20px;
-      font-weight: bold;
-      color: #444;
-      cursor: pointer;
-      margin: 0;
-      position: relative;
-      top: 0;
-      right: 0;
-      z-index: 10;
+      height: 20px; /* leerer Platz für optisch gleiche Struktur */
     }
 
     .overlay .input-container input[type="text"] {
-      width: 100%;
-      box-sizing: border-box;
+      width: 100%; box-sizing: border-box;
     }
-
     .overlay-scroll {
       overflow-y: auto;
-      padding: 10px 20px 20px 20px;
-      max-height: calc(80vh - 90px);
+      padding: 0px 20px 20px 20px;
+      height: calc(100% - 90px);
       box-sizing: border-box;
     }
 
     .overlay-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      display: flex; flex-direction: column; gap: 10px;
     }
-
     .overlay-buttons button {
-      white-space: normal;
-      word-break: break-word;
-      width: 100%;
+      white-space: normal; word-break: break-word; width: 100%;
     }
   </style>
 </head>
 <body>
 
-  <!-- Mobiles Layout -->
   <div id="mobile-layout" class="layout" style="display: none;">
     <div class="header-container">
-      <span>Auftragsdokumente mobile Anwendung</span>
+      <span>Auftragsdokumente mobile App</span>
     </div>
     <div class="input-container">
       <input type="text" id="mobileInputField" placeholder="lfd.Nr. eingeben">
@@ -196,10 +141,9 @@
     <div class="button-scroll-container" id="mobileButtonContainer"></div>
   </div>
 
-  <!-- Desktop Layout -->
   <div id="desktop-layout" class="layout" style="display: none;">
     <div class="header-container">
-      <span>Auftragsdokumente App</span>
+      <span>Auftragsdokumente Desktop-App</span>
     </div>
     <div class="input-container">
       <input type="text" id="desktopInputField" placeholder="lfd.Nr. hier eingeben">
@@ -218,18 +162,14 @@
     <div class="button-scroll-container" id="desktopButtonContainer"></div>
   </div>
 
-  <!-- Fester Button unten rechts -->
   <div class="bottom-right-info">
     <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version">Programmversion 3.0</div>
+    <div class="version">Programmversion 3.1</div>
   </div>
 
-  <!-- Overlay -->
   <div class="overlay" id="overlay">
     <div class="overlay-header">
-      <div class="overlay-header-top">
-        <button class="close-btn" onclick="toggleOverlay()">×</button>
-      </div>
+      <div class="overlay-header-top"></div>
       <div class="input-container">
         <input type="text" id="posInputField" placeholder="Pos.Nr. eingeben">
       </div>
@@ -261,7 +201,9 @@
     };
 
     function loadMobileProfileButtons() {
-      const profile = document.getElementById('mobileProfileSelector').value;
+      const profileSelector = document.getElementById('mobileProfileSelector');
+      const profile = profileSelector.value;
+      localStorage.setItem('selectedMobileProfile', profile);
       const container = document.getElementById('mobileButtonContainer');
       container.innerHTML = "";
       profiles[profile].forEach(name => {
@@ -277,7 +219,9 @@
     }
 
     function loadDesktopProfileButtons() {
-      const profile = document.getElementById('desktopProfileSelector').value;
+      const profileSelector = document.getElementById('desktopProfileSelector');
+      const profile = profileSelector.value;
+      localStorage.setItem('selectedDesktopProfile', profile);
       const container = document.getElementById('desktopButtonContainer');
       container.innerHTML = "";
       profiles[profile].forEach(name => {
@@ -294,12 +238,21 @@
 
     function toggleOverlay() {
       const overlay = document.getElementById('overlay');
-      const isVisible = overlay.style.display === 'block';
+      const isVisible = overlay.classList.contains('show');
+
       if (!isVisible) {
         populateOverlayButtons();
-        overlay.style.display = 'block';
+        overlay.classList.add('show');
+        overlay.classList.remove('hide');
+        overlay.style.display = 'flex';
       } else {
-        overlay.style.display = 'none';
+        overlay.classList.add('hide');
+        overlay.classList.remove('show');
+        setTimeout(() => {
+          if (overlay.classList.contains('hide')) {
+            overlay.style.display = 'none';
+          }
+        }, 400);
       }
     }
 
@@ -339,7 +292,30 @@
       const isMobile = istMobil();
       document.body.classList.add(isMobile ? 'mobile' : 'desktop');
       document.getElementById(isMobile ? "mobile-layout" : "desktop-layout").style.display = "block";
-      (isMobile ? loadMobileProfileButtons : loadDesktopProfileButtons)();
+
+      if (isMobile) {
+        const savedProfile = localStorage.getItem('selectedMobileProfile');
+        if (savedProfile) {
+          document.getElementById('mobileProfileSelector').value = savedProfile;
+        }
+        loadMobileProfileButtons();
+      } else {
+        const savedProfile = localStorage.getItem('selectedDesktopProfile');
+        if (savedProfile) {
+          document.getElementById('desktopProfileSelector').value = savedProfile;
+        }
+        loadDesktopProfileButtons();
+      }
+    });
+
+    document.addEventListener('click', function(event) {
+      const overlay = document.getElementById('overlay');
+      const button = document.querySelector('.bottom-right-info button');
+      if (overlay.classList.contains('show') &&
+          !overlay.contains(event.target) &&
+          !button.contains(event.target)) {
+        toggleOverlay();
+      }
     });
   </script>
 </body>
