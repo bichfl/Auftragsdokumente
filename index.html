@@ -164,7 +164,7 @@
 
   <div class="bottom-right-info">
     <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version">Programmversion 3.1</div>
+    <div class="version">Programmversion 3.1.1</div>
   </div>
 
   <div class="overlay" id="overlay">
@@ -191,8 +191,8 @@
     const profiles = {
       "profile1": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Stueckl. p. Pos Montage", "FSF_Lagerliste_Artikel", "FSF_Lieferschein_mit_Los", "FSF_Packliste Montage", "FSF_Beschr. Fertigungswagen", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Vorfertigung Zuschnitte Etiketten Bogen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung", "FSF_Begleitplan_V2106_SBZ130", "FSF_Begleitplan_V2106_SBZ140", "FSF_Verschnittoptimierung_DG244-6,0", "FSF_Verschnittoptimierung_DG244-7,5", "FSF_Gläser_Paneele", "FSF_Paneelfertigung", "FSF_Endkontrolle", "PFS_Kalkulation", "FSF_Arbeitszeiten", "PEN_CE-Leistungserklärung", "PEN_CE-Begleitdokument", "FSF_Dokumente"],
       "profile2": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Stueckl. p. Pos Montage", "FSF_Lagerliste_Artikel", "FSF_Lieferschein_mit_Los", "FSF_Packliste Montage", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung", "FSF_Paneelfertigung", "FSF_Beschr. Fertigungswagen", "FSF_Gläser_Paneele"],
-      "profile3": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Verschnittoptimierung_DG244-6,0", "FSF_Verschnittoptimierung_DG244-7,5", "FSF_Beschr. Fertigungswagen", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Vorfertigung Zuschnitte Etiketten Bogen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"],
-      "profile4": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Begleitplan_V2106_SBZ130", "FSF_Begleitplan_V2106_SBZ140"],
+      "profile3": ["Fließfertigung", "Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Verschnittoptimierung_DG244-6,0", "FSF_Verschnittoptimierung_DG244-7,5", "FSF_Beschr. Fertigungswagen", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Vorfertigung Zuschnitte Etiketten Bogen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"],
+      "profile4": ["Fließfertigung", "Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Begleitplan_V2106_SBZ130", "FSF_Begleitplan_V2106_SBZ140"],
       "profile5": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel"],
       "profile6": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel"],
       "profile7": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel", "FSF_Endkontrolle"],
@@ -200,41 +200,75 @@
       "profile9": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lieferschein_mit_Los", "FSF_Lagerliste_Artikel", "FSF_Endkontrolle"]
     };
 
-    function loadMobileProfileButtons() {
-      const profileSelector = document.getElementById('mobileProfileSelector');
-      const profile = profileSelector.value;
-      localStorage.setItem('selectedMobileProfile', profile);
-      const container = document.getElementById('mobileButtonContainer');
-      container.innerHTML = "";
-      profiles[profile].forEach(name => {
-        const button = document.createElement("button");
-        button.textContent = name;
-        button.onclick = function () {
-          const eingabe = document.getElementById('mobileInputField').value;
-          const url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${eingabe}_${name}.pdf?csf=1&web=1`;
-          window.open(url, '_blank');
-        };
-        container.appendChild(button);
-      });
-    }
+    function getFormattedDate() {
+	  const today = new Date();
+	  const dd = String(today.getDate()).padStart(2, '0');
+	  const mm = String(today.getMonth() + 1).padStart(2, '0');
+	  const yyyy = today.getFullYear();
+	  return `${dd}.${mm}.${yyyy}`;
+	}
 
-    function loadDesktopProfileButtons() {
-      const profileSelector = document.getElementById('desktopProfileSelector');
-      const profile = profileSelector.value;
-      localStorage.setItem('selectedDesktopProfile', profile);
-      const container = document.getElementById('desktopButtonContainer');
-      container.innerHTML = "";
-      profiles[profile].forEach(name => {
-        const button = document.createElement("button");
-        button.textContent = name;
-        button.onclick = function () {
-          const eingabe = document.getElementById('desktopInputField').value;
-          const url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${eingabe}_${name}.pdf?csf=1&web=1`;
-          window.open(url, '_blank');
-        };
-        container.appendChild(button);
-      });
-    }
+	function getFliessfertigungUrl(profile) {
+	  const date = getFormattedDate();
+	  const base = "https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/Fließfertigung/";
+	  switch (profile) {
+		case "profile2": return `${base}Lager/${date}.pdf`;
+		case "profile3":
+		case "profile4": return `${base}Stabbearbeitung/${date}.pdf`;
+		case "profile5": return `${base}Türstabmontage/${date}.pdf`;
+		case "profile6": return `${base}Verklebung/${date}.pdf`;
+		case "profile7": return `${base}Zusammenbau/${date}.pdf`;
+		case "profile8": return `${base}Verglasung/${date}.pdf`;
+		case "profile9": return `${base}Sonder/${date}.pdf`;
+		default: return null;
+	  }
+	}
+	
+	function loadMobileProfileButtons() {
+	  const profileSelector = document.getElementById('mobileProfileSelector');
+	  const profile = profileSelector.value;
+	  localStorage.setItem('selectedMobileProfile', profile);
+	  const container = document.getElementById('mobileButtonContainer');
+	  container.innerHTML = "";
+	  profiles[profile].forEach(name => {
+		const button = document.createElement("button");
+		button.textContent = name;
+		button.onclick = function () {
+		  if (name === "Fließfertigung") {
+			const url = getFliessfertigungUrl(profile);
+			if (url) window.open(url, '_blank');
+		  } else {
+			const eingabe = document.getElementById('mobileInputField').value;
+			const url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${eingabe}_${name}.pdf?csf=1&web=1`;
+			window.open(url, '_blank');
+		  }
+		};
+		container.appendChild(button);
+	  });
+	}
+
+	function loadDesktopProfileButtons() {
+	  const profileSelector = document.getElementById('desktopProfileSelector');
+	  const profile = profileSelector.value;
+	  localStorage.setItem('selectedDesktopProfile', profile);
+	  const container = document.getElementById('desktopButtonContainer');
+	  container.innerHTML = "";
+	  profiles[profile].forEach(name => {
+		const button = document.createElement("button");
+		button.textContent = name;
+		button.onclick = function () {
+		  if (name === "Fließfertigung") {
+		    const url = getFliessfertigungUrl(profile);
+            if (url) window.open(url, '_blank');
+		  } else {
+			const eingabe = document.getElementById('desktopInputField').value;
+			const url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${eingabe}_${name}.pdf?csf=1&web=1`;
+			window.open(url, '_blank');
+		  }
+		};
+		container.appendChild(button);
+	  });
+	}
 
     function toggleOverlay() {
       const overlay = document.getElementById('overlay');
