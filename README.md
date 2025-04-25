@@ -13,9 +13,14 @@ Update V3.1
 	- Schließen-Button in Popup entfernt, da nichtmehr notwendig
   - mobile App
 	- Es wird jetzt auch die mobile Version korrekt dargestellt
+  - Webanwendung
+	- Die Anwendung ist nun auch unter dem Link https://bichfl.github.io/Auftragsdokumente/ erreichbar
 
 Update V3.0
   - Daten werden nicht mehr lokal abgerufen sondern über einen sharepoint
+  - Kompatibilität mit mehreren Platformen
+	- Programmcode komplett überarbeitet -> wechsel von *.hta zu *.html 
+	  *.html kann z.B. auch unter Android geöffnet werden.
         
 Update V2.0
   - Programmcode auf Basis von html in Form eines *.hta-Programmes um mehr Funktionen abzubilden
