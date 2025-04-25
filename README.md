@@ -1,6 +1,7 @@
-#############
 # CHANGELOG #
-#############
+
+Update V3.1.1
+  - Button "Fließfertigung" ergänzt
 
 Update V3.1
   - Profilauswahl
