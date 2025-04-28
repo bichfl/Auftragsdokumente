@@ -167,7 +167,7 @@
 
   <div class="bottom-right-info">
     <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version">Programmversion 3.1.2</div>
+    <div class="version">Programmversion 3.1.3</div>
   </div>
 
   <div class="overlay" id="overlay">
@@ -215,17 +215,18 @@
 	  const date = getFormattedDate();
 	  const base = "https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/Fließfertigung/";
 	  switch (profile) {
-		case "profile2": return `${base}Lager/${date}.pdf`;
+		case "profile2": return `${base}Lager/${date}.pdf?csf=1&web=1`;
 		case "profile3":
-		case "profile4": return `${base}Stabbearbeitung/${date}.pdf`;
-		case "profile5": return `${base}Türstabmontage/${date}.pdf`;
-		case "profile6": return `${base}Verklebung/${date}.pdf`;
-		case "profile7": return `${base}Zusammenbau/${date}.pdf`;
-		case "profile8": return `${base}Verglasung/${date}.pdf`;
-		case "profile9": return `${base}Sonder/${date}.pdf`;
+		case "profile4": return `${base}Stabbearbeitung/${date}.pdf?csf=1&web=1`;
+		case "profile5": return `${base}Türstabmontage/${date}.pdf?csf=1&web=1`;
+		case "profile6": return `${base}Verklebung/${date}.pdf?csf=1&web=1`;
+		case "profile7": return `${base}Zusammenbau/${date}.pdf?csf=1&web=1`;
+		case "profile8": return `${base}Verglasung/${date}.pdf?csf=1&web=1`;
+		case "profile9": return `${base}Sonder/${date}.pdf?csf=1&web=1`;
 		default: return null;
 	  }
 	}
+
 	
 	function loadMobileProfileButtons() {
 	  const profileSelector = document.getElementById('mobileProfileSelector');
