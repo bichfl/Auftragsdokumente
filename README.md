@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+Update V3.1.3
+  - PDF für Fließfertigung wird jetzt auch in der OneDrive ansicht geöffnet und nicht mehr in Acrobat
+    
 Update V3.1.2
   - meta-Tags ergänzt damit die Seite beim caching nicht gespeichert wird
   
