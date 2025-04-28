@@ -1,11 +1,14 @@
 # CHANGELOG #
 
+Update V3.1.2
+  - <meta>-Tags ergänzt damit die Seite beim caching nicht gespeichert wird
+  
 Update V3.1.1
   - Button "Fließfertigung" ergänzt
 
 Update V3.1
   - Profilauswahl
-	- Das ausgewählte Profil wird gespeichert und geladen, wenn die Seite erneut geööffnet wird
+	- Das ausgewählte Profil wird gespeichert und geladen, wenn die Seite erneut geöffnet wird
   - Button "fehlendes Dokument anzeigen" 
 	- Button-Bereich angepasst, damit sie innerhalb des Popup-Fensters bleiben
 	- Popup-Fenster wird geschlossen wenn daneben geklickt wird
