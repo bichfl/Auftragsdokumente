@@ -1,7 +1,7 @@
 # CHANGELOG #
 
 Update V3.1.2
-  - <meta>-Tags ergänzt damit die Seite beim caching nicht gespeichert wird
+  - meta-Tags ergänzt damit die Seite beim caching nicht gespeichert wird
   
 Update V3.1.1
   - Button "Fließfertigung" ergänzt
