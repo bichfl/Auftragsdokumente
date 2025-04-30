@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+Update V3.1.4
+  - 15-stellige Nummern werden auf 4-stellige gekürzt -> Aufkleber am Proofil kann jetzt abgescannt werden
+
 Update V3.1.3
   - PDF für Fließfertigung wird jetzt auch in der OneDrive ansicht geöffnet und nicht mehr in Acrobat
     
