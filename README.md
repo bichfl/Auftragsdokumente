@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+Update V3.1.5
+  - Button "FSF_Verschnittoptimierung_Schüco_GP100_LA100" ergänzt
+  
 Update V3.1.4
   - 15-stellige Nummern werden auf 4-stellige gekürzt -> Aufkleber am Profil kann jetzt abgescannt werden
 
