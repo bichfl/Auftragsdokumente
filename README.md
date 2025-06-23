@@ -26,7 +26,8 @@ Update V3.1
   - mobile App
 	- Es wird jetzt auch die mobile Version korrekt dargestellt
   - Webanwendung
-	- Die Anwendung ist nun auch unter dem Link https://bichfl.github.io/Auftragsdokumente/ erreichbar
+	- Die Anwendung ist nun auch unter dem Link auftragsdokumente.peneder.com erreichbar, solange sich der User im Peneder-Netzwerk befindet
+	- Außerhalb des Peneder-Netzwerkes ist die Testseite über den Link bichfl.github.io/Auftragsdokumente/ erreichbar
 
 Update V3.0
   - Daten werden nicht mehr lokal abgerufen sondern über einen sharepoint
