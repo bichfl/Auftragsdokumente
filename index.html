@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auftragsdokumente App</title>
   <style>
     body {
@@ -13,11 +13,9 @@
       margin: 0;
       padding: 0;
     }
-
     .layout {
       padding: 10px;
     }
-
     .input-container {
       display: flex;
       gap: 10px;
@@ -25,22 +23,18 @@
       margin-bottom: 10px;
       flex-wrap: wrap;
     }
-
     input[type="text"],
     select {
       border: 1px solid #ccc;
       padding: 10px;
       border-radius: 4px;
     }
-
     #mobile-layout input[type="text"] {
       width: 110px;
     }
-
     #desktop-layout input[type="text"] {
       width: 200px;
     }
-
     button {
       background-color: #9b9b9b;
       color: white;
@@ -52,18 +46,15 @@
       transition-duration: 0.3s;
       width: 100%;
     }
-
     button:hover {
       background-color: #696969;
     }
-
     body.mobile button,
     body.desktop button {
       padding: 4.5px 16px;
       font-size: 16px;
       margin-bottom: 5px;
     }
-
     .button-scroll-container {
       display: flex;
       flex-direction: column;
@@ -71,22 +62,18 @@
       padding-bottom: 150px;
       box-sizing: border-box;
     }
-
     body.mobile .button-scroll-container {
       height: calc(100vh - 220px);
     }
-
     body.desktop .button-scroll-container {
       height: calc(100vh - 150px);
     }
-
     .header-container span {
       display: block;
       text-align: left;
       font-weight: bold;
       margin-bottom: 5px;
     }
-
     .bottom-right-info {
       position: fixed;
       bottom: 10px;
@@ -94,18 +81,15 @@
       text-align: right;
       z-index: 1000;
     }
-
     .bottom-right-info button {
       width: auto;
       white-space: nowrap;
     }
-
     .bottom-right-info .version {
       font-size: 14px;
       color: #555;
       margin-top: 4px;
     }
-
     .overlay {
       position: fixed;
       bottom: 70px;
@@ -125,16 +109,13 @@
       flex-direction: column;
       height: calc(80vh - 90px);
     }
-
     .overlay.show {
       display: flex;
       opacity: 1;
     }
-
     .overlay.hide {
       opacity: 0;
     }
-
     .overlay-header {
       position: sticky;
       top: 0;
@@ -143,45 +124,104 @@
       border-radius: 10px;
       z-index: 2;
     }
-
     .overlay-header-top {
       height: 20px;
     }
-
     .overlay .input-container input[type="text"] {
       width: 100%;
       box-sizing: border-box;
     }
-
     .overlay-scroll {
       overflow-y: auto;
       padding: 0px 20px 20px 20px;
       height: calc(100% - 90px);
       box-sizing: border-box;
     }
-
     .overlay-buttons {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-
     .overlay-buttons button {
       white-space: normal;
       word-break: break-word;
       width: 100%;
     }
+    /* Neues Overlay für Anschlusspläne */
+    #anschlussplaene-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 2px solid #333;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      z-index: 2000;
+      display: none;
+      width: 350px;
+      max-width: 90vw;
+      padding: 20px;
+      flex-direction: column;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    #anschlussplaene-overlay.show {
+      display: flex;
+    }
+    #anschlussplaene-overlay h3 {
+      margin-top: 0;
+    }
+    #anschlussplaene-overlay .search-container {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+    #anschlussplaene-overlay input[type="text"] {
+      flex-grow: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    #anschlussplaene-overlay button.search-btn {
+      padding: 8px 16px;
+      background-color: #9b9b9b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    #anschlussplaene-overlay button.search-btn:hover {
+      background-color: #696969;
+    }
+    #anschlussplaene-overlay button.close-btn {
+      margin-top: 10px;
+      align-self: flex-end;
+      background-color: #9b9b9b;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #anschlussplaene-overlay button.close-btn:hover {
+      background-color: #696969;
+    }
   </style>
 </head>
 <body>
-
   <!-- Mobile Layout -->
   <div id="mobile-layout" class="layout" style="display: none;">
     <div class="header-container">
       <span>Auftragsdokumente mobile App</span>
     </div>
     <div class="input-container">
-      <input type="text" id="mobileInputField" placeholder="lfd.Nr. eingeben">
+      <input type="text" id="mobileInputField" placeholder="lfd.Nr. eingeben" />
       <select id="mobileProfileSelector" onchange="loadMobileProfileButtons()">
         <option value="profile1">OK.-Büro</option>
         <option value="profile2">Warenwirtschaft</option>
@@ -203,7 +243,7 @@
       <span>Auftragsdokumente Desktop-App</span>
     </div>
     <div class="input-container">
-      <input type="text" id="desktopInputField" placeholder="lfd.Nr. hier eingeben">
+      <input type="text" id="desktopInputField" placeholder="lfd.Nr. hier eingeben" />
       <select id="desktopProfileSelector" onchange="loadDesktopProfileButtons()">
         <option value="profile1">OK.-Büro</option>
         <option value="profile2">Warenwirtschaft</option>
@@ -222,15 +262,15 @@
   <!-- Floating Button -->
   <div class="bottom-right-info">
     <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version">Programmversion 3.1.5</div>
+    <div class="version">Programmversion 3.2.0</div>
   </div>
 
-  <!-- Overlay -->
+  <!-- Overlay für fehlende Dokumente -->
   <div class="overlay" id="overlay">
     <div class="overlay-header">
       <div class="overlay-header-top"></div>
       <div class="input-container">
-        <input type="text" id="posInputField" placeholder="Pos.Nr. eingeben">
+        <input type="text" id="posInputField" placeholder="Pos.Nr. eingeben" />
       </div>
     </div>
     <div class="overlay-scroll">
@@ -238,178 +278,381 @@
     </div>
   </div>
 
+  <!-- Neues Overlay für Anschlusspläne -->
+  <div id="anschlussplaene-overlay">
+    <h3>Anschlusspläne</h3>
+    <div class="search-container">
+      <input type="text" id="anschlussSuche" placeholder="Artikelnummer eingeben" />
+      <button class="search-btn" onclick="suchAnschlussplaene()">Suchen</button>
+    </div>
+    <button class="close-btn" onclick="closeAnschlussplaeneOverlay()">Schließen</button>
+  </div>
+
+
+<script>
+  async function fetchJsonMitFallback(url1, url2) {
+    try {
+      const res1 = await fetch(url1);
+      if (res1.ok) {
+        return await res1.json();
+      } else {
+        console.warn(`Konnte ${url1} nicht laden, versuche ${url2}...`);
+        const res2 = await fetch(url2);
+        if (res2.ok) {
+          return await res2.json();
+        } else {
+          throw new Error(`Beide Dateien nicht gefunden: ${url1}, ${url2}`);
+        }
+      }
+    } catch (error) {
+      throw new Error("Fehler beim Laden der JSON-Daten: " + error.message);
+    }
+  }
+
+  async function suchAnschlussplaene() {
+    const artikelnummer = document.getElementById("anschlussSuche").value.trim();
+    if (!artikelnummer) {
+      alert("Bitte eine Artikelnummer eingeben.");
+      return;
+    }
+
+    const timestamp = new Date().getTime();
+    const jsonUrl1 = `https://bichfl.github.io/PIN-Belegung/Test.json?t=${timestamp}`;
+    const jsonUrl2 = `https://bichfl.github.io/PIN-Belegung/Test.JSON?t=${timestamp}`;
+
+    try {
+      const daten = await fetchJsonMitFallback(jsonUrl1, jsonUrl2);
+      const eintrag = daten.find(item => item.ArtNR === artikelnummer);
+
+      if (!eintrag) {
+        alert("Artikelnummer nicht gefunden.");
+        return;
+      }
+
+      const pfad = eintrag.Pfad;
+      const dateiname = encodeURIComponent(eintrag.Dokument);
+      const pdfUrl = `https://peneder.sharepoint.com/:b:/r//sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/PIN-Belegung/${pfad}/${dateiname}.pdf`;
+
+      window.open(pdfUrl, '_blank');
+    } catch (error) {
+      console.error("Fehler:", error);
+      alert(error.message);
+    }
+  }
+
+  function closeAnschlussplaeneOverlay() {
+    toggleAnschlussplaeneOverlay(false);
+  }
+</script>
+
+
   <!-- JavaScript -->
   <script>
+    // Funktion prüft, ob Gerät mobil ist
     function istMobil() {
       const ua = navigator.userAgent;
       const istMobilUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-      const hatTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      const hatTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
       const istKleinerBildschirm = window.innerWidth <= 768;
       return [istMobilUA, hatTouch, istKleinerBildschirm].filter(Boolean).length >= 2;
     }
 
     function getFormattedDate() {
       const today = new Date();
-      const dd = String(today.getDate()).padStart(2, '0');
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, "0");
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
       const yyyy = today.getFullYear();
       return `${dd}.${mm}.${yyyy}`;
     }
 
     function getFliessfertigungUrl(profile) {
       const date = getFormattedDate();
-      const base = "https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/Fließfertigung/";
+      const base =
+        "https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/Fließfertigung/";
       switch (profile) {
-        case "profile2": return `${base}Lager/${date}.pdf?csf=1&web=1`;
-        case "profile3": return `${base}Stabbearbeitung/${date}.pdf?csf=1&web=1`;
-        case "profile4": return `${base}Stabbearbeitung/${date}.pdf?csf=1&web=1`;
-        case "profile5": return `${base}Türstabmontage/${date}.pdf?csf=1&web=1`;
-        case "profile6": return `${base}Verklebung/${date}.pdf?csf=1&web=1`;
-        case "profile7": return `${base}Zusammenbau/${date}.pdf?csf=1&web=1`;
-        case "profile8": return `${base}Verglasung/${date}.pdf?csf=1&web=1`;
-        case "profile9": return `${base}Sonder/${date}.pdf?csf=1&web=1`;
-        default: return null;
+        case "profile2":
+          return `${base}Lager/${date}.pdf?csf=1&web=1`;
+        case "profile3":
+          return `${base}Stabbearbeitung/${date}.pdf?csf=1&web=1`;
+        case "profile4":
+          return `${base}Stabbearbeitung/${date}.pdf?csf=1&web=1`;
+        case "profile5":
+          return `${base}Türstabmontage/${date}.pdf?csf=1&web=1`;
+        case "profile6":
+          return `${base}Verklebung/${date}.pdf?csf=1&web=1`;
+        case "profile7":
+          return `${base}Zusammenbau/${date}.pdf?csf=1&web=1`;
+        case "profile8":
+          return `${base}Verglasung/${date}.pdf?csf=1&web=1`;
+        case "profile9":
+          return `${base}Sonder/${date}.pdf?csf=1&web=1`;
+        default:
+          return null;
       }
     }
 
     const profiles = {
-      "profile1": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Stueckl. p. Pos Montage", "FSF_Lagerliste_Artikel", "FSF_Lieferschein_mit_Los", "FSF_Packliste Montage", "FSF_Beschr. Fertigungswagen", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Vorfertigung Zuschnitte Etiketten Bogen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung", "FSF_Begleitplan_V2106_SBZ130", "FSF_Begleitplan_V2106_SBZ140", "FSF_Verschnittoptimierung_DG244-6,0", "FSF_Verschnittoptimierung_Schüco_GP100_LA100", "FSF_Verschnittoptimierung_DG244-7,5", "FSF_Gläser_Paneele", "FSF_Paneelfertigung", "FSF_Endkontrolle", "PFS_Kalkulation", "FSF_Arbeitszeiten", "PEN_CE-Leistungserklärung", "PEN_CE-Begleitdokument", "FSF_Dokumente"],
-      "profile2": ["Fließfertigung", "Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Stueckl. p. Pos Montage", "FSF_Lagerliste_Artikel", "FSF_Lieferschein_mit_Los", "FSF_Packliste Montage", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung", "FSF_Paneelfertigung", "FSF_Beschr. Fertigungswagen", "FSF_Gläser_Paneele"],
-      "profile3": ["Fließfertigung", "Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Verschnittoptimierung_DG244-6,0", "FSF_Verschnittoptimierung_DG244-7,5", "FSF_Verschnittoptimierung_Schüco_GP100_LA100", "FSF_Beschr. Fertigungswagen", "FSF_Vorfertigung_Beschläge", "FSF_Vorfertigung_Bodendichungen", "FSF_Vorfertigung Zuschnitte Etiketten Bogen", "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"],
-      "profile4": ["Fließfertigung", "Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Begleitplan_V2106_SBZ130", "FSF_Begleitplan_V2106_SBZ140"],
-      "profile5": ["Fließfertigung", "Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel"],
-      "profile6": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel"],
-      "profile7": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel", "FSF_Endkontrolle"],
-      "profile8": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lagerliste_Artikel", "FSF_Lieferschein_mit_Los", "FSF_Packliste Montage", "FSF_Gläser_Paneele", "FSF_Paneelfertigung", "FSF_Endkontrolle"],
-      "profile9": ["Schnittkonstruktion", "FSF_Stueckl. p. Pos", "FSF_Lieferschein_mit_Los", "FSF_Lagerliste_Artikel", "FSF_Endkontrolle"]
+      profile1: [
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Stueckl. p. Pos Montage",
+		"FSF_Lagerliste_Artikel",
+		"FSF_Lieferschein_mit_Los",
+		"FSF_Packliste Montage",
+		"FSF_Beschr. Fertigungswagen",
+		"FSF_Vorfertigung_Beschläge",
+		"FSF_Vorfertigung_Bodendichungen",
+		"FSF_Vorfertigung Zuschnitte Etiketten Bogen",
+		"FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
+		"FSF_Begleitplan_V2106_SBZ130", "FSF_Begleitplan_V2106_SBZ140",
+		"FSF_Verschnittoptimierung_DG244-6,0",
+		"FSF_Verschnittoptimierung_Schüco_GP100_LA100",
+		"FSF_Verschnittoptimierung_DG244-7,5", "FSF_Gläser_Paneele",
+		"FSF_Paneelfertigung",
+		"FSF_Endkontrolle",
+		"PFS_Kalkulation",
+		"FSF_Arbeitszeiten",
+		"PEN_CE-Leistungserklärung",
+		"PEN_CE-Begleitdokument",
+		"FSF_Dokumente",
+		"Anschlusspläne"
+	  ],
+      profile2: [
+		"Fließfertigung",
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Stueckl. p. Pos Montage",
+		"FSF_Lagerliste_Artikel",
+		"FSF_Lieferschein_mit_Los",
+		"FSF_Packliste Montage",
+		"FSF_Vorfertigung_Beschläge",
+		"FSF_Vorfertigung_Bodendichungen",
+		"FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
+		"FSF_Paneelfertigung",
+		"FSF_Beschr. Fertigungswagen",
+		"FSF_Gläser_Paneele"
+	  ],
+      profile3: [
+		"Fließfertigung",
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Verschnittoptimierung_DG244-6,0",
+		"FSF_Verschnittoptimierung_DG244-7,5",
+		"FSF_Verschnittoptimierung_Schüco_GP100_LA100",
+		"FSF_Beschr. Fertigungswagen",
+		"FSF_Vorfertigung_Beschläge",
+		"FSF_Vorfertigung_Bodendichungen",
+		"FSF_Vorfertigung Zuschnitte Etiketten Bogen",
+		"FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"
+	  ],
+      profile4: [
+		"Fließfertigung",
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Begleitplan_V2106_SBZ130",
+		"FSF_Begleitplan_V2106_SBZ140"
+	  ],
+      profile5: [
+		"Fließfertigung",
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Lagerliste_Artikel",
+		"Anschlusspläne"
+	  ],
+      profile6: [
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Lagerliste_Artikel"
+	  ],
+      profile7: [
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Lagerliste_Artikel",
+		"FSF_Endkontrolle",
+		"Anschlusspläne"
+	  ],
+      profile8: [
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Lagerliste_Artikel",
+		"FSF_Lieferschein_mit_Los",
+		"FSF_Packliste Montage",
+		"FSF_Gläser_Paneele",
+		"FSF_Paneelfertigung",
+		"FSF_Endkontrolle",
+		"Anschlusspläne"
+	  ],
+      profile9: [
+		"Schnittkonstruktion",
+		"FSF_Stueckl. p. Pos",
+		"FSF_Lieferschein_mit_Los",
+		"FSF_Lagerliste_Artikel",
+		"FSF_Endkontrolle",
+		"Anschlusspläne"
+	  ]
     };
 
+    // Laden der Buttons Mobile
     function loadMobileProfileButtons() {
-      const profile = document.getElementById('mobileProfileSelector').value;
-      localStorage.setItem('selectedMobileProfile', profile);
-      const container = document.getElementById('mobileButtonContainer');
-      container.innerHTML = '';
-      profiles[profile].forEach(name => {
-        const button = document.createElement('button');
+      const profile = document.getElementById("mobileProfileSelector").value;
+      localStorage.setItem("selectedMobileProfile", profile);
+      const container = document.getElementById("mobileButtonContainer");
+      container.innerHTML = "";
+      profiles[profile].forEach((name) => {
+        const button = document.createElement("button");
         button.textContent = name;
         button.onclick = () => {
-          const url = (name === "Fließfertigung")
-            ? getFliessfertigungUrl(profile)
-            : `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${document.getElementById('mobileInputField').value}_${name}.pdf?csf=1&web=1`;
-          if (url) window.open(url, '_blank');
+          const url =
+            name === "Fließfertigung"
+              ? getFliessfertigungUrl(profile)
+              : `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${document.getElementById(
+                  "mobileInputField"
+                ).value}_${name}.pdf?csf=1&web=1`;
+          if (url) window.open(url, "_blank");
         };
         container.appendChild(button);
       });
     }
 
+    // Laden der Buttons Desktop, mit zusätzlicher Behandlung von "Anschlusspläne"
     function loadDesktopProfileButtons() {
-      const profile = document.getElementById('desktopProfileSelector').value;
-      localStorage.setItem('selectedDesktopProfile', profile);
-      const container = document.getElementById('desktopButtonContainer');
-      container.innerHTML = '';
-      profiles[profile].forEach(name => {
-        const button = document.createElement('button');
+      const profile = document.getElementById("desktopProfileSelector").value;
+      localStorage.setItem("selectedDesktopProfile", profile);
+      const container = document.getElementById("desktopButtonContainer");
+      container.innerHTML = "";
+      profiles[profile].forEach((name) => {
+        const button = document.createElement("button");
         button.textContent = name;
-        button.onclick = () => {
-          const url = (name === "Fließfertigung")
-            ? getFliessfertigungUrl(profile)
-            : `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${document.getElementById('desktopInputField').value}_${name}.pdf?csf=1&web=1`;
-          if (url) window.open(url, '_blank');
-        };
+
+        if (name === "Anschlusspläne") {
+          button.onclick = () => toggleAnschlussplaeneOverlay(true);
+        } else {
+          button.onclick = () => {
+            const url =
+              name === "Fließfertigung"
+                ? getFliessfertigungUrl(profile)
+                : `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${document.getElementById(
+                    "desktopInputField"
+                  ).value}_${name}.pdf?csf=1&web=1`;
+            if (url) window.open(url, "_blank");
+          };
+        }
+
         container.appendChild(button);
       });
     }
 
+    // Overlay toggle für "fehlendes Dokument anfordern"
     function toggleOverlay() {
-      const overlay = document.getElementById('overlay');
-      const isVisible = overlay.classList.contains('show');
-      if (!isVisible) {
-        populateOverlayButtons();
-        overlay.classList.add('show');
-        overlay.classList.remove('hide');
-        overlay.style.display = 'flex';
+  const overlay = document.getElementById("overlay");
+  const isVisible = overlay.classList.contains("show");
+  if (!isVisible) {
+    populateOverlayButtons(); // <--- Diese Zeile ist entscheidend
+    overlay.style.display = "flex";
+    overlay.classList.add("show");
+    overlay.classList.remove("hide");
+  } else {
+    overlay.classList.add("hide");
+    overlay.classList.remove("show");
+    setTimeout(() => {
+      overlay.style.display = "none";
+    }, 400);
+  }
+}
+
+function populateOverlayButtons() {
+  const container = document.querySelector(".overlay-buttons");
+  container.innerHTML = "";
+  const isMobile = document.body.classList.contains("mobile");
+  const profile = document.getElementById(isMobile ? "mobileProfileSelector" : "desktopProfileSelector").value;
+  profiles[profile].forEach(name => {
+    const button = document.createElement("button");
+    button.textContent = name;
+    button.onclick = () => openAccessMail(name);
+    container.appendChild(button);
+  });
+}
+
+function openAccessMail(buttonName) {
+  const nummer = getLaufendeNummer();
+  const position = document.getElementById("posInputField").value.trim();
+  const subject = encodeURIComponent("fehlende Dokumente zu " + nummer);
+  const bodyText = position
+    ? `Zur laufenden Nummer "${nummer}", Position "${position}" fehlt folgendes Dokument:\n\n"${buttonName}"\n\nBitte legt das Dokument ab.`
+    : `Zur laufenden Nummer "${nummer}" fehlt folgendes Dokument:\n\n"${buttonName}"\n\nBitte legt das Dokument ab.`;
+  const url = `https://access.peneder.com/owa/?path=/mail/action/compose&to=ok.alu@peneder.com&subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+  window.open(url, '_blank');
+}
+
+function getLaufendeNummer() {
+  const mobileInput = document.getElementById('mobileInputField');
+  const desktopInput = document.getElementById('desktopInputField');
+  return mobileInput && mobileInput.offsetParent !== null ? mobileInput.value : desktopInput.value;
+}
+
+document.addEventListener('click', function (event) {
+  const overlay = document.getElementById('overlay');
+  const button = document.querySelector('.bottom-right-info button');
+  if (
+    overlay.classList.contains('show') &&
+    !overlay.contains(event.target) &&
+    !button.contains(event.target)
+  ) {
+    toggleOverlay();
+  }
+});
+
+
+    // Overlay toggle für Anschlusspläne
+    function toggleAnschlussplaeneOverlay(show) {
+      const overlay = document.getElementById("anschlussplaene-overlay");
+      if (show) {
+        overlay.style.display = "flex";
+        overlay.classList.add("show");
       } else {
-        overlay.classList.add('hide');
-        overlay.classList.remove('show');
-        setTimeout(() => {
-          if (overlay.classList.contains('hide')) {
-            overlay.style.display = 'none';
-          }
-        }, 400);
+        overlay.classList.remove("show");
+        overlay.style.display = "none";
       }
     }
-
-    function populateOverlayButtons() {
-      const buttonContainer = document.querySelector('.overlay-buttons');
-      buttonContainer.innerHTML = '';
-      const isMobile = document.body.classList.contains('mobile');
-      const profile = document.getElementById(isMobile ? 'mobileProfileSelector' : 'desktopProfileSelector').value;
-      profiles[profile].forEach(name => {
-        const button = document.createElement('button');
-        button.textContent = name;
-        button.onclick = () => openAccessMail(name);
-        buttonContainer.appendChild(button);
-      });
+    function closeAnschlussplaeneOverlay() {
+      toggleAnschlussplaeneOverlay(false);
     }
+	
 
-    function getLaufendeNummer() {
-      const mobileInput = document.getElementById('mobileInputField');
-      const desktopInput = document.getElementById('desktopInputField');
-      return mobileInput && mobileInput.offsetParent !== null ? mobileInput.value : desktopInput.value;
-    }
+    // Klick außerhalb des Anschlusspläne-Overlays schließt es
+    document.addEventListener("click", function (event) {
+      const overlay = document.getElementById("anschlussplaene-overlay");
+      const anschlussButton = Array.from(
+        document.querySelectorAll("#desktopButtonContainer button")
+      ).find((btn) => btn.textContent === "Anschlusspläne");
 
-    function openAccessMail(buttonName) {
-      const nummer = getLaufendeNummer();
-      const position = document.getElementById('posInputField').value.trim();
-      const subject = encodeURIComponent("fehlende Dokumente zu " + nummer);
-      const bodyText = position
-        ? `Zur laufenden Nummer "${nummer}", Position "${position}" fehlt folgendes Dokument:\n\n"${buttonName}"\n\nBitte legt das Dokument ab.`
-        : `Zur laufenden Nummer "${nummer}" fehlt folgendes Dokument:\n\n"${buttonName}"\n\nBitte legt das Dokument ab.`;
-      const url = `https://access.peneder.com/owa/?path=/mail/action/compose&to=ok.alu@peneder.com&subject=${subject}&body=${encodeURIComponent(bodyText)}`;
-      window.open(url, '_blank');
-    }
-
-    function formatLfdNrInput(inputField) {
-      inputField.addEventListener('input', function () {
-        let value = inputField.value;
-        if (/^\d{15}$/.test(value)) {
-          let trimmed = value.replace(/^0+/, '');
-          inputField.value = trimmed.substring(0, 4);
-        }
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const isMobile = istMobil();
-      document.body.classList.add(isMobile ? 'mobile' : 'desktop');
-      document.getElementById(isMobile ? 'mobile-layout' : 'desktop-layout').style.display = 'block';
-
-      const mobileInput = document.getElementById('mobileInputField');
-      const desktopInput = document.getElementById('desktopInputField');
-      if (mobileInput) formatLfdNrInput(mobileInput);
-      if (desktopInput) formatLfdNrInput(desktopInput);
-
-      if (isMobile) {
-        const savedProfile = localStorage.getItem('selectedMobileProfile');
-        if (savedProfile) document.getElementById('mobileProfileSelector').value = savedProfile;
-        loadMobileProfileButtons();
-      } else {
-        const savedProfile = localStorage.getItem('selectedDesktopProfile');
-        if (savedProfile) document.getElementById('desktopProfileSelector').value = savedProfile;
-        loadDesktopProfileButtons();
-      }
-    });
-
-    document.addEventListener('click', function (event) {
-      const overlay = document.getElementById('overlay');
-      const button = document.querySelector('.bottom-right-info button');
-      if (overlay.classList.contains('show') &&
+      if (overlay && overlay.classList.contains("show")) {
+        if (
           !overlay.contains(event.target) &&
-          !button.contains(event.target)) {
-        toggleOverlay();
+          (!anschlussButton || !anschlussButton.contains(event.target))
+        ) {
+          toggleAnschlussplaeneOverlay(false);
+        }
       }
     });
-  </script>
 
+    // Initial Setup
+    if (istMobil()) {
+      document.body.classList.add("mobile");
+      document.getElementById("mobile-layout").style.display = "block";
+      document.getElementById("desktop-layout").style.display = "none";
+      // Setze gespeichertes Profil
+      const storedMobileProfile = localStorage.getItem("selectedMobileProfile") || "profile1";
+      document.getElementById("mobileProfileSelector").value = storedMobileProfile;
+      loadMobileProfileButtons();
+    } else {
+      document.body.classList.add("desktop");
+      document.getElementById("desktop-layout").style.display = "block";
+      document.getElementById("mobile-layout").style.display = "none";
+      const storedDesktopProfile = localStorage.getItem("selectedDesktopProfile") || "profile1";
+      document.getElementById("desktopProfileSelector").value = storedDesktopProfile;
+      loadDesktopProfileButtons();
+    }
+  </script>
 </body>
 </html>
