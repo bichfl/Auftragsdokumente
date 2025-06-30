@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+Update V3.2.0
+  - Button für Anschlusspläne ergänzt
+    
 Update V3.1.5
   - Button "FSF_Verschnittoptimierung_Schüco_GP100_LA100" ergänzt
   
