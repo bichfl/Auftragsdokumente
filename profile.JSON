@@ -1,0 +1,129 @@
+{
+  "profile1": {
+    "displayName": "OK.-Büro",
+    "buttons": [
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Stueckl. p. Pos Montage",
+      "FSF_Lagerliste_Artikel",
+      "FSF_Lieferschein_mit_Los",
+      "FSF_Packliste Montage",
+      "FSF_Beschr. Fertigungswagen",
+      "FSF_Vorfertigung_Beschläge",
+      "FSF_Vorfertigung_Bodendichungen",
+      "FSF_Vorfertigung Zuschnitte Etiketten Bogen",
+      "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
+      "FSF_Begleitplan_V2106_SBZ130",
+      "FSF_Begleitplan_V2106_SBZ140",
+      "FSF_Verschnittoptimierung_DG244-6,0",
+      "FSF_Verschnittoptimierung_Schüco_GP100_LA100",
+      "FSF_Verschnittoptimierung_DG244-7,5",
+      "FSF_Gläser_Paneele",
+      "FSF_Paneelfertigung",
+      "FSF_Endkontrolle",
+      "PFS_Kalkulation",
+      "FSF_Arbeitszeiten",
+      "PEN_CE-Leistungserklärung",
+      "PEN_CE-Begleitdokument",
+      "FSF_Dokumente",
+      "Anschlusspläne"
+    ]
+  },
+  "profile2": {
+    "displayName": "Warenwirtschaft",
+    "buttons": [
+      "Fließfertigung",
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Stueckl. p. Pos Montage",
+      "FSF_Lagerliste_Artikel",
+      "FSF_Lieferschein_mit_Los",
+      "FSF_Packliste Montage",
+      "FSF_Vorfertigung_Beschläge",
+      "FSF_Vorfertigung_Bodendichungen",
+      "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
+      "FSF_Paneelfertigung",
+      "FSF_Beschr. Fertigungswagen",
+      "FSF_Gläser_Paneele"
+    ]
+  },
+  "profile3": {
+    "displayName": "Zuschnitt",
+    "buttons": [
+      "Fließfertigung",
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Verschnittoptimierung_DG244-6,0",
+      "FSF_Verschnittoptimierung_DG244-7,5",
+      "FSF_Verschnittoptimierung_Schüco_GP100_LA100",
+      "FSF_Beschr. Fertigungswagen",
+      "FSF_Vorfertigung_Beschläge",
+      "FSF_Vorfertigung_Bodendichungen",
+      "FSF_Vorfertigung Zuschnitte Etiketten Bogen",
+      "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"
+    ]
+  },
+  "profile4": {
+    "displayName": "Bearbeitungszentrum",
+    "buttons": [
+      "Fließfertigung",
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Begleitplan_V2106_SBZ130",
+      "FSF_Begleitplan_V2106_SBZ140"
+    ]
+  },
+  "profile5": {
+    "displayName": "Türstabmontage",
+    "buttons": [
+      "Fließfertigung",
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Lagerliste_Artikel",
+      "Anschlusspläne"
+    ]
+  },
+  "profile6": {
+    "displayName": "Verklebung",
+    "buttons": [
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Lagerliste_Artikel"
+    ]
+  },
+  "profile7": {
+    "displayName": "Zusammenbau",
+    "buttons": [
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Lagerliste_Artikel",
+      "FSF_Endkontrolle",
+      "Anschlusspläne"
+    ]
+  },
+  "profile8": {
+    "displayName": "Verglasung",
+    "buttons": [
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Lagerliste_Artikel",
+      "FSF_Lieferschein_mit_Los",
+      "FSF_Packliste Montage",
+      "FSF_Gläser_Paneele",
+      "FSF_Paneelfertigung",
+      "FSF_Endkontrolle",
+      "Anschlusspläne"
+    ]
+  },
+  "profile9": {
+    "displayName": "Sonderarbeitsplatz",
+    "buttons": [
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Lieferschein_mit_Los",
+      "FSF_Lagerliste_Artikel",
+      "FSF_Endkontrolle",
+      "Anschlusspläne"
+    ]
+  }
+}
