@@ -1,5 +1,8 @@
 # CHANGELOG #
 
+Update V3.2.1
+  - Profile werden jetzt über JSON gewartet, somit muss nicht immer die html angepasst werden
+
 Update V3.2.0
   - Button für Anschlusspläne ergänzt
     
