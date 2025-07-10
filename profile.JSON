@@ -26,6 +26,8 @@
       "PEN_CE-Leistungserklärung",
       "PEN_CE-Begleitdokument",
       "FSF_Dokumente",
+      "Fertigungsauftrag",
+      "Beschriftung_Palette",
       "Anschlusspläne"
     ]
   },
@@ -44,7 +46,8 @@
       "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
       "FSF_Paneelfertigung",
       "FSF_Beschr. Fertigungswagen",
-      "FSF_Gläser_Paneele"
+      "FSF_Gläser_Paneele",
+      "Beschriftung_Palette"
     ]
   },
   "profile3": {
@@ -112,7 +115,8 @@
       "FSF_Gläser_Paneele",
       "FSF_Paneelfertigung",
       "FSF_Endkontrolle",
-      "Anschlusspläne"
+      "Anschlusspläne",
+      "Beschriftung_Palette"
     ]
   },
   "profile9": {
