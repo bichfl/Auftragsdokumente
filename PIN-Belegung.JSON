@@ -1038,21 +1038,33 @@
     "Pfad": "60_conecdoor_cable"
   },
   {
-    "ArtNR": "918034",
+    "ArtNR": "103351",
+    "Bezeichnung": "BKS A-Öffner / Platine 103351",
+    "Dokument": "103351",
+    "Pfad": "60_conecdoor_cable"
+  },
+  {
+    "ArtNR": "103301",
     "Bezeichnung": "BKS A-Öffner / Platine 103301",
     "Dokument": "103301",
+    "Pfad": "60_conecdoor_cable"
+  },
+  {
+    "ArtNR": "918034",
+    "Bezeichnung": "BKS A-Öffner / Platine 103351",
+    "Dokument": "103351",
     "Pfad": "60_conecdoor_cable"
   },
   {
     "ArtNR": "918035",
-    "Bezeichnung": "BKS A-Öffner / Platine 103301",
-    "Dokument": "103301",
+    "Bezeichnung": "BKS A-Öffner / Platine 103351",
+    "Dokument": "103351",
     "Pfad": "60_conecdoor_cable"
   },
   {
     "ArtNR": "918178",
-    "Bezeichnung": "BKS A-Öffner / Platine 103301",
-    "Dokument": "103301",
+    "Bezeichnung": "BKS A-Öffner / Platine 103351",
+    "Dokument": "103351",
     "Pfad": "60_conecdoor_cable"
   },
   {
@@ -1119,6 +1131,24 @@
     "ArtNR": "103384",
     "Bezeichnung": "B-1970 / B-1971 / B-1980 / B-1981",
     "Dokument": "103384",
+    "Pfad": "70_Schüco"
+  },
+  {
+    "ArtNR": "279725",
+    "Bezeichnung": "B-9252",
+    "Dokument": "103646",
+    "Pfad": "70_Schüco"
+  },
+  {
+    "ArtNR": "279726",
+    "Bezeichnung": "B-9252",
+    "Dokument": "103646",
+    "Pfad": "70_Schüco"
+  },
+  {
+    "ArtNR": "103646",
+    "Bezeichnung": "B-9252",
+    "Dokument": "103646",
     "Pfad": "70_Schüco"
   }
 ]
