@@ -184,6 +184,37 @@
       transition: background-color 0.3s;
     }
     #anschlussplaene-overlay button.close-btn:hover { background-color: #696969; }
+	#readme-popup {
+      position: fixed;
+      bottom: 110px;
+      right: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 2000;
+      display: none;
+      max-width: 90vw;
+      max-height: 70vh;
+      overflow: auto;
+      padding: 16px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    .version.clickable {
+      cursor: pointer;
+      color: #555; /* grau */
+      text-decoration: none;
+    }
+    .version.clickable:hover {
+      color: #000; /* beim Hover dunkler */
+    }
+    #readme-popup h2 {
+      margin-top: 0;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -205,7 +236,7 @@
   </div>
   <div class="bottom-right-info">
     <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version">Programmversion 3.2.2</div>
+    <div class="version">Programmversion 3.2.3</div>
   </div>
   <div class="overlay" id="overlay">
     <div class="overlay-header"><div class="overlay-header-top"></div>
@@ -221,8 +252,47 @@
     </div>
     <button class="close-btn" onclick="closeAnschlussplaeneOverlay()">Schließen</button>
   </div>
+  <div class="bottom-right-info">
+    <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
+    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.2.3</div>
+  </div>
+
+  <div id="readme-popup"></div>
 
   <script>
+	async function toggleReadmePopup() {
+      const popup = document.getElementById('readme-popup');
+      if (popup.style.display === 'block') {
+        popup.style.display = 'none';
+        return;
+      }
+      try {
+        popup.innerHTML = '<h2>CHANGELOG</h2><div>Lade...</div>';
+        popup.style.display = 'block';
+
+        // Zeitstempel anhängen, damit der Browser nicht cached
+        const url = 'https://bichfl.github.io/Auftragsdokumente/README.md?t=' + Date.now();
+
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Fehler beim Laden der README.md');
+        const text = await res.text();
+
+        // Inhalt einfügen (HTML-Tags entschärfen)
+        popup.innerHTML = '<h2>CHANGELOG</h2><div>' + text.replace(/</g, "&lt;") + '</div>';
+      } catch (err) {
+        popup.innerHTML = '<h2>CHANGELOG</h2><div>Fehler beim Laden: ' + err.message + '</div>';
+      }
+    }
+
+    // Klick außerhalb schließt das Popup
+    document.addEventListener('click', function(event) {
+      const popup = document.getElementById('readme-popup');
+      const version = document.querySelector('.version.clickable');
+      if (popup.style.display === 'block' && !popup.contains(event.target) && !version.contains(event.target)) {
+        popup.style.display = 'none';
+      }
+    });
+	
 	async function fetchJsonMitFallback(u1, u2) {
       try {
         const r1 = await fetch(u1);
