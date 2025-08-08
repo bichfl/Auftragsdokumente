@@ -1,5 +1,3 @@
-# CHANGELOG #
-
 Update V3.2.2
   - Anschlusspläne werden jetzt größer dargestellt
 
