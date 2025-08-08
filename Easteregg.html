@@ -1,25 +1,11 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <title>Easteregg</title>
+<!-- NUR dieser Teil wird in deine bestehende Seite geladen -->
+<div id="easteregg-game-container">
   <style>
-    * {
+    #easteregg-game-container * {
       box-sizing: border-box;
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-      background: #222;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #game {
+    #easteregg-game-container #game {
       position: relative;
       width: 600px;
       height: 200px;
@@ -29,7 +15,7 @@
       margin-top: 20px;
     }
 
-    #player {
+    #easteregg-game-container #player {
       position: absolute;
       width: 40px;
       height: 40px;
@@ -42,12 +28,12 @@
       align-items: center;
     }
 
-    #player .logo {
+    #easteregg-game-container #player .logo {
       width: 16px;
       height: 16px;
     }
 
-    .obstacle {
+    #easteregg-game-container .obstacle {
       position: absolute;
       background: red;
       right: -30px;
@@ -65,11 +51,11 @@
       }
     }
 
-    .controls {
+    #easteregg-game-container .controls {
       margin-top: 20px;
     }
 
-    button {
+    #easteregg-game-container button {
       padding: 10px 20px;
       margin: 0 10px;
       font-size: 16px;
@@ -78,17 +64,16 @@
       cursor: pointer;
     }
 
-    #score {
+    #easteregg-game-container #score {
       margin-top: 15px;
       font-size: 18px;
+      color: white;
     }
   </style>
-</head>
-<body>
 
   <div id="game">
     <div id="player">
-      <img src="https://www.peneder.com/assets/favicons/favicon-16x16.png" alt="Logo" class="logo">
+      <img src="https://www.peneder.com/assets/favicons/favicon-16x16.png" alt="Logo" class="logo" />
     </div>
   </div>
 
@@ -100,107 +85,111 @@
   <div id="score">Punkte: 0</div>
 
   <script>
-    const player = document.getElementById("player");
-    const game = document.getElementById("game");
-    const scoreDisplay = document.getElementById("score");
-    let isJumping = false;
-    let isDucking = false;
-    let score = 0;
+    (function () {
+      const container = document.getElementById("easteregg-game-container");
+      const player = container.querySelector("#player");
+      const game = container.querySelector("#game");
+      const scoreDisplay = container.querySelector("#score");
+      let isJumping = false;
+      let isDucking = false;
+      let score = 0;
 
-    function jump() {
-      if (isJumping || isDucking) return;
+      window.jump = function () {
+        if (isJumping || isDucking) return;
 
-      isJumping = true;
-      player.style.bottom = "100px";
-      setTimeout(() => {
-        player.style.bottom = "0";
+        isJumping = true;
+        player.style.bottom = "100px";
         setTimeout(() => {
-          isJumping = false;
+          player.style.bottom = "0";
+          setTimeout(() => {
+            isJumping = false;
+          }, 300);
         }, 300);
-      }, 300);
-    }
+      };
 
-    function duck() {
-      if (isJumping || isDucking) return;
+      window.duck = function () {
+        if (isJumping || isDucking) return;
 
-      isDucking = true;
-      player.style.height = "20px";
-      player.style.alignItems = "flex-end";
-      setTimeout(() => {
-        player.style.height = "40px";
-        player.style.alignItems = "center";
-        isDucking = false;
-      }, 500);
-    }
+        isDucking = true;
+        player.style.height = "20px";
+        player.style.alignItems = "flex-end";
+        setTimeout(() => {
+          player.style.height = "40px";
+          player.style.alignItems = "center";
+          isDucking = false;
+        }, 500);
+      };
 
-    function getSpeed() {
-      const baseDuration = 3.0;
-      const minDuration = 1.2;
-      const speedUp = Math.min(score * 0.05, baseDuration - minDuration);
-      return (baseDuration - speedUp).toFixed(2) + 's';
-    }
-
-    function spawnObstacle() {
-      const obs = document.createElement("div");
-      obs.classList.add("obstacle");
-
-      const isHigh = Math.random() < 0.5;
-
-      if (isHigh) {
-        obs.style.height = "30px";
-        obs.style.width = "30px";
-        obs.style.bottom = "25px";
-        obs.style.background = "blue";
-      } else {
-        obs.style.height = "30px";
-        obs.style.width = "20px";
-        obs.style.bottom = "0";
-        obs.style.background = "red";
+      function getSpeed() {
+        const baseDuration = 3.0;
+        const minDuration = 1.2;
+        const speedUp = Math.min(score * 0.05, baseDuration - minDuration);
+        return (baseDuration - speedUp).toFixed(2) + "s";
       }
 
-      obs.style.animationDuration = getSpeed();
-      game.appendChild(obs);
+      function spawnObstacle() {
+        const obs = document.createElement("div");
+        obs.classList.add("obstacle");
 
-      const obsInterval = setInterval(() => {
-        const obsRect = obs.getBoundingClientRect();
-        const playerRect = player.getBoundingClientRect();
+        const isHigh = Math.random() < 0.5;
 
-        const verticalOverlap = playerRect.bottom > obsRect.top && playerRect.top < obsRect.bottom;
-        const horizontalOverlap = obsRect.left < playerRect.right && obsRect.right > playerRect.left;
-
-        if (horizontalOverlap && verticalOverlap) {
-          alert("Game Over! Dein Punktestand: " + score);
-          location.reload();
+        if (isHigh) {
+          obs.style.height = "30px";
+          obs.style.width = "30px";
+          obs.style.bottom = "25px";
+          obs.style.background = "blue";
+        } else {
+          obs.style.height = "30px";
+          obs.style.width = "20px";
+          obs.style.bottom = "0";
+          obs.style.background = "red";
         }
-      }, 20);
 
-      obs.addEventListener("animationend", () => {
-        clearInterval(obsInterval);
-        obs.remove();
-        score++;
-        scoreDisplay.textContent = "Punkte: " + score;
-      });
-    }
+        obs.style.animationDuration = getSpeed();
+        game.appendChild(obs);
 
-    function startObstacleLoop() {
-      const minDelay = 2000;
-      const maxDelay = 3500;
+        const obsInterval = setInterval(() => {
+          const obsRect = obs.getBoundingClientRect();
+          const playerRect = player.getBoundingClientRect();
 
-      function loop() {
-        spawnObstacle();
-        const nextDelay = Math.random() * (maxDelay - minDelay) + minDelay;
-        setTimeout(loop, nextDelay);
+          const verticalOverlap =
+            playerRect.bottom > obsRect.top && playerRect.top < obsRect.bottom;
+          const horizontalOverlap =
+            obsRect.left < playerRect.right && obsRect.right > playerRect.left;
+
+          if (horizontalOverlap && verticalOverlap) {
+            alert("Game Over! Dein Punktestand: " + score);
+            location.reload();
+          }
+        }, 20);
+
+        obs.addEventListener("animationend", () => {
+          clearInterval(obsInterval);
+          obs.remove();
+          score++;
+          scoreDisplay.textContent = "Punkte: " + score;
+        });
       }
 
-      loop();
-    }
+      function startObstacleLoop() {
+        const minDelay = 2000;
+        const maxDelay = 3500;
 
-    document.addEventListener("keydown", (e) => {
-      if (e.code === "ArrowUp") jump();
-      if (e.code === "ArrowDown") duck();
-    });
+        function loop() {
+          spawnObstacle();
+          const nextDelay = Math.random() * (maxDelay - minDelay) + minDelay;
+          setTimeout(loop, nextDelay);
+        }
 
-    startObstacleLoop();
+        loop();
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.code === "ArrowUp") jump();
+        if (e.code === "ArrowDown") duck();
+      });
+
+      startObstacleLoop();
+    })();
   </script>
-</body>
-</html>
+</div>
