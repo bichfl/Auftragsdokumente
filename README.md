@@ -1,3 +1,6 @@
+Update V3.2.5
+  - Fehler im Code behoben, diverse Funktionen funktionieren jetzt flüssiger
+
 Update V3.2.4
   - Easteregg ergänzt
     
