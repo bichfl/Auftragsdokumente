@@ -235,8 +235,8 @@
     <div class="button-scroll-container" id="desktopButtonContainer"></div>
   </div>
   <div class="bottom-right-info">
-    <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version">Programmversion 3.2.4</div>
+	<button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
+    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.2.5</div>
   </div>
   <div class="overlay" id="overlay">
     <div class="overlay-header"><div class="overlay-header-top"></div>
@@ -252,16 +252,14 @@
     </div>
     <button class="close-btn" onclick="closeAnschlussplaeneOverlay()">Schließen</button>
   </div>
-  <div class="bottom-right-info">
-    <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.2.4</div>
-  </div>
+
 
   <div id="readme-popup"></div>
 
   <script>
 	async function toggleReadmePopup() {
       const popup = document.getElementById('readme-popup');
+	  popup.style.color = '#000';
       if (popup.style.display === 'block') {
         popup.style.display = 'none';
         return;
@@ -499,27 +497,27 @@
   popup.style.width = '800px';
   popup.style.height = 'auto';
   popup.style.maxWidth = 'none';
-  popup.style.color = '#fff';
 
   // Spielfeld HTML einfügen
   popup.innerHTML = `
-    <h2 style="font-family: Arial, sans-serif; margin-top:0; text-align:center;">Easteregg</h2>
     <style>
       * { box-sizing: border-box; }
+
       #game {
         position: relative;
         width: 650px;
         height: 200px;
-        border: 3px solid #333;
+        border: 3px solid #9b9b9b; /* optional: Rahmen auch grau */
         overflow: hidden;
         background: ${popupBackground};
         margin: 10px auto;
       }
+
       #player {
         position: absolute;
         width: 40px;
         height: 40px;
-        background: limegreen;
+        background: #9b9b9b; /* grau wie Buttons */
         bottom: 0;
         left: 50px;
         transition: bottom 0.3s, height 0.1s;
@@ -528,27 +526,58 @@
         align-items: center;
       }
       #player .logo { width: 16px; height: 16px; }
+
       .obstacle {
         position: absolute;
         right: -30px;
         animation-name: moveLeft;
         animation-timing-function: linear;
         animation-fill-mode: forwards;
+        background: #9b9b9b; /* grau wie Buttons */
       }
+
       @keyframes moveLeft {
         from { right: -30px; }
         to { right: 100%; }
       }
-      .controls { margin-top: 10px; text-align: center; }
-      .controls button {
-        padding: 10px 20px;
-        margin: 0 10px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+
+      /* --- Wichtig: höhere Spezifität, damit globale Button-Regeln NICHT gewinnen --- */
+      #readme-popup .controls {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        text-align: center;
+        flex-wrap: nowrap;
       }
-      #score { margin-top: 10px; font-size: 18px; text-align: center; }
+
+      #readme-popup .controls button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto !important;         /* globale width:100% überstimmen */
+        padding: 20px 30px !important;  /* höher/breiter */
+        font-size: 28px !important;     /* größere Pfeile */
+        line-height: 1;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #9b9b9b;
+        color: #fff;
+        transition: background-color 0.3s;
+      }
+
+      #readme-popup .controls button:hover {
+        background-color: #696969;
+      }
+
+      #score {
+        margin-top: 10px;
+        font-size: 18px;
+        text-align: center;
+        color: black;
+      }
     </style>
 
     <div id="game">
@@ -570,6 +599,8 @@
   // Spiellogik starten
   initGame();
 }
+
+
 
 function initGame() {
   const player = document.getElementById("player");
@@ -618,12 +649,12 @@ function initGame() {
       obs.style.height = "30px";
       obs.style.width = "30px";
       obs.style.bottom = "25px";
-      obs.style.background = "blue";
+      obs.style.background = "#9b9b9b";
     } else {
       obs.style.height = "30px";
       obs.style.width = "20px";
       obs.style.bottom = "0";
-      obs.style.background = "red";
+      obs.style.background = "#9b9b9b";
     }
 
     obs.style.animationDuration = getSpeed();
