@@ -1,3 +1,6 @@
+Update V3.2.6
+  - Einstellungen hinzugefügt -> Seite kann jetzt individualisiert werden
+    
 Update V3.2.5
   - Fehler im Code behoben, diverse Funktionen funktionieren jetzt flüssiger
 
