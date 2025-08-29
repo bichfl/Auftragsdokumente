@@ -17,7 +17,8 @@ Update V3.2.1
   - Profile werden jetzt über JSON gewartet, somit muss nicht immer die html angepasst werden
 
 Update V3.2.0
-  - Button für Anschlusspläne ergänzt
+  - Button für Anschlusspläne ergänzt 
+	Anschlusspläne können jetzt über sharepoint geladen und am Etikettendrucker gedruckt werden
     
 Update V3.1.5
   - Button "FSF_Verschnittoptimierung_Schüco_GP100_LA100" ergänzt
