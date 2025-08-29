@@ -8,6 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auftragsdokumente App</title>
   <style>
+	:root {
+	  --button-color: #9b9b9b;
+	  --button-hover: #696969;
+	  --button-text: #ffffff;
+	}
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -31,8 +36,8 @@
     #mobile-layout input[type="text"] { width: 110px; }
     #desktop-layout input[type="text"] { width: 200px; }
     button {
-      background-color: #9b9b9b;
-      color: white;
+      background-color: var(--button-color);
+      color: var(--button-text);
       border: none;
       cursor: pointer;
       border-radius: 4px;
@@ -41,7 +46,9 @@
       transition-duration: 0.3s;
       width: 100%;
     }
-    button:hover { background-color: #696969; }
+    button:hover {
+	  background-color: var(--button-hover);
+	}
     body.mobile button, body.desktop button {
       padding: 4.5px 16px;
       font-size: 16px;
@@ -62,6 +69,7 @@
       font-weight: bold;
       margin-bottom: 5px;
     }
+    /* rechter Buttonbereich */
     .bottom-right-info {
       position: fixed;
       bottom: 10px;
@@ -78,6 +86,19 @@
       color: #555;
       margin-top: 4px;
     }
+    /* neuer linker Buttonbereich */
+    .bottom-left-info {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      text-align: left;
+      z-index: 1000;
+    }
+    .bottom-left-info button {
+      width: auto;
+      white-space: nowrap;
+    }
+
     .overlay {
       position: fixed;
       bottom: 70px;
@@ -163,27 +184,27 @@
     }
     #anschlussplaene-overlay button.search-btn {
       padding: 8px 16px;
-      background-color: #9b9b9b;
-      color: white;
+      background-color: var(--button-color);
+      color: var(--button-text);
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-size: 16px;
       transition: background-color 0.3s;
     }
-    #anschlussplaene-overlay button.search-btn:hover { background-color: #696969; }
+    #anschlussplaene-overlay button.search-btn:hover { background-color: var(--button-hover); }
     #anschlussplaene-overlay button.close-btn {
       margin-top: 10px;
       align-self: flex-end;
-      background-color: #9b9b9b;
-      color: white;
+      background-color: var(--button-color);
+      color: var(--button-text);
       border: none;
       padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
-    #anschlussplaene-overlay button.close-btn:hover { background-color: #696969; }
+    #anschlussplaene-overlay button.close-btn:hover { background-color: var(--button-hover); }
 	#readme-popup {
       position: fixed;
       bottom: 110px;
@@ -203,11 +224,11 @@
     }
     .version.clickable {
       cursor: pointer;
-      color: #555; /* grau */
+      color: #555;
       text-decoration: none;
     }
     .version.clickable:hover {
-      color: #000; /* beim Hover dunkler */
+      color: #000;
     }
     #readme-popup h2 {
       margin-top: 0;
@@ -215,6 +236,22 @@
       font-size: 18px;
       font-weight: bold;
     }
+	#settings-overlay {
+	  position: fixed;
+	  bottom: 60px;
+	  left: 10px;
+	  background-color: #fff;
+	  border: 1px solid #ccc;
+	  border-radius: 10px;
+	  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+	  z-index: 1500;
+	  display: none;
+	  padding: 16px;
+	  min-width: 250px;
+	  max-width: 80vw;
+	}
+	#settings-overlay.show { display: block; }
+
   </style>
 </head>
 <body>
@@ -234,10 +271,35 @@
     </div>
     <div class="button-scroll-container" id="desktopButtonContainer"></div>
   </div>
+
+  <!-- NEUER LINKSBÜNDIGER BUTTON -->
+  <div class="bottom-left-info">
+    <button onclick="toggleSettings()">⛭</button>
+  </div>
+
+  <!-- Einstellungen-Overlay -->
+  <div id="settings-overlay">
+  <div class="settings-content">
+    <h3>Einstellungen</h3>
+
+    <label for="btnColorPicker">Buttonfarbe:</label><br>
+    <input type="color" id="btnColorPicker" value="#9b9b9b"><br><br>
+
+    <label for="btnHoverColorPicker">Hoverfarbe:</label><br>
+    <input type="color" id="btnHoverColorPicker" value="#696969"><br><br>
+
+    <label for="btnTextColorPicker">Schriftfarbe:</label><br>
+    <input type="color" id="btnTextColorPicker" value="#ffffff"><br><br>
+
+    <button id="resetDefaultsBtn">Standard wiederherstellen</button>
+  </div>
+</div>
+
   <div class="bottom-right-info">
 	<button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.2.5</div>
+    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.2.6</div>
   </div>
+
   <div class="overlay" id="overlay">
     <div class="overlay-header"><div class="overlay-header-top"></div>
       <div class="input-container"><input type="text" id="posInputField" placeholder="Pos.Nr. eingeben" /></div>
@@ -253,10 +315,93 @@
     <button class="close-btn" onclick="closeAnschlussplaeneOverlay()">Schließen</button>
   </div>
 
-
   <div id="readme-popup"></div>
 
   <script>
+
+	function applyButtonStyles(normal, hover, text) {
+  if (normal) document.documentElement.style.setProperty('--button-color', normal);
+  if (hover)  document.documentElement.style.setProperty('--button-hover', hover);
+  if (text)   document.documentElement.style.setProperty('--button-text', text);
+}
+
+function toggleSettings() {
+  const s = document.getElementById("settings-overlay");
+  s.classList.toggle("show");
+}
+
+// Klick außerhalb schließt das Overlay
+document.addEventListener("click", function(e) {
+  const s = document.getElementById("settings-overlay");
+  const btn = document.querySelector(".bottom-left-info button");
+  if (s.classList.contains("show") && !s.contains(e.target) && !btn.contains(e.target)) {
+    s.classList.remove("show");
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const colorPickers = {
+    btnColorPicker: "buttonColor",
+    btnHoverColorPicker: "buttonHoverColor",
+    btnTextColorPicker: "buttonTextColor"
+  };
+
+  // gespeicherte Werte laden oder Defaults
+  const normal = localStorage.getItem("buttonColor") || "#9b9b9b";
+  const hover  = localStorage.getItem("buttonHoverColor") || "#696969";
+  const text   = localStorage.getItem("buttonTextColor") || "#ffffff";
+
+  document.getElementById("btnColorPicker").value = normal;
+  document.getElementById("btnHoverColorPicker").value = hover;
+  document.getElementById("btnTextColorPicker").value = text;
+
+  applyButtonStyles(normal, hover, text);
+
+  // Änderungen speichern & anwenden
+  Object.entries(colorPickers).forEach(([pickerId, storageKey]) => {
+    const picker = document.getElementById(pickerId);
+    picker.addEventListener("input", () => {
+      const value = picker.value;
+      localStorage.setItem(storageKey, value);
+
+      const newNormal = document.getElementById("btnColorPicker").value;
+      const newHover  = document.getElementById("btnHoverColorPicker").value;
+      const newText   = document.getElementById("btnTextColorPicker").value;
+
+      applyButtonStyles(newNormal, newHover, newText);
+    });
+  });
+
+  // 👉 Hier fehlt bisher der Reset!
+  document.getElementById("resetDefaultsBtn").addEventListener("click", () => {
+    // Standardwerte zurücksetzen
+    const defaults = {
+      buttonColor: "#9b9b9b",
+      buttonHoverColor: "#696969",
+      buttonTextColor: "#ffffff"
+    };
+
+    // localStorage leeren/überschreiben
+    Object.entries(defaults).forEach(([key, val]) => {
+      localStorage.setItem(key, val);
+    });
+
+    // Inputs zurücksetzen
+    document.getElementById("btnColorPicker").value = defaults.buttonColor;
+    document.getElementById("btnHoverColorPicker").value = defaults.buttonHoverColor;
+    document.getElementById("btnTextColorPicker").value = defaults.buttonTextColor;
+
+    // Styles anwenden
+    applyButtonStyles(
+      defaults.buttonColor,
+      defaults.buttonHoverColor,
+      defaults.buttonTextColor
+    );
+  });
+});
+
+
+
 	async function toggleReadmePopup() {
       const popup = document.getElementById('readme-popup');
 	  popup.style.color = '#000';
@@ -507,7 +652,7 @@
         position: relative;
         width: 650px;
         height: 200px;
-        border: 3px solid #9b9b9b; /* optional: Rahmen auch grau */
+        border: 3px solid var(--button-color); /* optional: Rahmen auch grau */
         overflow: hidden;
         background: ${popupBackground};
         margin: 10px auto;
@@ -517,7 +662,7 @@
         position: absolute;
         width: 40px;
         height: 40px;
-        background: #9b9b9b; /* grau wie Buttons */
+        background: var(--button-color); /* grau wie Buttons */
         bottom: 0;
         left: 50px;
         transition: bottom 0.3s, height 0.1s;
@@ -533,7 +678,7 @@
         animation-name: moveLeft;
         animation-timing-function: linear;
         animation-fill-mode: forwards;
-        background: #9b9b9b; /* grau wie Buttons */
+        background: var(--button-color); /* grau wie Buttons */
       }
 
       @keyframes moveLeft {
@@ -563,13 +708,13 @@
         border: none;
         border-radius: 6px;
         cursor: pointer;
-        background-color: #9b9b9b;
-        color: #fff;
+        background-color: var(--button-color);
+        color: var(--button-text);
         transition: background-color 0.3s;
       }
 
       #readme-popup .controls button:hover {
-        background-color: #696969;
+        background-color: var(--button-hover);
       }
 
       #score {
@@ -649,12 +794,12 @@ function initGame() {
       obs.style.height = "30px";
       obs.style.width = "30px";
       obs.style.bottom = "25px";
-      obs.style.background = "#9b9b9b";
+      obs.style.background = "var(--button-color)";
     } else {
       obs.style.height = "30px";
       obs.style.width = "20px";
       obs.style.bottom = "0";
-      obs.style.background = "#9b9b9b";
+      obs.style.background = "var(--button-color)";
     }
 
     obs.style.animationDuration = getSpeed();
