@@ -28,6 +28,7 @@
       "FSF_Dokumente",
       "Fertigungsauftrag",
       "Beschriftung_Palette",
+      "FSF_Vorkommissionierung_mit_Fuellung",
       "Anschlusspläne"
     ]
   },
@@ -41,6 +42,7 @@
       "FSF_Lagerliste_Artikel",
       "FSF_Lieferschein_mit_Los",
       "FSF_Packliste Montage",
+      "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Vorfertigung_Beschläge",
       "FSF_Vorfertigung_Bodendichungen",
       "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
@@ -112,6 +114,7 @@
       "FSF_Lagerliste_Artikel",
       "FSF_Lieferschein_mit_Los",
       "FSF_Packliste Montage",
+      "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Gläser_Paneele",
       "FSF_Paneelfertigung",
       "FSF_Endkontrolle",
@@ -126,8 +129,10 @@
       "FSF_Stueckl. p. Pos",
       "FSF_Lieferschein_mit_Los",
       "FSF_Lagerliste_Artikel",
+      "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Endkontrolle",
       "Anschlusspläne"
     ]
   }
 }
+
