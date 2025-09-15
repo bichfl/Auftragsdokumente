@@ -9,21 +9,21 @@
       "FSF_Lieferschein_mit_Los",
       "FSF_Packliste Montage",
       "FSF_Beschr. Fertigungswagen",
-      "FSF_Vorfertigung_Beschläge",
+      "FSF_Vorfertigung_Beschlaege",
       "FSF_Vorfertigung_Bodendichungen",
       "FSF_Vorfertigung Zuschnitte Etiketten Bogen",
       "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
       "FSF_Begleitplan_V2106_SBZ130",
       "FSF_Begleitplan_V2106_SBZ140",
       "FSF_Verschnittoptimierung_DG244-6,0",
-      "FSF_Verschnittoptimierung_Schüco_GP100_LA100",
+      "FSF_Verschnittoptimierung_Schueco_GP100_LA100",
       "FSF_Verschnittoptimierung_DG244-7,5",
-      "FSF_Gläser_Paneele",
+      "FSF_Glaeser_Paneele",
       "FSF_Paneelfertigung",
       "FSF_Endkontrolle",
       "PFS_Kalkulation",
       "FSF_Arbeitszeiten",
-      "PEN_CE-Leistungserklärung",
+      "PEN_CE-Leistungserklaerung",
       "PEN_CE-Begleitdokument",
       "FSF_Dokumente",
       "Fertigungsauftrag",
@@ -135,4 +135,5 @@
     ]
   }
 }
+
 
