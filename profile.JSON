@@ -1,6 +1,6 @@
 {
   "profile1": {
-    "displayName": "OK.-Büro",
+    "displayName": "OK.-Buero",
     "buttons": [
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
@@ -29,7 +29,7 @@
       "Fertigungsauftrag",
       "Beschriftung_Palette",
       "FSF_Vorkommissionierung_mit_Fuellung",
-      "Anschlusspläne"
+      "Anschlussplaene"
     ]
   },
   "profile2": {
@@ -43,12 +43,12 @@
       "FSF_Lieferschein_mit_Los",
       "FSF_Packliste Montage",
       "FSF_Vorkommissionierung_mit_Fuellung",
-      "FSF_Vorfertigung_Beschläge",
+      "FSF_Vorfertigung_Beschlaege",
       "FSF_Vorfertigung_Bodendichtungen",
       "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
       "FSF_Paneelfertigung",
       "FSF_Beschr. Fertigungswagen",
-      "FSF_Gläser_Paneele",
+      "FSF_Glaeser_Paneele",
       "Beschriftung_Palette"
     ]
   },
@@ -60,9 +60,9 @@
       "FSF_Stueckl. p. Pos",
       "FSF_Verschnittoptimierung_DG244-6,0",
       "FSF_Verschnittoptimierung_DG244-7,5",
-      "FSF_Verschnittoptimierung_Schüco_GP100_LA100",
+      "FSF_Verschnittoptimierung_Schueco_GP100_LA100",
       "FSF_Beschr. Fertigungswagen",
-      "FSF_Vorfertigung_Beschläge",
+      "FSF_Vorfertigung_Beschlaege",
       "FSF_Vorfertigung_Bodendichtungen",
       "FSF_Vorfertigung Zuschnitte Etiketten Bogen",
       "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"
@@ -79,13 +79,13 @@
     ]
   },
   "profile5": {
-    "displayName": "Türstabmontage",
+    "displayName": "Tuerstabmontage",
     "buttons": [
       "Fließfertigung",
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
       "FSF_Lagerliste_Artikel",
-      "Anschlusspläne"
+      "Anschlussplaene"
     ]
   },
   "profile6": {
@@ -103,7 +103,7 @@
       "FSF_Stueckl. p. Pos",
       "FSF_Lagerliste_Artikel",
       "FSF_Endkontrolle",
-      "Anschlusspläne"
+      "Anschlussplaene"
     ]
   },
   "profile8": {
@@ -115,10 +115,10 @@
       "FSF_Lieferschein_mit_Los",
       "FSF_Packliste Montage",
       "FSF_Vorkommissionierung_mit_Fuellung",
-      "FSF_Gläser_Paneele",
+      "FSF_Glaeser_Paneele",
       "FSF_Paneelfertigung",
       "FSF_Endkontrolle",
-      "Anschlusspläne",
+      "Anschlussplaene",
       "Beschriftung_Palette"
     ]
   },
@@ -131,10 +131,11 @@
       "FSF_Lagerliste_Artikel",
       "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Endkontrolle",
-      "Anschlusspläne"
+      "Anschlussplaene"
     ]
   }
 }
+
 
 
 
