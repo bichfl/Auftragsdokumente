@@ -1,5 +1,5 @@
 Update V3.2.7
-  - Benutzerdefiniertes Profil ergänzt
+  - Benutzerdefiniertes Profil ergänzt: 
 	Im benutzerdefinierten Profil können Buttons aktiviert, bzw. deaktiviert werden, sowie die Reihenfolge angepasst werden
 
 Update V3.2.6
