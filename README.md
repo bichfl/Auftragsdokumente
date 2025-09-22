@@ -1,5 +1,9 @@
+Update V3.2.7
+  - Benutzerdefiniertes Profil ergänzt
+	Im benutzerdefinierten Profil können Buttons aktiviert, bzw. deaktiviert werden, sowie die Reihenfolge angepasst werden
+
 Update V3.2.6
-  - Einstellungen hinzugefügt -> Seite kann jetzt individualisiert werden
+  - Einstellungen hinzugefügt -> Buttonfarbe kann jetzt individualisiert werden
     
 Update V3.2.5
   - Fehler im Code behoben, diverse Funktionen funktionieren jetzt flüssiger
