@@ -249,8 +249,23 @@
 	  padding: 16px;
 	  min-width: 250px;
 	  max-width: 80vw;
+	  max-height: 70vh;
+      overflow-y: auto;
 	}
 	#settings-overlay.show { display: block; }
+
+    /* Drag & Drop Styles */
+    .draggable-item {
+      padding: 4px;
+      border: 1px dashed transparent;
+    }
+    .draggable-item.dragging {
+      opacity: 0.5;
+    }
+    .draggable-item:hover {
+      border: 1px dashed #999;
+      cursor: move;
+    }
 
   </style>
 </head>
@@ -292,6 +307,12 @@
     <input type="color" id="btnTextColorPicker" value="#ffffff"><br><br>
 
     <button id="resetDefaultsBtn">Standard wiederherstellen</button>
+
+    <hr>
+    <h4>Benutzerdefiniertes Profil</h4>
+	<input type="text" id="customProfileName" placeholder="Benutzerdefiniert" /><br><br>
+    <div id="customProfileSettings"></div>
+
   </div>
 </div>
 
@@ -318,26 +339,26 @@
   <div id="readme-popup"></div>
 
   <script>
+    function applyButtonStyles(normal, hover, text) {
+      if (normal) document.documentElement.style.setProperty('--button-color', normal);
+      if (hover)  document.documentElement.style.setProperty('--button-hover', hover);
+      if (text)   document.documentElement.style.setProperty('--button-text', text);
+    }
 
-	function applyButtonStyles(normal, hover, text) {
-  if (normal) document.documentElement.style.setProperty('--button-color', normal);
-  if (hover)  document.documentElement.style.setProperty('--button-hover', hover);
-  if (text)   document.documentElement.style.setProperty('--button-text', text);
-}
+    function toggleSettings() {
+      const s = document.getElementById("settings-overlay");
+      s.classList.toggle("show");
+    }
 
-function toggleSettings() {
-  const s = document.getElementById("settings-overlay");
-  s.classList.toggle("show");
-}
-
-// Klick außerhalb schließt das Overlay
-document.addEventListener("click", function(e) {
-  const s = document.getElementById("settings-overlay");
-  const btn = document.querySelector(".bottom-left-info button");
-  if (s.classList.contains("show") && !s.contains(e.target) && !btn.contains(e.target)) {
-    s.classList.remove("show");
-  }
-});
+    // Klick außerhalb schließt das Overlay + Reload
+    document.addEventListener("click", function(e) {
+      const s = document.getElementById("settings-overlay");
+      const btn = document.querySelector(".bottom-left-info button");
+      if (s.classList.contains("show") && !s.contains(e.target) && !btn.contains(e.target)) {
+        s.classList.remove("show");
+        location.reload();
+      }
+    });
 
 document.addEventListener("DOMContentLoaded", () => {
   const colorPickers = {
@@ -372,33 +393,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 👉 Hier fehlt bisher der Reset!
-  document.getElementById("resetDefaultsBtn").addEventListener("click", () => {
-    // Standardwerte zurücksetzen
-    const defaults = {
-      buttonColor: "#9b9b9b",
-      buttonHoverColor: "#696969",
-      buttonTextColor: "#ffffff"
-    };
-
-    // localStorage leeren/überschreiben
-    Object.entries(defaults).forEach(([key, val]) => {
-      localStorage.setItem(key, val);
+  // Reset
+      document.getElementById("resetDefaultsBtn").addEventListener("click", () => {
+        const defaults = {
+          buttonColor: "#9b9b9b",
+          buttonHoverColor: "#696969",
+          buttonTextColor: "#ffffff"
+        };
+        Object.entries(defaults).forEach(([key, val]) => {
+          localStorage.setItem(key, val);
+        });
+        document.getElementById("btnColorPicker").value = defaults.buttonColor;
+        document.getElementById("btnHoverColorPicker").value = defaults.buttonHoverColor;
+        document.getElementById("btnTextColorPicker").value = defaults.buttonTextColor;
+        applyButtonStyles(defaults.buttonColor, defaults.buttonHoverColor, defaults.buttonTextColor);
+      });
     });
-
-    // Inputs zurücksetzen
-    document.getElementById("btnColorPicker").value = defaults.buttonColor;
-    document.getElementById("btnHoverColorPicker").value = defaults.buttonHoverColor;
-    document.getElementById("btnTextColorPicker").value = defaults.buttonTextColor;
-
-    // Styles anwenden
-    applyButtonStyles(
-      defaults.buttonColor,
-      defaults.buttonHoverColor,
-      defaults.buttonTextColor
-    );
-  });
-});
 
 
 
@@ -447,32 +457,171 @@ document.addEventListener("DOMContentLoaded", () => {
         throw err;
       }
     }
+	
     let profiles = {};
     async function loadProfiles() {
-	  try {
-		profiles = await fetchJsonMitFallback(
-		  `https://bichfl.github.io/Auftragsdokumente/profile.json?t=${Date.now()}`,
-		  `https://bichfl.github.io/Auftragsdokumente/profile.JSON?t=${Date.now()}`
-		);
-		populateProfileSelectors();
-		initUI();
-	  } catch (e) {
-		console.error(e);
-		alert('Profile konnten nicht geladen werden.');
-	  }
-	}
-    function populateProfileSelectors() {
-      ['mobileProfileSelector', 'desktopProfileSelector'].forEach(id => {
-        const sel = document.getElementById(id);
-        sel.innerHTML = '';
-        Object.entries(profiles).forEach(([key, prof]) => {
-          const opt = document.createElement('option');
-          opt.value = key;
-          opt.textContent = prof.displayName;
-          sel.appendChild(opt);
-        });
-      });
+      try {
+        profiles = await fetchJsonMitFallback(
+          `https://bichfl.github.io/Auftragsdokumente/profile.json?t=${Date.now()}`,
+          `https://bichfl.github.io/Auftragsdokumente/profile.JSON?t=${Date.now()}`
+        );
+        populateProfileSelectors();
+        populateCustomProfileSettings();
+        initUI();
+      } catch (e) {
+        console.error(e);
+        alert('Profile konnten nicht geladen werden.');
+      }
     }
+	
+    function populateProfileSelectors() {
+  ['mobileProfileSelector', 'desktopProfileSelector'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = '';
+
+    // Normale Profile
+    Object.entries(profiles).forEach(([key, prof]) => {
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = prof.displayName;
+      sel.appendChild(opt);
+    });
+
+    // Benutzerdefiniertes Profil
+    const opt = document.createElement('option');
+    opt.value = 'custom';
+    const savedName = localStorage.getItem('customProfileName') || 'Benutzerdefiniert';
+    opt.textContent = savedName;
+    sel.appendChild(opt);
+  });
+
+  // Name im Overlay setzen
+  const input = document.getElementById('customProfileName');
+  input.value = localStorage.getItem('customProfileName') || 'Benutzerdefiniert';
+  input.addEventListener('input', () => {
+    localStorage.setItem('customProfileName', input.value || 'Benutzerdefiniert');
+    // Selektoren aktualisieren
+    populateProfileSelectors();
+  });
+}
+	function populateCustomProfileSettings() {
+  const container = document.getElementById("customProfileSettings");
+  container.innerHTML = '';
+
+  const allButtons = new Set();
+  Object.values(profiles).forEach(p => p.buttons.forEach(b => allButtons.add(b)));
+
+  // Prüfen ob key existiert. Nur beim ersten Mal initialisieren.
+  const raw = localStorage.getItem("customProfileButtons");
+  let saved;
+  if (raw === null) {
+    // Erstinitialisierung: alle Buttons in Default-Reihenfolge aktivieren
+    saved = Array.from(allButtons);
+    localStorage.setItem("customProfileButtons", JSON.stringify(saved));
+  } else {
+    try {
+      saved = JSON.parse(raw);
+      if (!Array.isArray(saved)) saved = [];
+    } catch (e) {
+      saved = [];
+    }
+  }
+
+  // gespeicherte (aktivierte) Buttons in der Reihenfolge anzeigen
+  saved.forEach(btn => {
+    const label = document.createElement("div");
+    label.classList.add("draggable-item");
+    label.setAttribute("draggable", "true");
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.value = btn;
+    cb.checked = true;
+    cb.addEventListener("change", saveCustomProfile);
+
+    label.appendChild(cb);
+    label.append(" " + btn);
+
+    label.addEventListener("dragstart", dragStart);
+    label.addEventListener("dragover", dragOver);
+    label.addEventListener("drop", dropItem);
+
+    container.appendChild(label);
+  });
+
+  // alle übrigen (nicht aktiven) Buttons anhängen — ungeprüft
+  Array.from(allButtons).forEach(btn => {
+    if (!saved.includes(btn)) {
+      const label = document.createElement("div");
+      label.classList.add("draggable-item");
+      label.setAttribute("draggable", "true");
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.value = btn;
+      cb.checked = false;
+      cb.addEventListener("change", saveCustomProfile);
+
+      label.appendChild(cb);
+      label.append(" " + btn);
+
+      label.addEventListener("dragstart", dragStart);
+      label.addEventListener("dragover", dragOver);
+      label.addEventListener("drop", dropItem);
+
+      container.appendChild(label);
+    }
+  });
+}
+
+
+    function saveCustomProfile() {
+      const items = document.querySelectorAll("#customProfileSettings .draggable-item input[type=checkbox]");
+      const selected = Array.from(items)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
+      localStorage.setItem("customProfileButtons", JSON.stringify(selected));
+    }
+
+    let draggedItem = null;
+
+    function dragStart(e) {
+      draggedItem = e.target;
+      e.target.classList.add("dragging");
+      e.dataTransfer.effectAllowed = "move";
+    }
+
+    function dragOver(e) {
+      e.preventDefault();
+      const container = document.getElementById("customProfileSettings");
+      const afterElement = getDragAfterElement(container, e.clientY);
+      if (afterElement == null) {
+        container.appendChild(draggedItem);
+      } else {
+        container.insertBefore(draggedItem, afterElement);
+      }
+    }
+
+    function dropItem(e) {
+      e.preventDefault();
+      draggedItem.classList.remove("dragging");
+      saveCustomProfile();
+    }
+
+    function getDragAfterElement(container, y) {
+      const draggableElements = [...container.querySelectorAll(".draggable-item:not(.dragging)")];
+      return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+	
     function initUI() {
       if (istMobil()) {
         document.body.classList.add('mobile');
@@ -489,23 +638,32 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
-      localStorage.setItem(isDesktop ? 'selectedDesktopProfile' : 'selectedMobileProfile', profileKey);
-      const prof = profiles[profileKey];
-      const cont = document.getElementById(containerId);
-      cont.innerHTML = '';
-      prof.buttons.forEach(name => {
-        const btn = document.createElement('button');
-        btn.textContent = name;
-        btn.onclick = () => {
-          if (isDesktop && name === 'Anschlusspläne') return toggleAnschlussplaeneOverlay(true);
-          const input = document.getElementById(inputId).value.trim();
-          let url = name === 'Fließfertigung' ? getFliessfertigungUrl(profileKey)
-            : `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
-          if (url) window.open(url, '_blank');
-        };
-        cont.appendChild(btn);
-      });
-    }
+  localStorage.setItem(isDesktop ? 'selectedDesktopProfile' : 'selectedMobileProfile', profileKey);
+  const cont = document.getElementById(containerId);
+  cont.innerHTML = '';
+
+  let buttons = [];
+  if (profileKey === "custom") {
+    buttons = JSON.parse(localStorage.getItem("customProfileButtons") || "[]");
+  } else {
+    const prof = profiles[profileKey];
+    if (!prof) return; // Sicherheit
+    buttons = prof.buttons;
+  }
+
+  buttons.forEach(name => {
+    const btn = document.createElement('button');
+    btn.textContent = name;
+    btn.onclick = () => {
+      const input = document.getElementById(inputId).value.trim();
+      let url = name === 'Fließfertigung' ? getFliessfertigungUrl(profileKey)
+        : `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
+      if (url) window.open(url, '_blank');
+    };
+    cont.appendChild(btn);
+  });
+}
+
     function loadMobileProfileButtons() {
       loadProfileButtons(document.getElementById('mobileProfileSelector').value,
         'mobileInputField', 'mobileButtonContainer', false);
@@ -547,7 +705,14 @@ document.addEventListener("DOMContentLoaded", () => {
       con.innerHTML='';
       const isMob = document.body.classList.contains('mobile');
       const sel = document.getElementById(isMob ? 'mobileProfileSelector' : 'desktopProfileSelector');
-      profiles[sel.value].buttons.forEach(name => {
+      const profileKey = sel.value;
+      let buttons = [];
+      if (profileKey === "custom") {
+        buttons = JSON.parse(localStorage.getItem("customProfileButtons") || "[]");
+      } else {
+        buttons = profiles[profileKey].buttons;
+      }
+      buttons.forEach(name => {
         const b = document.createElement('button');
         b.textContent = name;
         b.onclick = () => openAccessMail(name);
@@ -612,6 +777,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const dBtn = Array.from(document.querySelectorAll('#desktopButtonContainer button')).find(b => b.textContent==='Anschlusspläne');
       if (o.classList.contains('show') && !o.contains(event.target) && (!dBtn||!dBtn.contains(event.target))) toggleAnschlussplaeneOverlay(false);
     });
+
     document.addEventListener('DOMContentLoaded', loadProfiles);
 	
 	let changelogClickCount = 0;
