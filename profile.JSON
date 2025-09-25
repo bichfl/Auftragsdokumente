@@ -29,7 +29,7 @@
       "Fertigungsauftrag",
       "Beschriftung_Palette",
       "FSF_Vorkommissionierung_mit_Fuellung",
-      "Anschlussplaene"
+      "Anschlusspläne"
     ]
   },
   "profile2": {
@@ -85,7 +85,7 @@
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
       "FSF_Lagerliste_Artikel",
-      "Anschlussplaene"
+      "Anschlusspläne"
     ]
   },
   "profile6": {
@@ -103,7 +103,7 @@
       "FSF_Stueckl. p. Pos",
       "FSF_Lagerliste_Artikel",
       "FSF_Endkontrolle",
-      "Anschlussplaene"
+      "Anschlusspläne"
     ]
   },
   "profile8": {
@@ -118,7 +118,7 @@
       "FSF_Glaeser_Paneele",
       "FSF_Paneelfertigung",
       "FSF_Endkontrolle",
-      "Anschlussplaene",
+      "Anschlusspläne",
       "Beschriftung_Palette"
     ]
   },
@@ -131,10 +131,11 @@
       "FSF_Lagerliste_Artikel",
       "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Endkontrolle",
-      "Anschlussplaene"
+      "Anschlusspläne"
     ]
   }
 }
+
 
 
 
