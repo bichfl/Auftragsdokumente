@@ -1,3 +1,6 @@
+Update V3.2.8
+  - Bugfix: Button "Anschlusspläne" und "Fließfertigung" funktioniert wieder
+      
 Update V3.2.7
   - Benutzerdefiniertes Profil ergänzt: 
 	Im benutzerdefinierten Profil können Buttons aktiviert, bzw. deaktiviert werden, sowie die Reihenfolge angepasst werden
