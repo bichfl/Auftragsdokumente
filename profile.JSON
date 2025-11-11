@@ -15,9 +15,8 @@
       "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung",
       "FSF_Begleitplan_V2106_SBZ122",
       "FSF_Begleitplan_V2106_SBZ140",
-      "FSF_Verschnittoptimierung_DG244-6,0",
+      "FSF_Verschnittoptimierung_DG244",
       "FSF_Verschnittoptimierung_Schueco_GP100_LA100",
-      "FSF_Verschnittoptimierung_DG244-7,5",
       "FSF_Glaeser_Paneele",
       "FSF_Paneelfertigung",
       "FSF_Endkontrolle",
@@ -58,8 +57,7 @@
       "Fließfertigung",
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
-      "FSF_Verschnittoptimierung_DG244-6,0",
-      "FSF_Verschnittoptimierung_DG244-7,5",
+      "FSF_Verschnittoptimierung_DG244",
       "FSF_Verschnittoptimierung_Schueco_GP100_LA100",
       "FSF_Beschr. Fertigungswagen",
       "FSF_Vorfertigung_Beschlaege",
@@ -135,6 +133,7 @@
     ]
   }
 }
+
 
 
 
