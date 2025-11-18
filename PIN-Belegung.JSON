@@ -270,6 +270,12 @@
     "Pfad": "10_Assa Abloy"
   },
   {
+    "ArtNR": "102275694",
+    "Bezeichnung": "AssaAbloy EL420 / EL422 / EL426 / EL520 / EL522 / EL526",
+    "Dokument": "102968",
+    "Pfad": "10_Assa Abloy"
+  },
+  {
     "ArtNR": "103650",
     "Bezeichnung": "AssaAbloy EL420 / EL422 / EL426 / EL520 / EL522 / EL526",
     "Dokument": "102968",
@@ -1164,6 +1170,7 @@
     "Pfad": "70_Schüco"
   }
 ]
+
 
 
 
