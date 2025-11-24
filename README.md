@@ -1,3 +1,7 @@
+Update V3.2.9
+  - Bugfix: Eingabe der lfd.Nr. durch abscannen der Profile ist wieder möglich
+  - Änderung email auf outlook365 statt Access
+
 Update V3.2.8
   - Bugfix: Button "Anschlusspläne" und "Fließfertigung" funktioniert wieder
       
