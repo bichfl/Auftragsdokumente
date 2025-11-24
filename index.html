@@ -318,7 +318,7 @@
 
   <div class="bottom-right-info">
 	<button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.2.7</div>
+    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.2.9</div>
   </div>
 
   <div class="overlay" id="overlay">
@@ -339,6 +339,16 @@
   <div id="readme-popup"></div>
 
   <script>
+	function formatLfdNrInput(inputField) {
+	inputField.addEventListener('input', function () {
+		let value = inputField.value;
+		if (/^\d{15}$/.test(value)) {
+			let trimmed = value.replace(/^0+/, '');
+			inputField.value = trimmed.substring(0, 4);
+			}
+		});
+	}
+  
     function applyButtonStyles(normal, hover, text) {
       if (normal) document.documentElement.style.setProperty('--button-color', normal);
       if (hover)  document.documentElement.style.setProperty('--button-hover', hover);
@@ -623,6 +633,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 	
     function initUI() {
+		const mobileInput = document.getElementById('mobileInputField');
+		const desktopInput = document.getElementById('desktopInputField');
+		if (mobileInput) formatLfdNrInput(mobileInput);
+		if (desktopInput) formatLfdNrInput(desktopInput);
       if (istMobil()) {
         document.body.classList.add('mobile');
         document.getElementById('mobile-layout').style.display = 'block';
@@ -720,16 +734,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
     function openAccessMail(btnName) {
-      const nr = getLaufendeNummer();
-      const pos = document.getElementById('posInputField').value.trim();
-      const subj = encodeURIComponent('fehlende Dokumente zu ' + nr);
-      const body = encodeURIComponent(
-        pos
-          ? `Zur laufenden Nummer "${nr}", Position "${pos}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
-          : `Zur laufenden Nummer "${nr}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
-      );
-      window.open(`https://access.peneder.com/owa/?path=/mail/action/compose&to=ok.alu@peneder.com&subject=${subj}&body=${body}`, '_blank');
-    }
+	  const nr = getLaufendeNummer();
+	  const pos = document.getElementById('posInputField').value.trim();
+	  const subj = encodeURIComponent('fehlende Dokumente zu ' + nr);
+	  const body = encodeURIComponent(
+		pos
+		  ? `Zur laufenden Nummer "${nr}", Position "${pos}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
+		  : `Zur laufenden Nummer "${nr}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
+	  );
+	  const url = `https://outlook.office365.com/mail/deeplink/compose?to=ok.alu@peneder.com&subject=${subj}&body=${body}`;
+	  window.open(url, '_blank');
+	}
+
     function getLaufendeNummer() {
       const mi = document.getElementById('mobileInputField');
       return mi.offsetParent !== null ? mi.value : document.getElementById('desktopInputField').value;
