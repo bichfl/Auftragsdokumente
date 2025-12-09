@@ -786,6 +786,12 @@
     "Pfad": "30_Wilka"
   },
   {
+    "ArtNR": "10001531",
+    "Bezeichnung": "ET30 / ET40",
+    "Dokument": "102981",
+    "Pfad": "30_Wilka"
+  },
+  {
     "ArtNR": "918517",
     "Bezeichnung": "ET30 / ET40",
     "Dokument": "102981",
@@ -1170,6 +1176,7 @@
     "Pfad": "70_Schüco"
   }
 ]
+
 
 
 
