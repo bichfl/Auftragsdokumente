@@ -28,6 +28,7 @@
       "Fertigungsauftrag",
       "Beschriftung_Palette",
       "FSF_Vorkommissionierung_mit_Fuellung",
+      "FSF_Phonotherm",
       "Anschlusspläne"
     ]
   },
@@ -38,6 +39,7 @@
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
       "FSF_Stueckl. p. Pos Montage",
+      "FSF_Phonotherm",
       "FSF_Lagerliste_Artikel",
       "FSF_Lieferschein_mit_Los",
       "FSF_Packliste Montage",
@@ -100,6 +102,7 @@
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
       "FSF_Lagerliste_Artikel",
+      "FSF_Phonotherm",
       "FSF_Endkontrolle",
       "Anschlusspläne"
     ]
@@ -109,6 +112,7 @@
     "buttons": [
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
+      "FSF_Phonotherm",
       "FSF_Lagerliste_Artikel",
       "FSF_Lieferschein_mit_Los",
       "FSF_Packliste Montage",
@@ -125,6 +129,7 @@
     "buttons": [
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
+      "FSF_Phonotherm",
       "FSF_Lieferschein_mit_Los",
       "FSF_Lagerliste_Artikel",
       "FSF_Vorkommissionierung_mit_Fuellung",
@@ -133,6 +138,7 @@
     ]
   }
 }
+
 
 
 
