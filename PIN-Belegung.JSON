@@ -1,5 +1,11 @@
 [
   {
+    "ArtNR": "279517",
+    "Bezeichnung": "Schloss",
+    "Dokument": "279517",
+    "Pfad": "70_Schüco"
+  },
+  {
     "ArtNR": "263018",
     "Bezeichnung": "A-Öffner",
     "Dokument": "263018",
@@ -1188,6 +1194,7 @@
     "Pfad": "70_Schüco"
   }
 ]
+
 
 
 
