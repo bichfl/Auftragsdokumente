@@ -26,6 +26,7 @@
       "PEN_CE-Begleitdokument",
       "FSF_Dokumente",
       "Fertigungsauftrag",
+      "FSF_Beschriftung",
       "Beschriftung_Palette",
       "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Phonotherm",
@@ -65,6 +66,7 @@
       "FSF_Vorfertigung_Beschlaege",
       "FSF_Vorfertigung_Bodendichtungen",
       "FSF_Vorfertigung Etiketten",
+      "Beschriftung_Palette",
       "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"
     ]
   },
@@ -93,7 +95,8 @@
     "buttons": [
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
-      "FSF_Lagerliste_Artikel"
+      "FSF_Lagerliste_Artikel",
+      "Beschriftung_Palette"
     ]
   },
   "profile7": {
