@@ -10,6 +10,7 @@
     }
     .layout {
       padding: 10px;
+	  display: none;
     }
     .input-container {
       display: flex;
@@ -88,6 +89,10 @@
       width: auto;
       white-space: nowrap;
     }
+
+	.hidden {
+	  display: none;
+	}
 
     .overlay {
       position: fixed;

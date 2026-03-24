@@ -685,3 +685,17 @@ function initGame() {
 
   startObstacleLoop();
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.getElementById("settingsBtn")
+    .addEventListener("click", toggleSettings);
+
+  document.getElementById("mobileProfileSelector")
+    .addEventListener("change", loadMobileProfileButtons);
+
+  document.getElementById("desktopProfileSelector")
+    .addEventListener("change", loadDesktopProfileButtons);
+
+});
