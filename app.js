@@ -329,8 +329,14 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.textContent = name;
     btn.onclick = () => {
       const input = document.getElementById(inputId).value.trim();
-      let url = name === 'Fließfertigung' ? getFliessfertigungUrl(profileKey)
-        : `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
+      let url;
+	  if (name === 'Fließfertigung') {
+		url = getFliessfertigungUrl(profileKey);
+	  } else if (name === 'FSF_Beschriftung') {
+		url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
+	  } else {
+		url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
+	  }
       if (url) window.open(url, '_blank');
     };
     cont.appendChild(btn);
