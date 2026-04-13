@@ -1,3 +1,6 @@
+Update V3.3.0
+  - Code-Teile ausgelagert damit nicht alles in der index.html steht -> besser Wartungsmöglichkeiten
+  
 Update V3.2.10
   - Alle Etiketten werden jetzt nichtmehr im Editor geöffnet sondern direkt im PDF-Viewer -> schnellerer Druck
         
