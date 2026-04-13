@@ -1,3 +1,6 @@
+Update V3.2.10
+  - Alle Etiketten werden jetzt nichtmehr im Editor geöffnet sondern direkt im PDF-Viewer -> schnellerer Druck
+        
 Update V3.2.9
   - Bugfix: Eingabe der lfd.Nr. durch abscannen der Profile ist wieder möglich
   - Änderung email auf outlook365 statt Access
