@@ -810,31 +810,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
- serieSelect.addEventListener("change", () => {
-  daSelect.innerHTML = '<option value="">Dichtung außen</option>';
-  diSelect.innerHTML = '<option value="">Dichtung innen</option>';
-  eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
+  serieSelect.addEventListener("change", () => {
+    daSelect.innerHTML = '<option value="">Dichtung außen</option>';
+    diSelect.innerHTML = '<option value="">Dichtung innen</option>';
+    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
 
-  daSelect.disabled = false;
-  diSelect.disabled = true;
-  eiSelect.disabled = true;
+    daSelect.disabled = false;
+    diSelect.disabled = true;
+    eiSelect.disabled = true;
 
-  const serie = serieSelect.value;
+    const serie = serieSelect.value;
+    if (!serie) return;
 
-  const serieKey = Object.keys(dichtungen).find(k => k.trim() === serie.trim());
-
-  if (!serieKey) {
-    console.warn("Serie nicht gefunden:", serie);
-    return;
-  }
-
-  Object.keys(dichtungen[serieKey]).forEach(da => {
-    const opt = document.createElement("option");
-    opt.value = da;
-    opt.textContent = da;
-    daSelect.appendChild(opt);
+    Object.keys(dichtungen[serie]).forEach(da => {
+      const opt = document.createElement("option");
+      opt.value = da;
+      opt.textContent = da;
+      daSelect.appendChild(opt);
+    });
   });
-});
 
   daSelect.addEventListener("change", () => {
     diSelect.innerHTML = '<option value="">Dichtung innen</option>';
