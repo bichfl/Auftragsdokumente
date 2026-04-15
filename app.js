@@ -174,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 }
 	function populateCustomProfileSettings() {
-	if (btn === "Fließfertigung") return;
   const container = document.getElementById("customProfileSettings");
   container.innerHTML = '';
 
@@ -199,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // gespeicherte (aktivierte) Buttons in der Reihenfolge anzeigen
   saved.forEach(btn => {
+	if (btn === "Fließfertigung") return;
     const label = document.createElement("div");
     label.classList.add("draggable-item");
     label.setAttribute("draggable", "true");
@@ -221,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // alle übrigen (nicht aktiven) Buttons anhängen — ungeprüft
   Array.from(allButtons).forEach(btn => {
+	if (btn === "Fließfertigung") return;
     if (!saved.includes(btn)) {
       const label = document.createElement("div");
       label.classList.add("draggable-item");
