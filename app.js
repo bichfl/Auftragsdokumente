@@ -349,6 +349,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		toggleAnschlussplaeneOverlay(true);
 		return;
 	  }
+	  if (name.trim().toLowerCase() === 'dichtungswechsel') {
+		toggleDichtungswechselOverlay(true);
+		return;
+	  }
 	  let url;
 	  if (name === 'Fließfertigung') {
 		url = getFliessfertigungUrl(profileKey);
@@ -503,6 +507,33 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (!e.target.closest("#readme-popup")) {
       changelogClickCount = 0;
     }
+  });
+  
+  function toggleDichtungswechselOverlay(show) {
+    const o = document.getElementById('dichtungswechsel-overlay');
+	if (show) {
+      o.style.display = 'flex';
+      o.classList.add('show');
+	} else {
+      o.classList.remove('show');
+      o.style.display = 'none';
+	}
+  }
+
+  function closeDichtungswechselOverlay() {
+	toggleDichtungswechselOverlay(false);
+  }
+  
+  document.addEventListener('click', event => {
+    const o = document.getElementById('dichtungswechsel-overlay');
+    const dBtn = Array.from(document.querySelectorAll('#desktopButtonContainer button'))
+      .find(b => b.textContent.trim() === 'Dichtungswechsel');
+
+    if (o.classList.contains('show') &&
+       !o.contains(event.target) &&
+       (!dBtn || !dBtn.contains(event.target))) {
+      toggleDichtungswechselOverlay(false);
+	}
   });
 
   function showEasterEgg() {
