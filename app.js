@@ -509,104 +509,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   
-function toggleDichtungswechselOverlay(show) {
-  const o = document.getElementById('dichtungswechsel-overlay');
-
-  if (show) {
-    o.style.display = 'flex';
-    o.classList.add('show');
-
-    initDichtungswechsel(); // 🔥 NEU
-
-  } else {
-    o.classList.remove('show');
-    o.style.display = 'none';
+  function toggleDichtungswechselOverlay(show) {
+    const o = document.getElementById('dichtungswechsel-overlay');
+	if (show) {
+      o.style.display = 'flex';
+      o.classList.add('show');
+	} else {
+      o.classList.remove('show');
+      o.style.display = 'none';
+	}
   }
-}
-
-function initDichtungswechsel() {
-  const posInput = document.getElementById("pos");
-  const serieSelect = document.getElementById("serieSelect");
-  const daSelect = document.getElementById("daSelect");
-  const diSelect = document.getElementById("diSelect");
-  const eiSelect = document.getElementById("eiSelect");
-
-  if (!posInput) return;
-
-  // 🔥 wichtig: doppelte Listener verhindern
-  if (posInput.dataset.init) return;
-  posInput.dataset.init = "true";
-
-  posInput.addEventListener("input", () => {
-    const filled = posInput.value.trim() !== "";
-    serieSelect.disabled = !filled;
-
-    if (!filled) {
-      serieSelect.value = "";
-      daSelect.disabled = true;
-      diSelect.disabled = true;
-      eiSelect.disabled = true;
-    }
-  });
-
-  serieSelect.addEventListener("change", () => {
-    daSelect.innerHTML = '<option value="">Dichtung außen</option>';
-    diSelect.innerHTML = '<option value="">Dichtung innen</option>';
-    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
-
-    daSelect.disabled = false;
-    diSelect.disabled = true;
-    eiSelect.disabled = true;
-
-    const serie = serieSelect.value;
-    if (!serie || !dichtungen[serie]) return;
-
-    Object.keys(dichtungen[serie]).forEach(da => {
-      const opt = document.createElement("option");
-      opt.value = da;
-      opt.textContent = da;
-      daSelect.appendChild(opt);
-    });
-  });
-
-  daSelect.addEventListener("change", () => {
-    diSelect.innerHTML = '<option value="">Dichtung innen</option>';
-    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
-
-    diSelect.disabled = false;
-    eiSelect.disabled = true;
-
-    const serie = serieSelect.value;
-    const da = daSelect.value;
-
-    if (!dichtungen[serie] || !dichtungen[serie][da]) return;
-
-    Object.keys(dichtungen[serie][da]).forEach(di => {
-      const opt = document.createElement("option");
-      opt.value = di;
-      opt.textContent = di;
-      diSelect.appendChild(opt);
-    });
-  });
-
-  diSelect.addEventListener("change", () => {
-    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
-    eiSelect.disabled = false;
-
-    const serie = serieSelect.value;
-    const da = daSelect.value;
-    const di = diSelect.value;
-
-    if (!dichtungen[serie]?.[da]?.[di]) return;
-
-    dichtungen[serie][da][di].forEach(ei => {
-      const opt = document.createElement("option");
-      opt.value = ei;
-      opt.textContent = ei;
-      eiSelect.appendChild(opt);
-    });
-  });
-}
 
   function closeDichtungswechselOverlay() {
 	toggleDichtungswechselOverlay(false);
@@ -973,4 +885,3 @@ function senden() {
   const url = `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`;
   window.open(url, "_blank");
 }
-loadGaskets();
