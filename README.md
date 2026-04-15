@@ -1,3 +1,7 @@
+Update V3.3.1
+  - Button "Anschlusspläne" funktioniert wieder korrekt
+  - Button "Fließfertigung" für benutzerdefinierte Profile nichtmehr auswählbar, da die Zuordnung auf den Arbeitsplatz nicht funktioniert
+    
 Update V3.3.0
   - Code-Teile ausgelagert damit nicht alles in der index.html steht -> besser Wartungsmöglichkeiten
   
