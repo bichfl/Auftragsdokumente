@@ -185,6 +185,16 @@
 	#dichtungswechsel-overlay button.close-btn:hover { 
 	  background-color: var(--button-hover); 
 	}
+	#dichtungswechsel-overlay .container {
+	  display: flex;
+	  gap: 10px;
+	  flex-wrap: wrap;
+	  align-items: center;
+	}
+	#dichtungswechsel-overlay input,
+	#dichtungswechsel-overlay select {
+	  min-width: 160px;
+	}
     #anschlussplaene-overlay {
       position: fixed;
       top: 50%;

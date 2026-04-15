@@ -748,3 +748,140 @@ function initGame() {
 
   startObstacleLoop();
 }
+
+// ------------------------------
+// DICHTUNGSWECHSEL LOGIK
+// ------------------------------
+
+let dichtungen = {};
+
+async function loadGaskets() {
+  const urlJSON = "https://bichfl.github.io/Auftragsdokumente/gaskets.JSON?t=" + Date.now();
+  const urljson = "https://bichfl.github.io/Auftragsdokumente/gaskets.json?t=" + Date.now();
+
+  try {
+    let res = await fetch(urlJSON);
+    if (!res.ok) res = await fetch(urljson);
+
+    dichtungen = await res.json();
+    populateSerieDropdown();
+  } catch (e) {
+    console.error(e);
+    alert("Fehler beim Laden der Dichtungsdaten!");
+  }
+}
+
+function populateSerieDropdown() {
+  const serieSelect = document.getElementById("serieSelect");
+  if (!serieSelect) return;
+
+  serieSelect.innerHTML = '<option value="" selected>Serie wählen</option>';
+
+  Object.keys(dichtungen).forEach(serie => {
+    const opt = document.createElement("option");
+    opt.value = serie;
+    opt.textContent = serie;
+    serieSelect.appendChild(opt);
+  });
+}
+
+// Event Listener erst nach DOM laden
+document.addEventListener("DOMContentLoaded", () => {
+
+  const posInput = document.getElementById("pos");
+  const serieSelect = document.getElementById("serieSelect");
+  const daSelect = document.getElementById("daSelect");
+  const diSelect = document.getElementById("diSelect");
+  const eiSelect = document.getElementById("eiSelect");
+
+  if (!posInput) return; // wichtig!
+
+  loadGaskets();
+
+  posInput.addEventListener("input", () => {
+    const filled = posInput.value.trim() !== "";
+    serieSelect.disabled = !filled;
+
+    if (!filled) {
+      serieSelect.value = "";
+      daSelect.disabled = true;
+      diSelect.disabled = true;
+      eiSelect.disabled = true;
+    }
+  });
+
+  serieSelect.addEventListener("change", () => {
+    daSelect.innerHTML = '<option value="">Dichtung außen</option>';
+    diSelect.innerHTML = '<option value="">Dichtung innen</option>';
+    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
+
+    daSelect.disabled = false;
+    diSelect.disabled = true;
+    eiSelect.disabled = true;
+
+    const serie = serieSelect.value;
+    if (!serie) return;
+
+    Object.keys(dichtungen[serie]).forEach(da => {
+      const opt = document.createElement("option");
+      opt.value = da;
+      opt.textContent = da;
+      daSelect.appendChild(opt);
+    });
+  });
+
+  daSelect.addEventListener("change", () => {
+    diSelect.innerHTML = '<option value="">Dichtung innen</option>';
+    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
+
+    diSelect.disabled = false;
+    eiSelect.disabled = true;
+
+    const serie = serieSelect.value;
+    const da = daSelect.value;
+
+    Object.keys(dichtungen[serie][da]).forEach(di => {
+      const opt = document.createElement("option");
+      opt.value = di;
+      opt.textContent = di;
+      diSelect.appendChild(opt);
+    });
+  });
+
+  diSelect.addEventListener("change", () => {
+    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
+    eiSelect.disabled = false;
+
+    const serie = serieSelect.value;
+    const da = daSelect.value;
+    const di = diSelect.value;
+
+    dichtungen[serie][da][di].forEach(ei => {
+      const opt = document.createElement("option");
+      opt.value = ei;
+      opt.textContent = ei;
+      eiSelect.appendChild(opt);
+    });
+  });
+
+});
+
+// Mail senden
+function senden() {
+  const pos = document.getElementById("pos").value;
+  const di = document.getElementById("diSelect").value;
+  const ei = document.getElementById("eiSelect").value;
+
+  const recipients = "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
+  const subject = encodeURIComponent("Verglasungsdichtung innen geändert");
+
+  const body = encodeURIComponent(
+    `Hallo,\n\n` +
+    `bei Position ${pos} wurde eine andere Dichtung verwendet.\n\n` +
+    `Dichtung lt. LogiKal: ${di}\n` +
+    `verwendete Dichtung: ${ei}`
+  );
+
+  const url = `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`;
+  window.open(url, "_blank");
+}

@@ -80,13 +80,33 @@
     <button class="close-btn" onclick="closeAnschlussplaeneOverlay()">Schließen</button>
   </div>
   
-  <div id="dichtungswechsel-overlay">
-    <h3>Dichtungswechsel</h3>
-    <div class="search-container">
-      <input type="text" id="anschlussSuche" placeholder="Artikelnummer eingeben" />
-      <button class="search-btn" onclick="suchAnschlussplaene()">Suchen</button>
-    </div>
+ <div id="dichtungswechsel-overlay">
+  <h3>Dichtungswechsel</h3>
+
+  <div class="container">
+    <input type="text" id="pos" placeholder="Positionsnummer">
+
+    <select id="serieSelect" disabled>
+      <option value="" selected>Serie wählen</option>
+    </select>
+
+    <select id="daSelect" disabled>
+      <option value="" selected>Dichtung außen</option>
+    </select>
+
+    <select id="diSelect" disabled>
+      <option value="" selected>Dichtung innen</option>
+    </select>
+
+    <select id="eiSelect" disabled>
+      <option value="" selected>Ersatzdichtung innen</option>
+    </select>
+
+    <button onclick="senden()">Senden</button>
   </div>
+
+  <button class="close-btn" onclick="closeDichtungswechselOverlay()">Schließen</button>
+</div>
 
   <div id="readme-popup"></div>
 
