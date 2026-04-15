@@ -201,8 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // gespeicherte (aktivierte) Buttons in der Reihenfolge anzeigen
-  saved.forEach(btn => {
-	if (btn === "Fließfertigung") {
+  saved.forEach(buttonName  => {
+	if (buttonName  === "Fließfertigung") {
 	  return;
 	}
     const label = document.createElement("div");
@@ -211,12 +211,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cb = document.createElement("input");
     cb.type = "checkbox";
-    cb.value = btn;
+    cb.value = buttonName ;
     cb.checked = true;
     cb.addEventListener("change", saveCustomProfile);
 
     label.appendChild(cb);
-    label.append(" " + btn);
+    label.append(" " + buttonName );
 
     label.addEventListener("dragstart", dragStart);
     label.addEventListener("dragover", dragOver);
@@ -226,23 +226,23 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // alle übrigen (nicht aktiven) Buttons anhängen — ungeprüft
-  Array.from(allButtons).forEach(btn => {
-	if (btn === "Fließfertigung") {
+  Array.from(allButtons).forEach(buttonName  => {
+	if (buttonName  === "Fließfertigung") {
 	  return;
 	}
-    if (!saved.includes(btn)) {
+    if (!saved.includes(buttonName )) {
       const label = document.createElement("div");
       label.classList.add("draggable-item");
       label.setAttribute("draggable", "true");
 
       const cb = document.createElement("input");
       cb.type = "checkbox";
-      cb.value = btn;
+      cb.value = buttonName ;
       cb.checked = false;
       cb.addEventListener("change", saveCustomProfile);
 
       label.appendChild(cb);
-      label.append(" " + btn);
+      label.append(" " + buttonName );
 
       label.addEventListener("dragstart", dragStart);
       label.addEventListener("dragover", dragOver);
