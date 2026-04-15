@@ -878,9 +878,9 @@ function senden() {
 
   const body = encodeURIComponent(
     `Hallo,\n\n` +
-    `bei laufenden Nummer "${nr}", Position ${pos} wurde eine andere Dichtung verwendet.\n\n` +
+    `bei laufenden Nummer ${nr}, Position ${pos} wurde eine andere Dichtung verwendet.\n\n` +
     `Dichtung lt. LogiKal: ${di}\n` +
-    `verwendete Dichtung: ${ei}\n` +
+    `verwendete Dichtung: ${ei}\n\n` +
 	`OK.-Büro: Buchung im Infor korrigieren\n` +
 	`Warenwirtschaft: Dichtung für Seitenteile im Montagepaket tauschen` 
   );
