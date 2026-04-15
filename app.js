@@ -178,7 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
   container.innerHTML = '';
 
   const allButtons = new Set();
-  Object.values(profiles).forEach(p => p.buttons.forEach(b => allButtons.add(b)));
+  Object.values(profiles).forEach(p => {
+  if (Array.isArray(p.buttons)) {
+    p.buttons.forEach(b => allButtons.add(b));
+  }
+  });
 
   // Prüfen ob key existiert. Nur beim ersten Mal initialisieren.
   const raw = localStorage.getItem("customProfileButtons");
@@ -198,7 +202,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // gespeicherte (aktivierte) Buttons in der Reihenfolge anzeigen
   saved.forEach(btn => {
-	if (btn === "Fließfertigung") return;
+	if (btn === "Fließfertigung") {
+	  return;
+	}
     const label = document.createElement("div");
     label.classList.add("draggable-item");
     label.setAttribute("draggable", "true");
@@ -221,7 +227,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // alle übrigen (nicht aktiven) Buttons anhängen — ungeprüft
   Array.from(allButtons).forEach(btn => {
-	if (btn === "Fließfertigung") return;
+	if (btn === "Fließfertigung") {
+	  return;
+	}
     if (!saved.includes(btn)) {
       const label = document.createElement("div");
       label.classList.add("draggable-item");
@@ -323,7 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     const prof = profiles[profileKey];
     if (!prof) return; // Sicherheit
-    buttons = prof.buttons;
+    buttons = Array.isArray(prof.buttons) ? prof.buttons : [];
   }
 	
   const allowedFliessfertigungProfiles = ["profile2","profile3","profile4"];
