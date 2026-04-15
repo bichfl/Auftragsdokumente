@@ -79,14 +79,13 @@
     <button class="close-btn" onclick="closeAnschlussplaeneOverlay()">Schließen</button>
   </div>
   
-  <div id="dichtungswechsel-overlay" class="overlay">
-    <div class="overlay-content">
-      <span class="close-btn" onclick="closeDichtungswechselOverlay()">✖</span>
-    
-      <h2>Dichtungswechsel</h2>
-      <p>Inhalt folgt...</p>
-
+  <div id="anschlussplaene-overlay">
+    <h3>Anschlusspläne</h3>
+    <div class="search-container">
+      <input type="text" id="anschlussSuche" placeholder="Artikelnummer eingeben" />
+      <button class="search-btn" onclick="suchAnschlussplaene()">Suchen</button>
     </div>
+    <button class="close-btn" onclick="closeAnschlussplaeneOverlay()">Schließen</button>
   </div>
 
   <div id="readme-popup"></div>
