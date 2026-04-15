@@ -334,6 +334,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		url = getFliessfertigungUrl(profileKey);
 	  } else if (name === 'FSF_Beschriftung') {
 		url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
+	  } else if (name === 'FSF_Vorfertigung Etiketten') {
+		url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
 	  } else {
 		url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
 	  }
