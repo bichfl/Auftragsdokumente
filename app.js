@@ -174,6 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 }
 	function populateCustomProfileSettings() {
+	if (btn === "Fließfertigung") return;
   const container = document.getElementById("customProfileSettings");
   container.innerHTML = '';
 
@@ -197,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // gespeicherte (aktivierte) Buttons in der Reihenfolge anzeigen
-  if (btn === "Fließfertigung") return;
   saved.forEach(btn => {
     const label = document.createElement("div");
     label.classList.add("draggable-item");
@@ -220,7 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // alle übrigen (nicht aktiven) Buttons anhängen — ungeprüft
-  if (btn === "Fließfertigung") return;
   Array.from(allButtons).forEach(btn => {
     if (!saved.includes(btn)) {
       const label = document.createElement("div");
@@ -325,9 +324,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!prof) return; // Sicherheit
     buttons = prof.buttons;
   }
-
+	
+  const allowedFliessfertigungProfiles = ["profile2","profile3","profile4"];
+	
   buttons.forEach(name => {
-	if (profileKey === "custom" && name === "Fließfertigung") return;
+	if (name === "Fließfertigung" && !allowedFliessfertigungProfiles.includes(profileKey)) {
+      return;
+	}
     const btn = document.createElement('button');
     btn.textContent = name;
     btn.onclick = () => {
@@ -396,7 +399,11 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         buttons = profiles[profileKey].buttons;
       }
+	  const allowedFliessfertigungProfiles = ["profile2","profile3","profile4"];
       buttons.forEach(name => {
+		if (name === "Fließfertigung" && !allowedFliessfertigungProfiles.includes(profileKey)) {
+		  return;
+		}
         const b = document.createElement('button');
         b.textContent = name;
         b.onclick = () => openAccessMail(name);
