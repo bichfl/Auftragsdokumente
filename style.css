@@ -160,8 +160,9 @@
 	#dichtungswechsel-overlay.show { 
 	  display: flex; 
 	}
-	#dichtungswechsel-overlay h3 { 
-	  margin-top: 0; 
+	#dichtungswechsel-overlay h3 {
+	  margin-top: 0;
+	  font-family: Arial, sans-serif;
 	}
 	#dichtungswechsel-overlay .search-container {
 	  display: flex;
@@ -175,6 +176,19 @@
 	  border: 1px solid #ccc;
 	  border-radius: 6px;
 	  font-size: 16px;
+	}
+	#dichtungswechsel-overlay button {
+	  padding: 8px 16px;
+	  background-color: var(--button-color);
+	  color: var(--button-text);
+	  border: none;
+	  border-radius: 6px;
+	  cursor: pointer;
+	  font-size: 16px;
+	transition: background-color 0.3s;
+	}
+	#dichtungswechsel-overlay button:hover {
+	  background-color: var(--button-hover);
 	}
 	#dichtungswechsel-overlay button.search-btn {
 	  padding: 8px 16px;
@@ -192,26 +206,23 @@
 	#dichtungswechsel-overlay button.close-btn {
 	  margin-top: 10px;
 	  align-self: flex-end;
-	  background-color: var(--button-color);
-	  color: var(--button-text);
-	  border: none;
-	  padding: 6px 12px;
-	  border-radius: 6px;
-	  cursor: pointer;
-	  transition: background-color 0.3s;
 	}
 	#dichtungswechsel-overlay button.close-btn:hover { 
 	  background-color: var(--button-hover); 
 	}
 	#dichtungswechsel-overlay .container {
 	  display: flex;
+	  flex-direction: column;
 	  gap: 10px;
-	  flex-wrap: wrap;
-	  align-items: center;
 	}
 	#dichtungswechsel-overlay input,
 	#dichtungswechsel-overlay select {
-	  min-width: 160px;
+	  width: 100%;
+	  padding: 8px;
+	  border: 1px solid #ccc;
+	  border-radius: 6px;
+	  font-size: 16px;
+	  box-sizing: border-box;
 	}
     #anschlussplaene-overlay {
       position: fixed;
