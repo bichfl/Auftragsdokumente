@@ -345,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.onclick = () => {
 	  const input = document.getElementById(inputId).value.trim();
 
-	  if (name === 'Anschlusspläne') {
+	  if (name.trim().toLowerCase() === 'anschlusspläne') {
 		toggleAnschlussplaeneOverlay(true);
 		return;
 	  }
@@ -481,7 +481,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     document.addEventListener('click', event => {
       const o = document.getElementById('anschlussplaene-overlay');
-      const dBtn = Array.from(document.querySelectorAll('#desktopButtonContainer button')).find(b => b.textContent==='Anschlusspläne');
+      const dBtn = Array.from(document.querySelectorAll('#desktopButtonContainer button')).find(b => b.textContent.trim() === 'Anschlusspläne');
       if (o.classList.contains('show') && !o.contains(event.target) && (!dBtn||!dBtn.contains(event.target))) toggleAnschlussplaeneOverlay(false);
     });
 
