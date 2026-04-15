@@ -868,6 +868,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Mail senden
 function senden() {
+  const nr = getLaufendeNummer();
   const pos = document.getElementById("pos").value;
   const di = document.getElementById("diSelect").value;
   const ei = document.getElementById("eiSelect").value;
@@ -877,11 +878,15 @@ function senden() {
 
   const body = encodeURIComponent(
     `Hallo,\n\n` +
-    `bei Position ${pos} wurde eine andere Dichtung verwendet.\n\n` +
+    `bei laufenden Nummer "${nr}", Position ${pos} wurde eine andere Dichtung verwendet.\n\n` +
     `Dichtung lt. LogiKal: ${di}\n` +
-    `verwendete Dichtung: ${ei}`
+    `verwendete Dichtung: ${ei}\n` +
+	`OK.-Büro: Buchung im Infor korrigieren\n` +
+	`Warenwirtschaft: Dichtung für Seitenteile im Montagepaket tauschen` 
   );
 
   const url = `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`;
   window.open(url, "_blank");
 }
+
+
