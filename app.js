@@ -343,8 +343,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.createElement('button');
     btn.textContent = name;
     btn.onclick = () => {
-      const input = document.getElementById(inputId).value.trim();
-      let url;
+	  const input = document.getElementById(inputId).value.trim();
+
+	  if (name === 'Anschlusspläne') {
+		toggleAnschlussplaeneOverlay(true);
+		return;
+	  }
+	  let url;
 	  if (name === 'Fließfertigung') {
 		url = getFliessfertigungUrl(profileKey);
 	  } else if (name === 'FSF_Beschriftung') {
@@ -354,8 +359,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	  } else {
 		url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
 	  }
-      if (url) window.open(url, '_blank');
-    };
+	  if (url) window.open(url, '_blank');
+	};
     cont.appendChild(btn);
   });
 }
