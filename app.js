@@ -349,7 +349,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		toggleAnschlussplaeneOverlay(true);
 		return;
 	  }
-	  if (name.trim().toLowerCase() === 'dichtungswechsel') {
+	  console.log(">>>", name, "| Länge:", name.length);
+	  if (name.toLowerCase().includes('dichtungswechsel')) {
 		toggleDichtungswechselOverlay(true);
 		return;
 	  }
@@ -510,15 +511,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   
   function toggleDichtungswechselOverlay(show) {
-    const o = document.getElementById('dichtungswechsel-overlay');
-	if (show) {
-      o.style.display = 'flex';
-      o.classList.add('show');
-	} else {
-      o.classList.remove('show');
-      o.style.display = 'none';
-	}
+  const o = document.getElementById('dichtungswechsel-overlay');
+  if (!o) {
+    console.error("Overlay nicht gefunden!");
+    return;
   }
+
+  if (show) {
+    o.style.display = 'flex';
+    o.classList.add('show');
+  } else {
+    o.classList.remove('show');
+    o.style.display = 'none';
+  }
+}
 
   function closeDichtungswechselOverlay() {
 	toggleDichtungswechselOverlay(false);
