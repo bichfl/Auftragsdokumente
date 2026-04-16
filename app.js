@@ -882,38 +882,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Mail senden
 function senden() {
-  const nrElement = getLaufendeNummer();
-  const nr = nrElement ? nrElement.toString().trim() : "";
+  const nr = getLaufendeNummer().trim();
+  const pos = document.getElementById("pos").value.trim();
+  const serie = document.getElementById("serieSelect").value.trim();
+  const da = document.getElementById("daSelect").value.trim();
+  const di = document.getElementById("diSelect").value.trim();
+  const ei = document.getElementById("eiSelect").value.trim();
 
-  const posElement = document.getElementById("pos");
-  const serieElement = document.getElementById("serieSelect");
-  const daElement = document.getElementById("daSelect");
-  const diElement = document.getElementById("diSelect");
-  const eiElement = document.getElementById("eiSelect");
+  let fehler = [];
 
-  const pos = posElement ? posElement.value.trim() : "";
-  const serie = serieElement ? serieElement.value.trim() : "";
-  const da = daElement ? daElement.value.trim() : "";
-  const di = diElement ? diElement.value.trim() : "";
-  const ei = eiElement ? eiElement.value.trim() : "";
+  if (!nr) fehler.push("Laufende Nummer");
+  if (!pos) fehler.push("Positionsnummer");
+  if (!serie) fehler.push("Serie");
+  if (!da) fehler.push("Dichtung außen");
+  if (!di) fehler.push("Dichtung innen");
+  if (!ei) fehler.push("Ersatzdichtung innen");
 
-  const fehlendeFelder = [];
-
-  if (nr === "") fehlendeFelder.push("Laufende Nummer");
-  if (pos === "") fehlendeFelder.push("Positionsnummer");
-  if (serie === "") fehlendeFelder.push("Serie");
-  if (da === "") fehlendeFelder.push("Dichtung außen");
-  if (di === "") fehlendeFelder.push("Dichtung innen");
-  if (ei === "") fehlendeFelder.push("Ersatzdichtung innen");
-
-  if (fehlendeFelder.length > 0) {
+  // WENN FELDER FEHLEN -> ABBRUCH
+  if (fehler.length > 0) {
     alert(
-      "Folgende Eingaben fehlen:\n\n" +
-      fehlendeFelder.join("\n")
+      "Bitte folgende Felder ausfüllen:\n\n- " +
+      fehler.join("\n- ")
     );
     return false;
   }
 
+  // NUR WENN ALLES VOLLSTÄNDIG
   const recipients =
     "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
 
@@ -936,6 +930,7 @@ function senden() {
     `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`;
 
   window.open(url, "_blank");
+
   return true;
 }
 
