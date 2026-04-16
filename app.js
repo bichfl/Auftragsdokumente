@@ -898,39 +898,22 @@ function senden() {
   if (!di) fehler.push("Dichtung innen");
   if (!ei) fehler.push("Ersatzdichtung innen");
 
-  // WENN FELDER FEHLEN -> ABBRUCH
   if (fehler.length > 0) {
-    alert(
-      "Bitte folgende Felder ausfüllen:\n\n- " +
-      fehler.join("\n- ")
-    );
-    return false;
+    alert("Bitte folgende Felder ausfüllen:\n\n- " + fehler.join("\n- "));
+    return; // <-- wichtig: nur return
   }
 
-  // NUR WENN ALLES VOLLSTÄNDIG
-  const recipients =
-    "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
+  // erst hier Mail erzeugen
+  const recipients = "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
 
-  const subject = encodeURIComponent(
-    "Verglasungsdichtung innen geändert"
-  );
+  const subject = encodeURIComponent("Verglasungsdichtung innen geändert");
 
   const body = encodeURIComponent(
-    `Hallo,\n\n` +
-    `bei laufenden Nummer ${nr}, Position ${pos} wurde eine andere Dichtung verwendet.\n\n` +
-    `Serie: ${serie}\n` +
-    `Dichtung außen: ${da}\n` +
-    `Dichtung lt. LogiKal: ${di}\n` +
-    `verwendete Dichtung: ${ei}\n\n` +
-    `OK.-Büro: Buchung im Infor korrigieren\n` +
-    `Warenwirtschaft: Dichtung für Seitenteile im Montagepaket tauschen`
+    `Hallo,\n\nbei laufenden Nummer ${nr}, Position ${pos} ...`
   );
 
-  const url =
-    `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`;
-
-  window.open(url, "_blank");
-
-  return true;
+  window.open(
+    `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`,
+    "_blank"
+  );
 }
-
