@@ -882,32 +882,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Mail senden
 function senden() {
-  const nr    = getLaufendeNummer().trim();
-  const pos   = document.getElementById("pos").value.trim();
-  const serie = document.getElementById("serieSelect").value.trim();
-  const da    = document.getElementById("daSelect").value.trim();
-  const di    = document.getElementById("diSelect").value.trim();
-  const ei    = document.getElementById("eiSelect").value.trim();
+  const nrElement = getLaufendeNummer();
+  const nr = nrElement ? nrElement.toString().trim() : "";
+
+  const posElement = document.getElementById("pos");
+  const serieElement = document.getElementById("serieSelect");
+  const daElement = document.getElementById("daSelect");
+  const diElement = document.getElementById("diSelect");
+  const eiElement = document.getElementById("eiSelect");
+
+  const pos = posElement ? posElement.value.trim() : "";
+  const serie = serieElement ? serieElement.value.trim() : "";
+  const da = daElement ? daElement.value.trim() : "";
+  const di = diElement ? diElement.value.trim() : "";
+  const ei = eiElement ? eiElement.value.trim() : "";
 
   const fehlendeFelder = [];
 
-  if (!nr)    fehlendeFelder.push("Laufende Nummer");
-  if (!pos)   fehlendeFelder.push("Positionsnummer");
-  if (!serie) fehlendeFelder.push("Serie");
-  if (!da)    fehlendeFelder.push("Dichtung außen");
-  if (!di)    fehlendeFelder.push("Dichtung innen");
-  if (!ei)    fehlendeFelder.push("Ersatzdichtung innen");
+  if (nr === "") fehlendeFelder.push("Laufende Nummer");
+  if (pos === "") fehlendeFelder.push("Positionsnummer");
+  if (serie === "") fehlendeFelder.push("Serie");
+  if (da === "") fehlendeFelder.push("Dichtung außen");
+  if (di === "") fehlendeFelder.push("Dichtung innen");
+  if (ei === "") fehlendeFelder.push("Ersatzdichtung innen");
 
   if (fehlendeFelder.length > 0) {
     alert(
-      "Bitte folgende Felder ausfüllen:\n\n" +
+      "Folgende Eingaben fehlen:\n\n" +
       fehlendeFelder.join("\n")
     );
-    return;
+    return false;
   }
 
-  const recipients = "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
-  const subject = encodeURIComponent("Verglasungsdichtung innen geändert");
+  const recipients =
+    "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
+
+  const subject = encodeURIComponent(
+    "Verglasungsdichtung innen geändert"
+  );
 
   const body = encodeURIComponent(
     `Hallo,\n\n` +
@@ -924,5 +936,6 @@ function senden() {
     `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`;
 
   window.open(url, "_blank");
+  return true;
 }
 
