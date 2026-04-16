@@ -909,8 +909,13 @@ function senden() {
   const subject = encodeURIComponent("Verglasungsdichtung innen geändert");
 
   const body = encodeURIComponent(
-    `Hallo,\n\nbei laufenden Nummer ${nr}, Position ${pos} ...`
-  );
+    Hallo,\n\n + 
+	bei laufenden Nummer ${nr}, Position ${pos} wurde eine andere Dichtung verwendet als in LogiKal generiert.\n\n + 
+	Dichtung lt. LogiKal: ${di}\n + 
+	verwendete Dichtung: ${ei}\n\n +  
+	Warenwirtschaft: Dichtung für Seitenteile im Montagepaket tauschen\n +
+	OK.-Büro: Buchung im Infor korrigieren
+	);
 
   window.open(
     `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`,
