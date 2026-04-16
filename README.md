@@ -1,3 +1,7 @@
+Update V3.3.2
+  - Button "Dichtungswechsel" ergänzt
+  	Damit kann nun rückgemeldet werden wenn eine andere Dichtung als vom System vorgegeben verwendet wird
+
 Update V3.3.1
   - Button "Anschlusspläne" funktioniert wieder korrekt
   - Button "Fließfertigung" für benutzerdefinierte Profile nichtmehr auswählbar, da die Zuordnung auf den Arbeitsplatz nicht funktioniert
