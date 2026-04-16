@@ -882,10 +882,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Mail senden
 function senden() {
-  const nr = getLaufendeNummer();
-  const pos = document.getElementById("pos").value;
-  const di = document.getElementById("diSelect").value;
-  const ei = document.getElementById("eiSelect").value;
+  const nr    = getLaufendeNummer().trim();
+  const pos   = document.getElementById("pos").value.trim();
+  const serie = document.getElementById("serieSelect").value.trim();
+  const da    = document.getElementById("daSelect").value.trim();
+  const di    = document.getElementById("diSelect").value.trim();
+  const ei    = document.getElementById("eiSelect").value.trim();
+
+  const fehlendeFelder = [];
+
+  if (!nr)    fehlendeFelder.push("Laufende Nummer");
+  if (!pos)   fehlendeFelder.push("Positionsnummer");
+  if (!serie) fehlendeFelder.push("Serie");
+  if (!da)    fehlendeFelder.push("Dichtung außen");
+  if (!di)    fehlendeFelder.push("Dichtung innen");
+  if (!ei)    fehlendeFelder.push("Ersatzdichtung innen");
+
+  if (fehlendeFelder.length > 0) {
+    alert(
+      "Bitte folgende Felder ausfüllen:\n\n" +
+      fehlendeFelder.join("\n")
+    );
+    return;
+  }
 
   const recipients = "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
   const subject = encodeURIComponent("Verglasungsdichtung innen geändert");
@@ -893,14 +912,17 @@ function senden() {
   const body = encodeURIComponent(
     `Hallo,\n\n` +
     `bei laufenden Nummer ${nr}, Position ${pos} wurde eine andere Dichtung verwendet.\n\n` +
+    `Serie: ${serie}\n` +
+    `Dichtung außen: ${da}\n` +
     `Dichtung lt. LogiKal: ${di}\n` +
     `verwendete Dichtung: ${ei}\n\n` +
-	`OK.-Büro: Buchung im Infor korrigieren\n` +
-	`Warenwirtschaft: Dichtung für Seitenteile im Montagepaket tauschen` 
+    `OK.-Büro: Buchung im Infor korrigieren\n` +
+    `Warenwirtschaft: Dichtung für Seitenteile im Montagepaket tauschen`
   );
 
-  const url = `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`;
+  const url =
+    `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`;
+
   window.open(url, "_blank");
 }
-
 
