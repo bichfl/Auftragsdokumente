@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auftragsdokumente App</title>
   
-  <link rel="stylesheet" href="https://bichfl.github.io/Auftragsdokumente/style.css?t=<?= Date.now() ?>"> 
+  <link rel="stylesheet" href="https://bichfl.github.io/Auftragsdokumente/style.css?t=3.3.1"> 
   
   
 </head>
@@ -114,6 +114,8 @@
 
  
 
-</body>
-<script src="https://bichfl.github.io/Auftragsdokumente/app.js?t=<?= Date.now() ?>"></script> 
-</html>
+<script>
+  const script = document.createElement("script");
+  script.src = "https://bichfl.github.io/Auftragsdokumente/app.js?v=" + Date.now();
+  document.head.appendChild(script);
+</script>
