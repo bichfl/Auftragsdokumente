@@ -546,7 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (o.classList.contains('show') &&
        !o.contains(event.target) &&
        (!dBtn || !dBtn.contains(event.target))) {
-      toggleDichtungswechselOverlay(false);
+       closeDichtungswechselOverlay();
 	}
 	});
 
