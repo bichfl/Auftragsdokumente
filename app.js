@@ -521,8 +521,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function closeDichtungswechselOverlay() {
-	toggleDichtungswechselOverlay(false);
-  }
+	  const posInput = document.getElementById("pos");
+	  const serieSelect = document.getElementById("serieSelect");
+	  const daSelect = document.getElementById("daSelect");
+	  const diSelect = document.getElementById("diSelect");
+	  const eiSelect = document.getElementById("eiSelect");
+	  posInput.value = "";
+	  serieSelect.value = "";
+	  serieSelect.disabled = true;
+	  daSelect.innerHTML = '<option value="">Dichtung außen</option>';
+	  daSelect.disabled = true;
+	  diSelect.innerHTML = '<option value="">Dichtung innen</option>';
+	  diSelect.disabled = true;
+	  eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
+	  eiSelect.disabled = true;
+	  toggleDichtungswechselOverlay(false);
+	}
   
   document.addEventListener('click', event => {
     const o = document.getElementById('dichtungswechsel-overlay');
