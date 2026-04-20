@@ -10,12 +10,12 @@
 
   <script>
     // Cache-Buster erzeugen (immer aktuelle Version laden)
-    const cacheBuster = "?t=" + new Date().getTime();
+    window.cacheBuster = "?t=" + new Date().getTime();
 
     // CSS dynamisch laden
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "https://bichfl.github.io/Auftragsdokumente/style.css" + cacheBuster;
+    link.href = "https://bichfl.github.io/Auftragsdokumente/style.css" + window.cacheBuster;
     document.head.appendChild(link);
   </script>
 
@@ -67,7 +67,7 @@
 
   <div class="bottom-right-info">
     <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.3.3</div>
+    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.3.2</div>
   </div>
 
   <div class="overlay" id="overlay">
@@ -124,7 +124,7 @@
   <script>
     // JS dynamisch laden (kein Cache)
     const script = document.createElement("script");
-    script.src = "https://bichfl.github.io/Auftragsdokumente/app.js" + cacheBuster;
+    script.src = "https://bichfl.github.io/Auftragsdokumente/app.js" + window.cacheBuster;
     document.body.appendChild(script);
   </script>
 
