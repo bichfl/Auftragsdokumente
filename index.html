@@ -7,10 +7,18 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auftragsdokumente App</title>
-  
-  <link rel="stylesheet" href="https://bichfl.github.io/Auftragsdokumente/style.css?t=3.3.1"> 
-  
-  
+
+  <script>
+    // Cache-Buster erzeugen (immer aktuelle Version laden)
+    const cacheBuster = "?t=" + new Date().getTime();
+
+    // CSS dynamisch laden
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://bichfl.github.io/Auftragsdokumente/style.css" + cacheBuster;
+    document.head.appendChild(link);
+  </script>
+
 </head>
 <body>
   <div id="mobile-layout" class="layout" style="display: none;">
@@ -21,6 +29,7 @@
     </div>
     <div class="button-scroll-container" id="mobileButtonContainer"></div>
   </div>
+
   <div id="desktop-layout" class="layout" style="display: none;">
     <div class="header-container"><span>Auftragsdokumente Desktop-App</span></div>
     <div class="input-container">
@@ -30,47 +39,49 @@
     <div class="button-scroll-container" id="desktopButtonContainer"></div>
   </div>
 
-  <!-- NEUER LINKSBÜNDIGER BUTTON -->
   <div class="bottom-left-info">
     <button onclick="toggleSettings()">⛭</button>
   </div>
 
-  <!-- Einstellungen-Overlay -->
   <div id="settings-overlay">
-  <div class="settings-content">
-    <h3>Einstellungen</h3>
+    <div class="settings-content">
+      <h3>Einstellungen</h3>
 
-    <label for="btnColorPicker">Buttonfarbe:</label><br>
-    <input type="color" id="btnColorPicker" value="#9b9b9b"><br><br>
+      <label for="btnColorPicker">Buttonfarbe:</label><br>
+      <input type="color" id="btnColorPicker" value="#9b9b9b"><br><br>
 
-    <label for="btnHoverColorPicker">Buttonfarbe gedrückt:</label><br>
-    <input type="color" id="btnHoverColorPicker" value="#696969"><br><br>
+      <label for="btnHoverColorPicker">Buttonfarbe gedrückt:</label><br>
+      <input type="color" id="btnHoverColorPicker" value="#696969"><br><br>
 
-    <label for="btnTextColorPicker">Schriftfarbe:</label><br>
-    <input type="color" id="btnTextColorPicker" value="#ffffff"><br><br>
+      <label for="btnTextColorPicker">Schriftfarbe:</label><br>
+      <input type="color" id="btnTextColorPicker" value="#ffffff"><br><br>
 
-    <button id="resetDefaultsBtn">Standard wiederherstellen</button>
+      <button id="resetDefaultsBtn">Standard wiederherstellen</button>
 
-    <hr>
-    <h4>Benutzerdefiniertes Profil</h4>
-	<input type="text" id="customProfileName" placeholder="Benutzerdefiniert" /><br><br>
-    <div id="customProfileSettings"></div>
-
+      <hr>
+      <h4>Benutzerdefiniertes Profil</h4>
+      <input type="text" id="customProfileName" placeholder="Benutzerdefiniert" /><br><br>
+      <div id="customProfileSettings"></div>
+    </div>
   </div>
-</div>
 
   <div class="bottom-right-info">
-	<button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
-    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.3.2</div>
+    <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
+    <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.3.3</div>
   </div>
 
   <div class="overlay" id="overlay">
-    <div class="overlay-header"><div class="overlay-header-top"></div>
-      <div class="input-container"><input type="text" id="posInputField" placeholder="Pos.Nr. eingeben" /></div>
+    <div class="overlay-header">
+      <div class="overlay-header-top"></div>
+      <div class="input-container">
+        <input type="text" id="posInputField" placeholder="Pos.Nr. eingeben" />
+      </div>
     </div>
-    <div class="overlay-scroll"><div class="overlay-buttons"></div></div>
+    <div class="overlay-scroll">
+      <div class="overlay-buttons"></div>
+    </div>
   </div>
-  
+
   <div id="anschlussplaene-overlay">
     <h3>Anschlusspläne</h3>
     <div class="search-container">
@@ -79,9 +90,8 @@
     </div>
     <button class="close-btn" onclick="closeAnschlussplaeneOverlay()">Schließen</button>
   </div>
-  
- <div id="dichtungswechsel-overlay">
- 
+
+  <div id="dichtungswechsel-overlay">
     <h3>Dichtungswechsel</h3>
 
     <div class="container">
@@ -108,12 +118,15 @@
 
     <button class="close-btn" onclick="closeDichtungswechselOverlay()">Schließen</button>
   </div>
-</div>
 
   <div id="readme-popup"></div>
 
- 
+  <script>
+    // JS dynamisch laden (kein Cache)
+    const script = document.createElement("script");
+    script.src = "https://bichfl.github.io/Auftragsdokumente/app.js" + cacheBuster;
+    document.body.appendChild(script);
+  </script>
 
-</body> 
-<script src="https://bichfl.github.io/Auftragsdokumente/app.js?t=3.3.5"></script>
+</body>
 </html>
