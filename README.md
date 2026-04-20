@@ -1,87 +1,132 @@
-Update V3.3.2
-  - Button "Dichtungswechsel" ergänzt
-  	Damit kann nun rückgemeldet werden wenn eine andere Dichtung als vom System vorgegeben verwendet wird
+# Release Notes
 
-Update V3.3.1
-  - Button "Anschlusspläne" funktioniert wieder korrekt
-  - Button "Fließfertigung" für benutzerdefinierte Profile nichtmehr auswählbar, da die Zuordnung auf den Arbeitsplatz nicht funktioniert
-    
-Update V3.3.0
-  - Code-Teile ausgelagert damit nicht alles in der index.html steht -> besser Wartungsmöglichkeiten
-  
-Update V3.2.10
-  - Alle Etiketten werden jetzt nichtmehr im Editor geöffnet sondern direkt im PDF-Viewer -> schnellerer Druck
-        
-Update V3.2.9
-  - Bugfix: Eingabe der lfd.Nr. durch abscannen der Profile ist wieder möglich
-  - Änderung email auf outlook365 statt Access
+## [V3.3.2]
+- Button „Dichtungswechsel“ hinzugefügt  
+  - Ermöglicht Rückmeldung, wenn eine andere als die systemseitig vorgegebene Dichtung verwendet wird
 
-Update V3.2.8
-  - Bugfix: Button "Anschlusspläne" und "Fließfertigung" funktioniert wieder
-      
-Update V3.2.7
-  - Benutzerdefiniertes Profil ergänzt: 
-	Im benutzerdefinierten Profil können Buttons aktiviert, bzw. deaktiviert werden, sowie die Reihenfolge angepasst werden
+---
 
-Update V3.2.6
-  - Einstellungen hinzugefügt -> Buttonfarbe kann jetzt individualisiert werden
-    
-Update V3.2.5
-  - Fehler im Code behoben, diverse Funktionen funktionieren jetzt flüssiger
+## [V3.3.1]
+- Bugfix: Button „Anschlusspläne“ funktioniert wieder korrekt  
+- Button „Fließfertigung“ für benutzerdefinierte Profile deaktiviert  
 
-Update V3.2.4
-  - Easteregg ergänzt
-    
-Update V3.2.3
-  - Changelog-Fenster ergänzt
-    
-Update V3.2.2
-  - Anschlusspläne werden jetzt größer dargestellt
+---
 
-Update V3.2.1
-  - Profile werden jetzt über JSON gewartet, somit muss nicht immer die html angepasst werden
+## [V3.3.0]
+- Code-Struktur überarbeitet und ausgelagert  
+  - Reduzierung der Logik in der `index.html`  
+  - Verbesserte Wartbarkeit
 
-Update V3.2.0
-  - Button für Anschlusspläne ergänzt 
-	Anschlusspläne können jetzt über sharepoint geladen und am Etikettendrucker gedruckt werden
-    
-Update V3.1.5
-  - Button "FSF_Verschnittoptimierung_Schüco_GP100_LA100" ergänzt
-  
-Update V3.1.4
-  - 15-stellige Nummern werden auf 4-stellige gekürzt -> Aufkleber am Profil kann jetzt abgescannt werden
+---
 
-Update V3.1.3
-  - PDF für Fließfertigung wird jetzt auch in der OneDrive ansicht geöffnet und nicht mehr in Acrobat
-    
-Update V3.1.2
-  - meta-Tags ergänzt damit die Seite beim caching nicht gespeichert wird
-  
-Update V3.1.1
-  - Button "Fließfertigung" ergänzt
+## [V3.2.10]
+- Etiketten werden nun in Adobe Acrobat geöffnet statt im Sharepoint-Editor  
 
-Update V3.1
-  - Profilauswahl
-	- Das ausgewählte Profil wird gespeichert und geladen, wenn die Seite erneut geöffnet wird
-  - Button "fehlendes Dokument anzeigen" 
-	- Button-Bereich angepasst, damit sie innerhalb des Popup-Fensters bleiben
-	- Popup-Fenster wird geschlossen wenn daneben geklickt wird
-	- Popup-Fenster wird mit einer Animation ein- und ausgeblendet
-	- Schließen-Button in Popup entfernt, da nichtmehr notwendig
-  - mobile App
-	- Es wird jetzt auch die mobile Version korrekt dargestellt
-  - Webanwendung
-	- Die Anwendung ist nun auch unter dem Link auftragsdokumente.peneder.com erreichbar, solange sich der User im Peneder-Netzwerk befindet
-	- Außerhalb des Peneder-Netzwerkes ist die Testseite über den Link bichfl.github.io/Auftragsdokumente/ erreichbar
+---
 
-Update V3.0
-  - Daten werden nicht mehr lokal abgerufen sondern über einen sharepoint
-  - Kompatibilität mit mehreren Platformen
-	- Programmcode komplett überarbeitet -> wechsel von *.hta zu *.html 
-	  *.html kann z.B. auch unter Android geöffnet werden.
-        
-Update V2.0
-  - Programmcode auf Basis von html in Form eines *.hta-Programmes um mehr Funktionen abzubilden
+## [V3.2.9]
+- Bugfix: Scannen von Profilen zur Eingabe der laufenden Nummer (lfd. Nr.) wieder möglich  
+- Umstellung der E-Mail-Anbindung auf Outlook 365 (statt Access)
 
-Basisversion V1.0
-  - Programmcode VBS basiert um funktionsweise zu testen
+---
+
+## [V3.2.8]
+- Bugfix: Buttons „Anschlusspläne“ und „Fließfertigung“ wieder funktionsfähig
+
+---
+
+## [V3.2.7]
+- Benutzerdefinierte Profile eingeführt  
+  - Aktivieren/Deaktivieren von Buttons möglich  
+  - Anpassbare Reihenfolge der Buttons
+
+---
+
+## [V3.2.6]
+- Einstellung zur individuellen Buttonfarbe hinzugefügt
+
+---
+
+## [V3.2.5]
+- Diverse Fehler im Code behoben  
+- Verbesserte Performance und Stabilität
+
+---
+
+## [V3.2.4]
+- Easter Egg integriert
+
+---
+
+## [V3.2.3]
+- Changelog-Fenster integriert
+
+---
+
+## [V3.2.2]
+- Größere Darstellung der Anschlusspläne
+
+---
+
+## [V3.2.1]
+- Umstellung der Profilverwaltung auf JSON  
+
+
+---
+
+## [V3.2.0]
+- Button „Anschlusspläne“ hinzugefügt  
+  - Pläne können über SharePoint geladen und direkt am Etikettendrucker ausgegeben werden
+
+---
+
+## [V3.1.5]
+- Button „FSF_Verschnittoptimierung_Schüco_GP100_LA100“ hinzugefügt
+
+---
+
+## [V3.1.4]
+- 15-stellige Nummern werden auf 4 Stellen gekürzt und ermöglicht dadurch das Scannen von Profil-Aufklebern
+
+---
+
+## [V3.1.3]
+- Fließfertigungs-PDF öffnet nun in Sharepoint-Editor statt Adobe Acrobat
+
+---
+
+## [V3.1.2]
+- Meta-Tags ergänzt  
+
+---
+
+## [V3.1.1]
+- Button „Fließfertigung“ hinzugefügt
+
+---
+
+## [V3.1.0]
+- Profilauswahl speichert und lädt zuletzt verwendetes Profil  
+- Verbesserungen beim Popup „fehlendes Dokument anzeigen“  
+  - Animation für Ein-/Ausblenden  
+  - Schließen durch Klick außerhalb möglich  
+  - Layout angepasst (Buttons bleiben sichtbar)  
+  - Schließen-Button entfernt  
+- Mobile Version optimiert  
+- Webanwendung verfügbar unter bichfl.github.io/Auftragsdokumente/
+
+---
+
+## [V3.0.0]
+- Datenquelle auf SharePoint umgestellt statt lokal  
+- Komplette Neuentwicklung von `.hta` zu `.html` um plattformübergreifend Nutzbarkeit sicherzustellen
+
+---
+
+## [V2.0.0]
+- Umstellung auf HTML-basiertes `.hta`-Programm zur Erweiterung der Funktionalität
+
+---
+
+## [V1.0.0]
+- Erste Version auf Basis von VBScript zur grundlegendeg Funktionsprüfung
