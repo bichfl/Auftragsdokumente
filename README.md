@@ -1,4 +1,5 @@
-# Release Notes
+## [V3.3.3]
+- Rückmeldefunktion für die Fertigung ergänzt
 
 ## [V3.3.2]
 - Button „Dichtungswechsel“ hinzugefügt  
