@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auftragsdokumente App</title>
   
-  <link rel="stylesheet" href="https://bichfl.github.io/Auftragsdokumente/style.css?t=3.3.5"> 
+  <link rel="stylesheet" href="https://bichfl.github.io/Auftragsdokumente/style.css?t=3.3.3"> 
 </head>
 
 <body>
@@ -29,9 +29,7 @@
 
       <div class="right-panel">
         <h3>Rückmeldung</h3>
-        <div class="panel-placeholder">
-          Bereich für zukünftige Funktionen
-        </div>
+		<button onclick="toggleOverlay()">
       </div>
 
     </div>
@@ -55,9 +53,9 @@
 
       <div class="right-panel">
         <h3>Rückmeldung</h3>
-        <div class="panel-placeholder">
-          Bereich für zukünftige Funktionen
-        </div>
+        <button onclick="toggleOverlay()">
+          fehlendes Dokument anfordern
+		</button>
       </div>
 
     </div>
@@ -92,7 +90,6 @@
   </div>
 
   <div class="bottom-right-info">
-    <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
     <div class="version clickable" onclick="toggleReadmePopup()">Programmversion 3.3.3</div>
   </div>
 
