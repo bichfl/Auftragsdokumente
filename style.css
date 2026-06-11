@@ -384,17 +384,3 @@ body.mobile .main-content {
     height: calc(100vh - 210px);
 }
 
-
-
-
-.left-panel {
-    background: rgba(255,0,0,0.1);
-}
-
-.right-panel {
-    background: rgba(0,255,0,0.1);
-}
-.left-panel,
-.right-panel {
-    border: 2px solid black;
-}
