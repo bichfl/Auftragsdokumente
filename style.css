@@ -325,7 +325,7 @@
       cursor: move;
     }
 	
-	/* ==========================================
+/* ==========================================
    2-Spalten Layout
 ========================================== */
 
@@ -339,6 +339,18 @@
 .right-panel {
     flex: 1;
     min-width: 0;
+    background: #ffffff;
+    border: none;
+    border-radius: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* gleiche Überschriften-Abstände */
+.left-panel h3,
+.right-panel h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
 .left-panel {
@@ -346,19 +358,14 @@
 }
 
 .right-panel {
-    border: none;
-    border-radius: 0;
-    background: #ffffff;
     overflow: auto;
-    padding: 10px;
-    box-sizing: border-box;
 }
 
 .panel-placeholder {
     color: #777;
     text-align: center;
     margin-top: 20px;
-	display: none;
+    display: none;
 }
 
 /* Buttonbereich nutzt nun die komplette Höhe */
