@@ -51,8 +51,6 @@
       padding-bottom: 150px;
       box-sizing: border-box;
     }
-    body.mobile .button-scroll-container { height: calc(100vh - 220px); }
-    body.desktop .button-scroll-container { height: calc(100vh - 150px); }
     .header-container span {
       display: block;
       text-align: left;
@@ -326,3 +324,54 @@
       border: 1px dashed #999;
       cursor: move;
     }
+	
+	/* ==========================================
+   2-Spalten Layout
+========================================== */
+
+.main-content {
+    display: flex;
+    gap: 10px;
+    height: calc(100vh - 180px);
+}
+
+.left-panel,
+.right-panel {
+    flex: 1;
+    min-width: 0;
+}
+
+.left-panel {
+    overflow: hidden;
+}
+
+.right-panel {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f8f8f8;
+    overflow: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.panel-placeholder {
+    color: #777;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Buttonbereich nutzt nun die komplette Höhe */
+.button-scroll-container {
+    height: 100%;
+    padding-bottom: 0;
+}
+
+/* Desktop */
+body.desktop .main-content {
+    height: calc(100vh - 170px);
+}
+
+/* Mobile */
+body.mobile .main-content {
+    height: calc(100vh - 210px);
+}
