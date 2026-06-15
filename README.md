@@ -1,5 +1,7 @@
 ## [V3.3.3]
-- Rückmeldefunktion für die Fertigung ergänzt
+- Optische Anpassungen
+    - alle Popup-Fenster sind nun optisch ident
+    - zwei-Spalten-Design für mehr Übersichtlichkeit
 
 ## [V3.3.2]
 - Button „Dichtungswechsel“ hinzugefügt  
