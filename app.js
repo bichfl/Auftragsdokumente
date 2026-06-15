@@ -431,18 +431,31 @@ document.addEventListener("DOMContentLoaded", () => {
         con.appendChild(b);
       });
     }
-    function openAccessMail(btnName) {
-	  const nr = getLaufendeNummer();
-	  const pos = document.getElementById('posInputField').value.trim();
-	  const subj = encodeURIComponent('fehlende Dokumente zu ' + nr);
-	  const body = encodeURIComponent(
-		pos
-		  ? `Zur laufenden Nummer "${nr}", Position "${pos}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
-		  : `Zur laufenden Nummer "${nr}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
-	  );
-	  const url = `https://outlook.office365.com/mail/deeplink/compose?to=ok.alu@peneder.com&subject=${subj}&body=${body}`;
-	  window.open(url, '_blank');
-	}
+function openAccessMail(btnName) {
+  const nr = getLaufendeNummer().trim();
+  const pos = document.getElementById('posInputField').value.trim();
+  
+  let fehler = [];
+
+  // Validierung: Prüfen ob die Pflichtfelder befüllt sind
+  if (!nr) fehler.push("Laufende Nummer");
+  if (!pos) fehler.push("Positionsnummer");
+
+  // Wenn Felder fehlen, Fehlermeldung ausgeben und Abbruch
+  if (fehler.length > 0) {
+    alert("Bitte folgende Felder ausfüllen:\n\n- " + fehler.join("\n- "));
+    return; // Verhindert das Öffnen von Outlook
+  }
+
+  // Erst wenn alles befüllt ist, wird die E-Mail generiert
+  const subj = encodeURIComponent('fehlende Dokumente zu ' + nr);
+  const body = encodeURIComponent(
+    `Zur laufenden Nummer "${nr}", Position "${pos}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
+  );
+  
+  const url = `https://office365.com{subj}&body=${body}`;
+  window.open(url, '_blank');
+}
 
     function getLaufendeNummer() {
       const mi = document.getElementById('mobileInputField');
