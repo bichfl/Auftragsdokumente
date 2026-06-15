@@ -492,8 +492,20 @@ document.addEventListener("DOMContentLoaded", () => {
       toggleAnschlussplaeneOverlay(false);
     }
     document.addEventListener('click', event => {
-      const o = document.getElementById('overlay'), btn = document.querySelector('.bottom-right-info button');
-      if (o.classList.contains('show') && !o.contains(event.target) && !btn.contains(event.target)) toggleOverlay();
+      const o = document.getElementById('overlay');
+      // Falls der Button, der das Overlay öffnet, eine bestimmte Klasse oder ID hat, hier prüfen.
+      // Die CSS-Klasse "show" stellt sicher, dass das Overlay gerade offen ist.
+      if (o && o.classList.contains('show') && !o.contains(event.target)) {
+        // Überprüfen, ob der Klick auf einen Button ging, der das Popup öffnet (damit es nicht sofort wieder schließt)
+        const openBtnMobile = document.getElementById('mobileButtonContainer');
+        const openBtnDesktop = document.getElementById('desktopButtonContainer');
+        
+        if ((openBtnMobile && openBtnMobile.contains(event.target)) || (openBtnDesktop && openBtnDesktop.contains(event.target))) {
+          return; // Klick kam von den normalen Profil-Buttons, breche ab
+        }
+        
+        toggleOverlay();
+      }
     });
     document.addEventListener('click', event => {
 	  const popup = document.getElementById('anschlussplaene-overlay');
