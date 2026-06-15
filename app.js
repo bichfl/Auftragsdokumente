@@ -393,18 +393,20 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch(e){ alert(e.message); }
     }
     function toggleOverlay() {
-      const o = document.getElementById('overlay');
-      if (!o.classList.contains('show')) {
-        populateOverlayButtons();
-        o.style.display='flex';
-        o.classList.add('show');
-        o.classList.remove('hide');
-      } else {
-        o.classList.add('hide');
-        o.classList.remove('show');
-        setTimeout(()=>o.style.display='none',400);
-      }
+	  const o = document.getElementById('overlay');
+
+	  if (!o.classList.contains('show')) {
+		populateOverlayButtons();
+		o.style.display = 'flex';
+		o.classList.add('show');
+	  } else {
+		o.classList.remove('show');
+
+	  setTimeout(() => {
+        o.style.display = 'none';
+      }, 400);
     }
+  }
     function populateOverlayButtons() {
       const con = document.querySelector('.overlay-buttons');
       con.innerHTML='';
