@@ -1,10 +1,8 @@
 ## [V3.3.3]
-- funktionelle Anpassung
-    - Umbenennung von "Auftragsdokumente" zu "Fertigungsportal"
-    - Fehlermeldungen bei Falscheingabe in den Popup-Fenstern
-- Optische Anpassungen
-    - alle Popup-Fenster sind nun im selben Design gehalten
-    - zwei-Spalten-Design für mehr Übersichtlichkeit
+- Umbenennung von "Auftragsdokumente" zu "Fertigungsportal"
+- Fehlermeldungen bei Falscheingabe in den Popup-Fenstern
+- alle Popup-Fenster sind nun im selben Design gehalten
+- zwei-Spalten-Design für mehr Übersichtlichkeit
 
 ## [V3.3.2]
 - Button „Dichtungswechsel“ hinzugefügt  
