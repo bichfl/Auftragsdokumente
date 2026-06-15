@@ -432,8 +432,20 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 function openAccessMail(btnName) {
-  const nr = getLaufendeNummer().trim();
-  const pos = document.getElementById('posInputField').value.trim();
+  // 1. Laufende Nummer holen (mit Absicherung, falls die Funktion getLaufendeNummer() fehlt)
+  let nr = "";
+  if (typeof getLaufendeNummer === "function") {
+    nr = getLaufendeNummer();
+  } else {
+    // Fallback: Falls es ein normales Input-Feld mit einer ID gibt
+    const nrInput = document.getElementById('laufendeNummer') || document.getElementById('nrInputField');
+    if (nrInput) nr = nrInput.value;
+  }
+  nr = (nr || "").toString().trim();
+
+  // 2. Positionsnummer holen (sucht nach der ID)
+  const posInput = document.getElementById('posInputField');
+  const pos = posInput ? posInput.value.trim() : "";
   
   let fehler = [];
 
@@ -447,15 +459,13 @@ function openAccessMail(btnName) {
     return; // Verhindert das Öffnen von Outlook
   }
 
-  // Erst wenn alles befüllt ist, wird die E-Mail generiert
+  // 3. E-Mail generieren und im neuen Tab aufrufen
   const subj = encodeURIComponent('fehlende Dokumente zu ' + nr);
   const body = encodeURIComponent(
     `Zur laufenden Nummer "${nr}", Position "${pos}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
   );
   
   const url = `https://office365.com{subj}&body=${body}`;
-  window.open(url, '_blank');
-}
 
     function getLaufendeNummer() {
       const mi = document.getElementById('mobileInputField');
