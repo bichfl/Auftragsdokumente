@@ -302,16 +302,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 	
 	function attachRightPanel(isMobile) {
-	  const panel = document.querySelector('#sharedRightPanel .right-panel');
 
-	  const target = isMobile
-		? document.getElementById('mobileRightPanelContainer')
-		: document.getElementById('desktopRightPanelContainer');
+  console.log("attachRightPanel", isMobile);
 
-	  if (panel && target) {
-		target.appendChild(panel);
-	  }
-	}
+  const panel =
+    document.querySelector('#sharedRightPanel .right-panel');
+
+  const target = isMobile
+    ? document.getElementById('mobileRightPanelContainer')
+    : document.getElementById('desktopRightPanelContainer');
+
+  console.log(panel);
+  console.log(target);
+
+  if (panel && target) {
+    target.appendChild(panel);
+  }
+}
 	
     function initUI() {
   const mobileInput = document.getElementById('mobileInputField');
