@@ -1,6 +1,8 @@
 ## [V3.3.3]
+- funktionelle Anpassung
+    - Umbenennung von "Auftragsdokumente" zu "Fertigungsportal"
 - Optische Anpassungen
-    - alle Popup-Fenster sind nun optisch ident
+    - alle Popup-Fenster sind nun im selben Design gehalten
     - zwei-Spalten-Design für mehr Übersichtlichkeit
 
 ## [V3.3.2]
