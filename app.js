@@ -431,19 +431,13 @@ document.addEventListener("DOMContentLoaded", () => {
         con.appendChild(b);
       });
     }
-function openAccessMail(btnName) {
-  // 1. Laufende Nummer holen (mit Absicherung, falls die Funktion getLaufendeNummer() fehlt)
-  let nr = "";
-  if (typeof getLaufendeNummer === "function") {
-    nr = getLaufendeNummer();
-  } else {
-    // Fallback: Falls es ein normales Input-Feld mit einer ID gibt
-    const nrInput = document.getElementById('laufendeNummer') || document.getElementById('nrInputField');
-    if (nrInput) nr = nrInput.value;
-  }
-  nr = (nr || "").toString().trim();
-
-  // 2. Positionsnummer holen (sucht nach der ID)
+    function openAccessMail(btnName) {
+  // 1. Die laufende Nummer korrekt auslesen
+  const nrElement = getLaufendeNummer();
+  // Falls es ein HTML-Input ist .value nutzen, andernfalls direkt den Wert nehmen
+  const nr = (nrElement && nrElement.value ? nrElement.value : nrElement || "").toString().trim();
+  
+  // 2. Positionsnummer auslesen
   const posInput = document.getElementById('posInputField');
   const pos = posInput ? posInput.value.trim() : "";
   
@@ -453,19 +447,21 @@ function openAccessMail(btnName) {
   if (!nr) fehler.push("Laufende Nummer");
   if (!pos) fehler.push("Positionsnummer");
 
-  // Wenn Felder fehlen, Fehlermeldung ausgeben und Abbruch
+  // Wenn Felder fehlen: Fehlermeldung anzeigen und abbrechen
   if (fehler.length > 0) {
     alert("Bitte folgende Felder ausfüllen:\n\n- " + fehler.join("\n- "));
-    return; // Verhindert das Öffnen von Outlook
+    return; 
   }
 
-  // 3. E-Mail generieren und im neuen Tab aufrufen
+  // 3. E-Mail generieren (wird erst ausgeführt, wenn nr und pos befüllt sind)
   const subj = encodeURIComponent('fehlende Dokumente zu ' + nr);
   const body = encodeURIComponent(
     `Zur laufenden Nummer "${nr}", Position "${pos}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
   );
   
-  const url = `https://office365.com{subj}&body=${body}`;
+  const url = `https://outlook.office365.com/mail/deeplink/compose?to=ok.alu@peneder.com&subject=${subj}&body=${body}`;
+	  window.open(url, '_blank');
+	}
 
     function getLaufendeNummer() {
       const mi = document.getElementById('mobileInputField');
