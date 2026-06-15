@@ -97,8 +97,8 @@
       z-index: 2;
     }
     .overlay-header-top { height: 20px; }
-    .overlay .input-container input[type="text"] {
-      width: 100%;
+    #overlay input[type="text"] {
+      width: 100% !important;
       box-sizing: border-box;
     }
     .overlay-scroll {
