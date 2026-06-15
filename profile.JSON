@@ -30,8 +30,7 @@
       "Beschriftung_Palette",
       "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Phonotherm",
-      "Anschlusspläne",
-      "Dichtungswechsel"
+      "Anschlusspläne"
     ]
   },
   "profile2": {
@@ -126,8 +125,7 @@
       "FSF_Paneelfertigung",
       "FSF_Endkontrolle",
       "Anschlusspläne",
-      "Beschriftung_Palette",
-      "Dichtungswechsel"
+      "Beschriftung_Palette"
     ]
   },
   "profile9": {
@@ -140,8 +138,7 @@
       "FSF_Lagerliste_Artikel",
       "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Endkontrolle",
-      "Anschlusspläne",
-      "Dichtungswechsel"
+      "Anschlusspläne"
     ]
   }
 }
