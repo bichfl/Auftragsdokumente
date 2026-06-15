@@ -471,11 +471,20 @@ document.addEventListener("DOMContentLoaded", () => {
         default: return null;
       }
     }
-    function toggleAnschlussplaeneOverlay(show) {
-      const o = document.getElementById('anschlussplaene-overlay');
-      if (show) { o.style.display='flex'; o.classList.add('show'); }
-      else { o.classList.remove('show'); o.style.display='none'; }
-    }
+	function toggleAnschlussplaeneOverlay(show) {
+	  const o = document.getElementById('anschlussplaene-overlay');
+	  if (show) {
+		o.style.display = 'flex';
+		requestAnimationFrame(() => {
+		  o.classList.add('show');
+		});
+	  } else {
+		o.classList.remove('show');
+		setTimeout(() => {
+		  o.style.display = 'none';
+		}, 400);
+	  }
+	}
     function closeAnschlussplaeneOverlay() {
       toggleAnschlussplaeneOverlay(false);
     }
@@ -484,10 +493,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (o.classList.contains('show') && !o.contains(event.target) && !btn.contains(event.target)) toggleOverlay();
     });
     document.addEventListener('click', event => {
-      const o = document.getElementById('anschlussplaene-overlay');
-      const dBtn = Array.from(document.querySelectorAll('#desktopButtonContainer button')).find(b => b.textContent.trim() === 'Anschlusspläne');
-      if (o.classList.contains('show') && !o.contains(event.target) && (!dBtn||!dBtn.contains(event.target))) toggleAnschlussplaeneOverlay(false);
-    });
+	  const popup = document.getElementById('anschlussplaene-overlay');
+
+	  if (
+		popup.classList.contains('show') &&
+		!popup.contains(event.target)
+	  ) {
+		toggleAnschlussplaeneOverlay(false);
+	  }
+	});
 
     document.addEventListener('DOMContentLoaded', loadProfiles);
 	
@@ -513,11 +527,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const o = document.getElementById('dichtungswechsel-overlay');
 	if (show) {
       o.style.display = 'flex';
-      o.classList.add('show');
+	  requestAnimationFrame(() => {
+        o.classList.add('show');
+      });
 	} else {
       o.classList.remove('show');
-      o.style.display = 'none';
-	}
+      setTimeout(() => {
+        o.style.display = 'none';
+      }, 400);
+    }
   }
 
   function closeDichtungswechselOverlay() {
@@ -539,16 +557,15 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
   
   document.addEventListener('click', event => {
-    const o = document.getElementById('dichtungswechsel-overlay');
-    const dBtn = Array.from(document.querySelectorAll('#desktopButtonContainer button'))
-      .find(b => b.textContent.trim() === 'Dichtungswechsel');
+    const popup = document.getElementById('dichtungswechsel-overlay');
 
-    if (o.classList.contains('show') &&
-       !o.contains(event.target) &&
-       (!dBtn || !dBtn.contains(event.target))) {
-       closeDichtungswechselOverlay();
-	}
-	});
+    if (
+	  popup.classList.contains('show') &&
+      !popup.contains(event.target)
+    ) {
+      closeDichtungswechselOverlay();
+    }
+  });
 
   function showEasterEgg() {
   const popup = document.getElementById('readme-popup');
