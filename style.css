@@ -365,7 +365,7 @@ body.mobile .main-content {
 }
 
 /* ==========================================
-   STANDARD POPUP & OVERLAYS
+   EINHEITLICHE POPUPS & OVERLAYS (ZENTRIERT)
 ========================================== */
 
 .popup-overlay,
@@ -373,19 +373,20 @@ body.mobile .main-content {
 #dichtungswechsel-overlay,
 #overlay {
   position: fixed;
-  bottom: 70px;
-  right: 10px;
-  background-color: #fff; /* Einheitlich weißer Hintergrund */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Perfekt mittige Platzierung */
+  background-color: #ffffff;        /* Hintergrund komplett Weiß */
   border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 12px;              /* Abgerundete Ecken */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Einheitlicher Schatten */
   z-index: 2000;
 
   display: none;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 
-  width: 350px; /* Gleiche Breite wie die anderen Overlays */
+  width: 550px; 
   max-width: 90vw;
   height: auto;
   max-height: 80vh;
@@ -397,29 +398,42 @@ body.mobile .main-content {
   box-sizing: border-box;
 }
 
-/* Gemeinsame Anzeige-Klasse */
+/* Gemeinsame Anzeige-Klasse mit Einblend-Animation */
 .popup-overlay.show,
 #anschlussplaene-overlay.show,
 #dichtungswechsel-overlay.show,
 #overlay.show {
   display: flex;
   opacity: 1;
+  transform: translate(-50%, -50%) scale(1); /* Sanftes Aufzippen */
 }
 
-/* Überschriften-Korrektur */
+/* Erzwinge weißen Hintergrund für Header im Overlay, falls vorhanden */
+.overlay-header {
+  background-color: #ffffff !important; 
+}
+
+/* Überschriften-Abstände */
+.popup-overlay h3,
+#anschlussplaene-overlay h3,
+#dichtungswechsel-overlay h3,
 #overlay h3 {
   margin-top: 0;
   margin-bottom: 15px;
 }
 
-/* Buttons im Overlay */
+/* Button-Anordnung für das Dokumenten-Overlay */
 #overlay .overlay-buttons {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-#overlay button.close-btn {
-  margin-top: 10px;
+/* Schließen-Buttons rechtsbündig unten ausrichten */
+.popup-overlay .close-btn,
+#anschlussplaene-overlay .close-btn,
+#dichtungswechsel-overlay .close-btn,
+#overlay .close-btn {
+  margin-top: 15px;
   align-self: flex-end;
 }
