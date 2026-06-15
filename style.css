@@ -306,13 +306,14 @@
     }
 	
 /* ==========================================
-   2-Spalten Layout
+   2-Spalten Layout (Scrollbereich korrigiert)
 ========================================== */
 
 .main-content {
     display: flex;
     gap: 10px;
-    height: calc(100vh - 180px);
+    /* Erhöht von 180px auf 195px, um unten mehr Platz für den Button/Footer zu lassen */
+    height: calc(100vh - 195px); 
 }
 
 .left-panel,
@@ -348,20 +349,21 @@
     display: none;
 }
 
-/* Buttonbereich nutzt nun die komplette Höhe */
+/* Buttonbereich nutzt nun die komplette Höhe abzüglich eines kleinen Sicherheitsabstands */
 .button-scroll-container {
-    height: 100%;
-    padding-bottom: 0;
+    height: calc(100% - 15px); /* Die 15px verhindern, dass der letzte Button am Rand klebt */
+    padding-bottom: 10px;
+    box-sizing: border-box;
 }
 
-/* Desktop */
+/* Desktop Anpassung */
 body.desktop .main-content {
-    height: calc(100vh - 170px);
+    height: calc(100vh - 185px); /* Erhöht von 170px auf 185px */
 }
 
-/* Mobile */
+/* Mobile Anpassung */
 body.mobile .main-content {
-    height: calc(100vh - 210px);
+    height: calc(100vh - 225px); /* Erhöht von 210px auf 225px */
 }
 
 /* ==========================================
