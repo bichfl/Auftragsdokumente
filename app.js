@@ -301,25 +301,54 @@ document.addEventListener("DOMContentLoaded", () => {
       }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
 	
+	function attachRightPanel(isMobile) {
+	  const panel = document.querySelector('#sharedRightPanel .right-panel');
+
+	  const target = isMobile
+		? document.getElementById('mobileRightPanelContainer')
+		: document.getElementById('desktopRightPanelContainer');
+
+	  if (panel && target) {
+		target.appendChild(panel);
+	  }
+	}
+	
     function initUI() {
-		const mobileInput = document.getElementById('mobileInputField');
-		const desktopInput = document.getElementById('desktopInputField');
-		if (mobileInput) formatLfdNrInput(mobileInput);
-		if (desktopInput) formatLfdNrInput(desktopInput);
-      if (istMobil()) {
-        document.body.classList.add('mobile');
-        document.getElementById('mobile-layout').style.display = 'block';
-        const sel = document.getElementById('mobileProfileSelector');
-        sel.value = localStorage.getItem('selectedMobileProfile') || sel.options[0].value;
-        loadMobileProfileButtons();
-      } else {
-        document.body.classList.add('desktop');
-        document.getElementById('desktop-layout').style.display = 'block';
-        const sel = document.getElementById('desktopProfileSelector');
-        sel.value = localStorage.getItem('selectedDesktopProfile') || sel.options[0].value;
-        loadDesktopProfileButtons();
-      }
-    }
+  const mobileInput = document.getElementById('mobileInputField');
+  const desktopInput = document.getElementById('desktopInputField');
+
+  if (mobileInput) formatLfdNrInput(mobileInput);
+  if (desktopInput) formatLfdNrInput(desktopInput);
+
+  if (istMobil()) {
+
+    document.body.classList.add('mobile');
+    document.getElementById('mobile-layout').style.display = 'block';
+
+    attachRightPanel(true);
+
+    const sel = document.getElementById('mobileProfileSelector');
+    sel.value =
+      localStorage.getItem('selectedMobileProfile') ||
+      sel.options[0].value;
+
+    loadMobileProfileButtons();
+
+  } else {
+
+    document.body.classList.add('desktop');
+    document.getElementById('desktop-layout').style.display = 'block';
+
+    attachRightPanel(false);
+
+    const sel = document.getElementById('desktopProfileSelector');
+    sel.value =
+      localStorage.getItem('selectedDesktopProfile') ||
+      sel.options[0].value;
+
+    loadDesktopProfileButtons();
+  }
+}
     function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
   localStorage.setItem(isDesktop ? 'selectedDesktopProfile' : 'selectedMobileProfile', profileKey);
   const cont = document.getElementById(containerId);
