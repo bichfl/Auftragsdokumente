@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auftragsdokumente App</title>
   
-  <link rel="stylesheet" href="https://bichfl.github.io/Auftragsdokumente/style.css?t=3.4.11.1"> 
+  <link rel="stylesheet" href="https://bichfl.github.io/Auftragsdokumente/style.css?t=3.4.11.2"> 
 </head>
 
 <body>
@@ -29,7 +29,8 @@
 
       <div class="right-panel">
         <h3>Rückmeldung</h3>
-		<button onclick="toggleOverlay()">
+        <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
+		<button onclick="toggleDichtungswechselOverlay(true)" style="margin-top: 5px;">Dichtungswechsel</button>
       </div>
 
     </div>
@@ -53,9 +54,8 @@
 
       <div class="right-panel">
         <h3>Rückmeldung</h3>
-        <button onclick="toggleOverlay()">
-          fehlendes Dokument anfordern
-		</button>
+        <button onclick="toggleOverlay()">fehlendes Dokument anfordern</button>
+		<button onclick="toggleDichtungswechselOverlay(true)" style="margin-top: 5px;">Dichtungswechsel</button>
       </div>
 
     </div>
@@ -145,5 +145,5 @@
   <div id="readme-popup"></div>
 
 </body> 
-<script src="https://bichfl.github.io/Auftragsdokumente/app.js?t=3.4.11.1"></script>
+<script src="https://bichfl.github.io/Auftragsdokumente/app.js?t=3.4.11.2"></script>
 </html>
