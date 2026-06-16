@@ -482,67 +482,23 @@ body.mobile .main-content {
 
 .qm-header-row {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 15px;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 100%;
     margin-bottom: 10px;
 }
 
-.qm-header-row input {
-    width: 180px;
+#qmPosInputField {
+    width: 150px;
+    flex-shrink: 0;
 }
 
 .qm-toggle-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
     gap: 10px;
-}
-
-.qm-label {
-    font-size: 14px;
-    white-space: nowrap;
-}
-
-/* Switch */
-.qm-switch {
-    position: relative;
-    display: inline-block;
-    width: 80px;
-    height: 34px;
-}
-
-.qm-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.qm-slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background-color: #7ecb5a; /* grün */
-    transition: .3s;
-    border-radius: 34px;
-    border: 2px solid #000;
-}
-
-.qm-slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 3px;
-    top: 2px;
-    background-color: #333;
-    transition: .3s;
-    border-radius: 50%;
-}
-
-/* Handlungsbedarf */
-.qm-switch input:checked + .qm-slider {
-    background-color: #d9534f; /* rot */
-}
-
-.qm-switch input:checked + .qm-slider:before {
-    transform: translateX(44px);
 }
