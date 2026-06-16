@@ -1034,11 +1034,11 @@ function sendQualitaetsmeldung() {
 
     // 2. Status und Betreff-Präfix anhand des Schiebereglers bestimmen
     let statusText = "Hinweis";
-    let betreffPrefix = "[Hinweismeldung]";
+    let betreffPrefix = "Hinweismeldung";
 
     if (toggleField && toggleField.checked) {
         statusText = "Handlungsbedarf";
-        betreffPrefix = "[dringend]";
+        betreffPrefix = "Handlungsbedarf";
     }
 
     // 3. Validierung der Pflichtfelder
@@ -1056,14 +1056,15 @@ function sendQualitaetsmeldung() {
     const recipients = "qualitaet@peneder.com";
 
     // Betreff: Nutzt jetzt die neuen Bezeichnungen
-    const subject = encodeURIComponent(`ALU - ${betreffPrefix} - ${lfdNr} - Fehlermeldung Fertigung`);
+    const subject = encodeURIComponent(`ALU - [${betreffPrefix}] - ${lfdNr} - Fehlermeldung Fertigung`);
     
     // Mailtext
     const body = encodeURIComponent(
         `Hallo,\n\n` +
         `in der Fertigung ist ein Problem aufgetreten.\n\n` +
         `Status: ${betreffPrefix}\n` +
-        `Betroffene Position: ${lfdNr} - Pos.Nr.: ${posNr}\n\n` +
+        `Auftrag: ${lfdNr}\n` +
+		`Pos.Nr.: ${posNr}\n\n` +
         `Problembeschreibung:\n${error}\n\n`
     );
 
