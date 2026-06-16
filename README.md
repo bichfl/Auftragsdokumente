@@ -1,10 +1,10 @@
 ## [V4.0.0]
 - Umbenennung von "Auftragsdokumente" zu "Fertigungsportal"
+- zwei-Spalten-Design mit erweiterter Funktionalität  
+  - Ünterteilung in Auftragsdokumente und Rückmelde-Bereich
+  - Qualitätsmeldungen sind nun möglich
 - Fehlermeldungen bei Falscheingabe in den Popup-Fenstern
-- alle Popup-Fenster sind nun im selben Design gehalten
-- zwei-Spalten-Design für mehr Übersichtlichkeit
-- Feld für Rückmeldung aus der Fertigung an Büro
-- Feld für Qualitätsmeldung
+- Bugfix: Angleichen des Designs bei Popups
 
 ## [V3.3.2]
 - Button „Dichtungswechsel“ hinzugefügt  
