@@ -1,4 +1,4 @@
-## [V3.3.3]
+## [V4.0.0]
 - Umbenennung von "Auftragsdokumente" zu "Fertigungsportal"
 - Fehlermeldungen bei Falscheingabe in den Popup-Fenstern
 - alle Popup-Fenster sind nun im selben Design gehalten
