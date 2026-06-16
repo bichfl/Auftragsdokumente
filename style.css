@@ -572,3 +572,22 @@ body.mobile .main-content {
     color: #666;
     user-select: none;
 }
+
+.qm-send-btn {
+    width: auto !important; /* Verhindert, dass der Button die volle Zeilenbreite einnimmt */
+    height: 32px;          /* Gleiche Höhe wie das Eingabefeld und der Schieberegler */
+    padding: 0 20px;       /* Innenabstand links und rechts für den Text */
+    text-align: center;    /* Text mittig platzieren */
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 6px;
+    background-color: var(--button-color); /* Nutzt Ihre globalen Farben */
+    color: var(--button-text);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: auto;     /* OPTIONAL: Schiebt den Button ganz nach rechts an den Rand */
+}
+
+.qm-send-btn:hover {
+    background-color: var(--button-hover); /* Hover-Farbe aus Ihren Variablen */
+}
