@@ -1068,7 +1068,7 @@ function sendQualitaetsmeldung() {
 
     // 5. Outlook Web im neuen Tab öffnen
     window.open(
-        `https://office365.com{recipients}&subject=${subject}&body=${body}`,
+        `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`,
         "_blank"
     );
 }
