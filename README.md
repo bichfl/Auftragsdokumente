@@ -3,6 +3,8 @@
 - Fehlermeldungen bei Falscheingabe in den Popup-Fenstern
 - alle Popup-Fenster sind nun im selben Design gehalten
 - zwei-Spalten-Design für mehr Übersichtlichkeit
+- Feld für Rückmeldung aus der Fertigung an Büro
+- Feld für Qualitätsmeldung
 
 ## [V3.3.2]
 - Button „Dichtungswechsel“ hinzugefügt  
