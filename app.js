@@ -1012,14 +1012,11 @@ function senden() {
 
 
 
-
-
 function sendQualitaetsmeldung() {
     // 1. Eingabefelder für laufende Nummer abfragen (Desktop oder Mobil)
     const desktopInput = document.getElementById("desktopInputField");
     const mobileInput = document.getElementById("mobileInputField");
     
-    // Wert ermitteln: Nutze das Feld, das existiert und einen Wert enthält
     let lfdNr = "";
     if (desktopInput && desktopInput.value.trim()) {
         lfdNr = desktopInput.value.trim();
@@ -1035,8 +1032,14 @@ function sendQualitaetsmeldung() {
     const posNr = posNrField ? posNrField.value.trim() : "";
     const error = errorField ? errorField.value.trim() : "";
 
-    // 2. Status anhand des Schiebereglers bestimmen
-    const status = toggleField && toggleField.checked ? "Handlungsbedarf" : "Hinweis";
+    // 2. Status und Betreff-Präfix anhand des Schiebereglers bestimmen
+    let statusText = "Hinweis";
+    let betreffPrefix = "[Hinweismeldung]";
+
+    if (toggleField && toggleField.checked) {
+        statusText = "Handlungsbedarf";
+        betreffPrefix = "[dringend]";
+    }
 
     // 3. Validierung der Pflichtfelder
     let fehler = [];
@@ -1052,21 +1055,18 @@ function sendQualitaetsmeldung() {
     // 4. E-Mail Parameter vorbereiten
     const recipients = "qualitaet@peneder.com";
 
-    // Betreff: Status steht ganz vorne
-    const subject = encodeURIComponent(
-        `[${status}] Problem bei Auftrag ${lfdNr}`
-    );
-
+    // Betreff: Nutzt jetzt die neuen Bezeichnungen
+    const subject = encodeURIComponent(`ALU - ${betreffPrefix} - ${lfdNr} - Fehlermeldung Fertigung`);
+    
     // Mailtext
     const body = encodeURIComponent(
         `Hallo,\n\n` +
         `in der Fertigung ist ein Problem aufgetreten.\n\n` +
-        `Status: ${status}\n` +
+        `Status: ${betreffPrefix}\n` +
         `Betroffene Position: ${lfdNr} - Pos.Nr.: ${posNr}\n\n` +
         `Problembeschreibung:\n${error}\n\n`
     );
 
-    // 5. Outlook Web im neuen Tab öffnen
     window.open(
         `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`,
         "_blank"
