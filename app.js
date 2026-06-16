@@ -1009,3 +1009,66 @@ function senden() {
     "_blank"
   );
 }
+
+
+
+
+
+function sendQualitaetsmeldung() {
+    // 1. Eingabefelder für laufende Nummer abfragen (Desktop oder Mobil)
+    const desktopInput = document.getElementById("desktopInputField");
+    const mobileInput = document.getElementById("mobileInputField");
+    
+    // Wert ermitteln: Nutze das Feld, das existiert und einen Wert enthält
+    let lfdNr = "";
+    if (desktopInput && desktopInput.value.trim()) {
+        lfdNr = desktopInput.value.trim();
+    } else if (mobileInput && mobileInput.value.trim()) {
+        lfdNr = mobileInput.value.trim();
+    }
+
+    // Andere Felder auslesen
+    const posNrField = document.getElementById("qmPosInputField");
+    const errorField = document.getElementById("qmDescriptionField");
+    const toggleField = document.getElementById("qmPriorityToggle");
+
+    const posNr = posNrField ? posNrField.value.trim() : "";
+    const error = errorField ? errorField.value.trim() : "";
+
+    // 2. Status anhand des Schiebereglers bestimmen
+    const status = toggleField && toggleField.checked ? "Handlungsbedarf" : "Hinweis";
+
+    // 3. Validierung der Pflichtfelder
+    let fehler = [];
+    if (!lfdNr) fehler.push("Laufende Nummer");
+    if (!posNr) fehler.push("Positionsnummer");
+    if (!error) fehler.push("Problembeschreibung");
+
+    if (fehler.length > 0) {
+        alert("Folgende Daten fehlen noch:\n\n- " + fehler.join("\n- "));
+        return;
+    }
+
+    // 4. E-Mail Parameter vorbereiten
+    const recipients = "qualitaet@peneder.com";
+
+    // Betreff: Status steht ganz vorne
+    const subject = encodeURIComponent(
+        `[${status}] Problem bei Auftrag ${lfdNr}`
+    );
+
+    // Mailtext
+    const body = encodeURIComponent(
+        `Hallo,\n\n` +
+        `in der Fertigung ist ein Problem aufgetreten.\n\n` +
+        `Status: ${status}\n` +
+        `Betroffene Position: ${lfdNr} - Pos.Nr.: ${posNr}\n\n` +
+        `Problembeschreibung:\n${error}\n\n`
+    );
+
+    // 5. Outlook Web im neuen Tab öffnen
+    window.open(
+        `https://office365.com{recipients}&subject=${subject}&body=${body}`,
+        "_blank"
+    );
+}
