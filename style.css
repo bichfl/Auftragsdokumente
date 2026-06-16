@@ -578,13 +578,11 @@ body.mobile .main-content {
     height: 32px;          
     padding: 0 20px;
     font-size: 15px;
-    font-weight: bold;
     border-radius: 6px;
     background-color: var(--button-color);
     color: var(--button-text);
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: auto; 
 }
 
 .qm-send-btn:hover {
