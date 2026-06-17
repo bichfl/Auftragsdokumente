@@ -593,6 +593,7 @@ body.mobile .main-content {
 
 .qm-send-btn:hover {
     background-color: var(--button-hover);
+}
 	
 #lblHinweis, #lblHandlungsbedarf {
     display: inline-flex;
