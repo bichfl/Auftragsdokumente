@@ -623,3 +623,10 @@ body.mobile .main-content {
 #qmDescriptionField {
     resize: none;
 }
+
+.qm-hint-text {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #777777;
+}
