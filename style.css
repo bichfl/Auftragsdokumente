@@ -568,7 +568,7 @@ body.mobile .main-content {
 }
 
 .qm-label {
-    width: 130px;          /* feste Breite verhindert Verschieben */
+    width: 80px;          /* feste Breite verhindert Verschieben */
     display: inline-block;
     text-align: center;
     font-size: 14px;
