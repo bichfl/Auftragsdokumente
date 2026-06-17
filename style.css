@@ -593,3 +593,21 @@ body.mobile .main-content {
 
 .qm-send-btn:hover {
     background-color: var(--button-hover);
+	
+#lblHinweis, #lblHandlungsbedarf {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#lblHinweis::after, #lblHandlungsbedarf::after {
+    content: attr(data-text);
+    content: attr(data-text) / "";
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+    font-weight: bold;
+}
