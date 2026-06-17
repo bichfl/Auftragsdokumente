@@ -577,11 +577,13 @@ body.mobile .main-content {
 }
 
 #lblHinweis {
-    width: 70px;
+    width: 80px;
+    text-align: center;
 }
 
 #lblHandlungsbedarf {
-    width: 130px;
+    width: 150px;
+    text-align: center;
 }
 
 .qm-send-btn {
