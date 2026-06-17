@@ -585,7 +585,7 @@ body.mobile .main-content {
     cursor: pointer;
     box-sizing: border-box;       /* Verhindert Höhenverzerrung durch den Rahmen */
     display: inline-flex;         /* Zentriert den Text im Button perfekt */
-	margin-top: 1px;
+	margin-top: 2px;
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s;
