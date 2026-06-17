@@ -1011,6 +1011,34 @@ function senden() {
 }
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleField = document.getElementById("qmPriorityToggle");
+    
+    // Die beiden Label-Texte anhand ihrer IDs greifen
+    const labelHinweis = document.getElementById("lblHinweis");
+    const labelHandlungsbedarf = document.getElementById("lblHandlungsbedarf");
+
+    if (toggleField && labelHinweis && labelHandlungsbedarf) {
+        function aktualisiereFettdruck() {
+            if (toggleField.checked) {
+                // Handlungsbedarf ist aktiv (Regler rechts)
+                labelHandlungsbedarf.style.fontWeight = "bold";
+                labelHinweis.style.fontWeight = "normal";
+            } else {
+                // Hinweis ist aktiv (Regler links)
+                labelHandlungsbedarf.style.fontWeight = "normal";
+                labelHinweis.style.fontWeight = "bold";
+            }
+        }
+
+        // Auf Änderungen des Schiebereglers reagieren
+        toggleField.addEventListener("change", aktualisiereFettdruck);
+
+        // Initialen Zustand beim Laden der Anwendung setzen
+        aktualisiereFettdruck();
+    }
+});
+
 
 function sendQualitaetsmeldung() {
     // 1. Eingabefelder für laufende Nummer abfragen (Desktop oder Mobil)
