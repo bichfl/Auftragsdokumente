@@ -568,13 +568,20 @@ body.mobile .main-content {
 }
 
 .qm-label {
-    width: 80px;          /* feste Breite verhindert Verschieben */
     display: inline-block;
     text-align: center;
     font-size: 14px;
     color: #666;
     user-select: none;
     box-sizing: border-box;
+}
+
+#lblHinweis {
+    width: 70px;
+}
+
+#lblHandlungsbedarf {
+    width: 130px;
 }
 
 .qm-send-btn {
