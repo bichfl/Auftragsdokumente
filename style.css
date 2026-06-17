@@ -493,12 +493,12 @@ body.mobile .main-content {
 
 /* Passt das Eingabefeld an die Höhe des Umschalters (32px) an */
 #qmPosInputField {
-    width: 160px;
-    min-width: 160px;
-    flex: 0 0 160px;
-    height: 32px; /* Gleiche Höhe wie .qm-switch */
+    width: 160px !important;      
+    min-width: 160px !important; 
+    flex: 0 0 160px !important;
+    height: 32px;                
     box-sizing: border-box;
-    padding: 0 10px; /* Innenabstand leicht reduziert für die geringere Höhe */
+    padding: 0 10px; 
 }
 
 .qm-toggle-container {
@@ -575,13 +575,18 @@ body.mobile .main-content {
 
 .qm-send-btn {
     width: 100px;
-    height: 32px;          
-    padding: 0 20px;
+    height: 32px;                 /* Exakt gleiche Höhe wie Eingabefeld und Switch */
+    padding: 0;                   /* Padding genullt, da Höhe und Breite feststehen */
     font-size: 15px;
-    border-radius: 6px;
+    border: 1px solid #ccc;       /* Gleicher Rahmen wie das Eingabefeld für identischen Look */
+    border-radius: 4px;           /* Gleicher Radius wie das Eingabefeld */
     background-color: var(--button-color);
     color: var(--button-text);
     cursor: pointer;
+    box-sizing: border-box;       /* Verhindert Höhenverzerrung durch den Rahmen */
+    display: inline-flex;         /* Zentriert den Text im Button perfekt */
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.3s;
 }
 
