@@ -542,11 +542,11 @@ body.mobile .main-content {
     content: "";
     position: absolute;
 
-    width: 35px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
 
-    left: 0px;
-    top: 0px;
+    left: 1px;
+    top: 1px;
 
     border-radius: 50%;
     background: #f5f5f5;
