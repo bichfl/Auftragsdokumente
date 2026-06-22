@@ -1132,15 +1132,52 @@ function showMobileMainMenu() {
 }
 
 function showAuftragsdokumente() {
-  document.getElementById("mobileContent").innerHTML = `
-    <button class="mobile-back-btn" onclick="showMobileMainMenu()">
+
+  const profileKey =
+    document.getElementById('mobileProfileSelector').value;
+
+  let buttons = [];
+
+  if (profileKey === "custom") {
+    buttons = JSON.parse(
+      localStorage.getItem("customProfileButtons") || "[]"
+    );
+  } else {
+    const prof = profiles[profileKey];
+    if (!prof) return;
+    buttons = Array.isArray(prof.buttons)
+      ? prof.buttons
+      : [];
+  }
+
+  let html = `
+    <button class="mobile-back-btn"
+            onclick="showMobileMainMenu()">
       ← Zurück
     </button>
-
-    <div class="mobile-content-area">
-      Auftragsdokumente Inhalt folgt...
-    </div>
   `;
+
+  const allowedFliessfertigungProfiles =
+    ["profile2","profile3","profile4"];
+
+  buttons.forEach(name => {
+
+    if (
+      name === "Fließfertigung" &&
+      !allowedFliessfertigungProfiles.includes(profileKey)
+    ) {
+      return;
+    }
+
+    html += `
+      <button class="mobile-doc-btn"
+              onclick="openMobileDocument('${name.replace(/'/g, "\\'")}')">
+        ${name}
+      </button>
+    `;
+  });
+
+  document.getElementById("mobileContent").innerHTML = html;
 }
 
 function showRueckmeldung() {
@@ -1165,4 +1202,51 @@ function showQualitaetsmeldungMobile() {
       Qualitätsmeldung Inhalt folgt...
     </div>
   `;
+}
+
+function openMobileDocument(name) {
+
+  const input =
+    document.getElementById('mobileInputField')
+      .value.trim();
+
+  if (name.trim().toLowerCase() === 'anschlusspläne') {
+    toggleAnschlussplaeneOverlay(true);
+    return;
+  }
+
+  if (name.trim().toLowerCase() === 'dichtungswechsel') {
+    toggleDichtungswechselOverlay(true);
+    return;
+  }
+
+  const profileKey =
+    document.getElementById('mobileProfileSelector').value;
+
+  let url;
+
+  if (name === 'Fließfertigung') {
+
+    url = getFliessfertigungUrl(profileKey);
+
+  } else if (name === 'FSF_Beschriftung') {
+
+    url =
+      `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
+
+  } else if (name === 'FSF_Vorfertigung Etiketten') {
+
+    url =
+      `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
+
+  } else {
+
+    url =
+      `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
+
+  }
+
+  if (url) {
+    window.open(url, '_blank');
+  }
 }
