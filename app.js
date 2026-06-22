@@ -1113,3 +1113,56 @@ function sendQualitaetsmeldung() {
         "_blank"
     );
 }
+
+
+function showMobileMainMenu() {
+  document.getElementById("mobileContent").innerHTML = `
+    <button class="mobile-main-btn" onclick="showAuftragsdokumente()">
+      Auftragsdokumente
+    </button>
+
+    <button class="mobile-main-btn" onclick="showRueckmeldung()">
+      Rückmeldung
+    </button>
+
+    <button class="mobile-main-btn" onclick="showQualitaetsmeldungMobile()">
+      Qualitätsmeldung
+    </button>
+  `;
+}
+
+function showAuftragsdokumente() {
+  document.getElementById("mobileContent").innerHTML = `
+    <button class="mobile-back-btn" onclick="showMobileMainMenu()">
+      ← Zurück
+    </button>
+
+    <div class="mobile-content-area">
+      Auftragsdokumente Inhalt folgt...
+    </div>
+  `;
+}
+
+function showRueckmeldung() {
+  document.getElementById("mobileContent").innerHTML = `
+    <button class="mobile-back-btn" onclick="showMobileMainMenu()">
+      ← Zurück
+    </button>
+
+    <div class="mobile-content-area">
+      Rückmeldung Inhalt folgt...
+    </div>
+  `;
+}
+
+function showQualitaetsmeldungMobile() {
+  document.getElementById("mobileContent").innerHTML = `
+    <button class="mobile-back-btn" onclick="showMobileMainMenu()">
+      ← Zurück
+    </button>
+
+    <div class="mobile-content-area">
+      Qualitätsmeldung Inhalt folgt...
+    </div>
+  `;
+}
