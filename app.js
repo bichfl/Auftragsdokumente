@@ -129,19 +129,25 @@ document.addEventListener("DOMContentLoaded", () => {
 	
     let profiles = {};
     async function loadProfiles() {
-      try {
-        profiles = await fetchJsonMitFallback(
-          `https://bichfl.github.io/Auftragsdokumente/profile.json?t=${Date.now()}`,
-          `https://bichfl.github.io/Auftragsdokumente/profile.JSON?t=${Date.now()}`
-        );
-        populateProfileSelectors();
-        populateCustomProfileSettings();
-        initUI();
-      } catch (e) {
-        console.error(e);
-        alert('Profile konnten nicht geladen werden.');
-      }
-    }
+  try {
+    profiles = await fetchJsonMitFallback(
+      `https://bichfl.github.io/Auftragsdokumente/profile.json?t=${Date.now()}`,
+      `https://bichfl.github.io/Auftragsdokumente/profile.JSON?t=${Date.now()}`
+    );
+  } catch (e) {
+    console.error("Fehler beim Laden der Profile:", e);
+    alert("Profile konnten nicht geladen werden.");
+    return;
+  }
+
+  try {
+    populateProfileSelectors();
+    populateCustomProfileSettings();
+    initUI();
+  } catch (e) {
+    console.error("Fehler nach dem Laden der Profile:", e);
+  }
+}
 	
     function populateProfileSelectors() {
   ['mobileProfileSelector', 'desktopProfileSelector'].forEach(id => {
@@ -359,7 +365,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
   localStorage.setItem(isDesktop ? 'selectedDesktopProfile' : 'selectedMobileProfile', profileKey);
   const cont = document.getElementById(containerId);
-  cont.innerHTML = '';
+
+if (!cont) {
+  console.error(`Container '${containerId}' nicht gefunden.`);
+  return;
+}
+
+cont.innerHTML = '';
 
   let buttons = [];
   if (profileKey === "custom") {
