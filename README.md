@@ -1,3 +1,6 @@
+## [V4.0.1]
+- Restrukturierung des mobilen Layouts
+
 ## [V4.0.0]
 - Umbenennung von "Auftragsdokumente" zu "Fertigungsportal"
 - zwei-Spalten-Design mit erweiterter Funktionalität  
