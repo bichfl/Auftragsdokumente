@@ -385,58 +385,56 @@ cont.innerHTML = '';
   const allowedFliessfertigungProfiles = ["profile2","profile3","profile4"];
 	
   buttons.forEach(name => {
-	if (name === "Fließfertigung" && !allowedFliessfertigungProfiles.includes(profileKey)) {
-      return;
-	}
-    const btn = document.createElement('button');
+
+    if (name === "Fließfertigung" &&
+        !allowedFliessfertigungProfiles.includes(profileKey)) {
+        return;
+    }
+
+    const btn = document.createElement("button");
     btn.textContent = name;
+
     btn.onclick = () => {
-    if (!isDesktop) {
-        openMobileDocument(name);
-        return;
-    }
 
-    const input = document.getElementById(inputId).value.trim();
+        if (!isDesktop) {
+            openMobileDocument(name);
+            return;
+        }
 
-    if (name.trim().toLowerCase() === 'anschlusspläne') {
-        toggleAnschlussplaeneOverlay(true);
-        return;
-    }
+        const input = document.getElementById(inputId).value.trim();
 
-    if (name.trim().toLowerCase() === 'dichtungswechsel') {
-        toggleDichtungswechselOverlay(true);
-        return;
-    }
+        if (name.trim().toLowerCase() === "anschlusspläne") {
+            toggleAnschlussplaeneOverlay(true);
+            return;
+        }
 
-    let url;
+        if (name.trim().toLowerCase() === "dichtungswechsel") {
+            toggleDichtungswechselOverlay(true);
+            return;
+        }
 
-    if (name === 'Fließfertigung') {
-        url = getFliessfertigungUrl(profileKey);
-    } else if (name === 'FSF_Beschriftung') {
-        url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
-    } else if (name === 'FSF_Vorfertigung Etiketten') {
-        url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
-    } else {
-        url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
-    }
+        let url;
 
-    if (url) window.open(url, "_blank");
-};
-	  let url;
-	  if (name === 'Fließfertigung') {
-		url = getFliessfertigungUrl(profileKey);
-	  } else if (name === 'FSF_Beschriftung') {
-		url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
-	  } else if (name === 'FSF_Vorfertigung Etiketten') {
-		url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
-	  } else {
-		url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
-	  }
-	  if (url) window.open(url, '_blank');
-	};
+        if (name === "Fließfertigung") {
+            url = getFliessfertigungUrl(profileKey);
+
+        } else if (name === "FSF_Beschriftung") {
+            url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
+
+        } else if (name === "FSF_Vorfertigung Etiketten") {
+            url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
+
+        } else {
+            url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
+        }
+
+        if (url) {
+            window.open(url, "_blank");
+        }
+    };
+
     cont.appendChild(btn);
-  });
-}
+});
 
     function loadMobileProfileButtons() {
       loadProfileButtons(document.getElementById('mobileProfileSelector').value,
@@ -1164,12 +1162,16 @@ function showAuftragsdokumente() {
     `;
 
     // Profilbuttons mit der bestehenden Funktion erzeugen
-    loadProfileButtons(
-        document.getElementById("mobileProfileSelector").value,
-        "mobileInputField",
-        "mobileButtonContainer",
-        false
-    );
+    const profile =
+    localStorage.getItem("selectedMobileProfile") ||
+    document.getElementById("mobileProfileSelector").value;
+
+loadProfileButtons(
+    profile,
+    "mobileInputField",
+    "mobileButtonContainer",
+    false
+);
 
     // Buttons für die mobile Ansicht anpassen
     document.querySelectorAll("#mobileButtonContainer button").forEach(btn => {
