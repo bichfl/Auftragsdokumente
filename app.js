@@ -391,16 +391,37 @@ cont.innerHTML = '';
     const btn = document.createElement('button');
     btn.textContent = name;
     btn.onclick = () => {
-	  const input = document.getElementById(inputId).value.trim();
+    if (!isDesktop) {
+        openMobileDocument(name);
+        return;
+    }
 
-	  if (name.trim().toLowerCase() === 'anschlusspläne') {
-		toggleAnschlussplaeneOverlay(true);
-		return;
-	  }
-	  if (name.trim().toLowerCase() === 'dichtungswechsel') {
-		toggleDichtungswechselOverlay(true);
-		return;
-	  }
+    const input = document.getElementById(inputId).value.trim();
+
+    if (name.trim().toLowerCase() === 'anschlusspläne') {
+        toggleAnschlussplaeneOverlay(true);
+        return;
+    }
+
+    if (name.trim().toLowerCase() === 'dichtungswechsel') {
+        toggleDichtungswechselOverlay(true);
+        return;
+    }
+
+    let url;
+
+    if (name === 'Fließfertigung') {
+        url = getFliessfertigungUrl(profileKey);
+    } else if (name === 'FSF_Beschriftung') {
+        url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
+    } else if (name === 'FSF_Vorfertigung Etiketten') {
+        url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
+    } else {
+        url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
+    }
+
+    if (url) window.open(url, "_blank");
+};
 	  let url;
 	  if (name === 'Fließfertigung') {
 		url = getFliessfertigungUrl(profileKey);
@@ -1133,51 +1154,27 @@ function showMobileMainMenu() {
 
 function showAuftragsdokumente() {
 
-  const profileKey =
-    document.getElementById('mobileProfileSelector').value;
+    document.getElementById("mobileContent").innerHTML = `
+        <button class="mobile-back-btn"
+                onclick="showMobileMainMenu()">
+            ← Zurück
+        </button>
 
-  let buttons = [];
-
-  if (profileKey === "custom") {
-    buttons = JSON.parse(
-      localStorage.getItem("customProfileButtons") || "[]"
-    );
-  } else {
-    const prof = profiles[profileKey];
-    if (!prof) return;
-    buttons = Array.isArray(prof.buttons)
-      ? prof.buttons
-      : [];
-  }
-
-  let html = `
-    <button class="mobile-back-btn"
-            onclick="showMobileMainMenu()">
-      ← Zurück
-    </button>
-  `;
-
-  const allowedFliessfertigungProfiles =
-    ["profile2","profile3","profile4"];
-
-  buttons.forEach(name => {
-
-    if (
-      name === "Fließfertigung" &&
-      !allowedFliessfertigungProfiles.includes(profileKey)
-    ) {
-      return;
-    }
-
-    html += `
-      <button class="mobile-doc-btn"
-              onclick="openMobileDocument('${name.replace(/'/g, "\\'")}')">
-        ${name}
-      </button>
+        <div id="mobileButtonContainer"></div>
     `;
-  });
 
-  document.getElementById("mobileContent").innerHTML = html;
+    // Profilbuttons mit der bestehenden Funktion erzeugen
+    loadProfileButtons(
+        document.getElementById("mobileProfileSelector").value,
+        "mobileInputField",
+        "mobileButtonContainer",
+        false
+    );
+
+    // Buttons für die mobile Ansicht anpassen
+    document.querySelectorAll("#mobileButtonContainer button").forEach(btn => {
+        btn.classList.add("mobile-doc-btn");
+    });
 }
 
 function showRueckmeldung() {
