@@ -362,79 +362,109 @@ document.addEventListener("DOMContentLoaded", () => {
     loadDesktopProfileButtons();
   }
 }
-    function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
-  localStorage.setItem(isDesktop ? 'selectedDesktopProfile' : 'selectedMobileProfile', profileKey);
-  const cont = document.getElementById(containerId);
 
-if (!cont) {
-  console.error(`Container '${containerId}' nicht gefunden.`);
-  return;
-}
 
-cont.innerHTML = '';
+function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
 
-  let buttons = [];
-  if (profileKey === "custom") {
-    buttons = JSON.parse(localStorage.getItem("customProfileButtons") || "[]");
-  } else {
-    const prof = profiles[profileKey];
-    if (!prof) return; // Sicherheit
-    buttons = Array.isArray(prof.buttons) ? prof.buttons : [];
-  }
-	
-  const allowedFliessfertigungProfiles = ["profile2","profile3","profile4"];
-	
-  buttons.forEach(name => {
+    localStorage.setItem(
+        isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
+        profileKey
+    );
 
-    if (name === "Fließfertigung" &&
-        !allowedFliessfertigungProfiles.includes(profileKey)) {
+    const cont = document.getElementById(containerId);
+
+    if (!cont) {
+        console.error("Container nicht gefunden:", containerId);
         return;
     }
 
-    const btn = document.createElement("button");
-    btn.textContent = name;
+    cont.innerHTML = "";
 
-    btn.onclick = () => {
+    let buttons = [];
 
-        if (!isDesktop) {
-            openMobileDocument(name);
+    if (profileKey === "custom") {
+        buttons = JSON.parse(localStorage.getItem("customProfileButtons") || "[]");
+    } else {
+        const prof = profiles[profileKey];
+        if (!prof) return;
+
+        buttons = Array.isArray(prof.buttons) ? prof.buttons : [];
+    }
+
+    const allowedFliessfertigungProfiles = [
+        "profile2",
+        "profile3",
+        "profile4"
+    ];
+
+    buttons.forEach(name => {
+
+        if (
+            name === "Fließfertigung" &&
+            !allowedFliessfertigungProfiles.includes(profileKey)
+        ) {
             return;
         }
 
-        const input = document.getElementById(inputId).value.trim();
+        const btn = document.createElement("button");
+        btn.textContent = name;
 
-        if (name.trim().toLowerCase() === "anschlusspläne") {
-            toggleAnschlussplaeneOverlay(true);
-            return;
-        }
+        btn.onclick = () => {
 
-        if (name.trim().toLowerCase() === "dichtungswechsel") {
-            toggleDichtungswechselOverlay(true);
-            return;
-        }
+            // MOBILE
+            if (!isDesktop) {
+                openMobileDocument(name);
+                return;
+            }
 
-        let url;
+            // DESKTOP
+            const input = document.getElementById(inputId).value.trim();
 
-        if (name === "Fließfertigung") {
-            url = getFliessfertigungUrl(profileKey);
+            if (name.toLowerCase() === "anschlusspläne") {
+                toggleAnschlussplaeneOverlay(true);
+                return;
+            }
 
-        } else if (name === "FSF_Beschriftung") {
-            url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
+            if (name.toLowerCase() === "dichtungswechsel") {
+                toggleDichtungswechselOverlay(true);
+                return;
+            }
 
-        } else if (name === "FSF_Vorfertigung Etiketten") {
-            url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
+            let url = "";
 
-        } else {
-            url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
-        }
+            if (name === "Fließfertigung") {
 
-        if (url) {
-            window.open(url, "_blank");
-        }
-    };
+                url = getFliessfertigungUrl(profileKey);
 
-    cont.appendChild(btn);
-});
+            } else if (name === "FSF_Beschriftung") {
+
+                url =
+                    `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
+
+            } else if (name === "FSF_Vorfertigung Etiketten") {
+
+                url =
+                    `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
+
+            } else {
+
+                url =
+                    `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
+
+            }
+
+            if (url) {
+                window.open(url, "_blank");
+            }
+
+        };
+
+        cont.appendChild(btn);
+
+    });
+
+}
+
 
     function loadMobileProfileButtons() {
       loadProfileButtons(document.getElementById('mobileProfileSelector').value,
