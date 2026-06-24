@@ -1188,7 +1188,9 @@ function showAuftragsdokumente() {
             ← Zurück
         </button>
 
-        <div id="mobileButtonContainer"></div>
+        <div id="mobileContent">
+		  <div id="mobileButtonContainer"></div>
+		</div>
     `;
 
     // Profilbuttons mit der bestehenden Funktion erzeugen
