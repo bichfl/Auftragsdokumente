@@ -1,5 +1,5 @@
 ## [V4.0.1]
-- Restrukturierung des mobilen Layouts
+- Anpassungen des mobilen Layouts für Smartphones
 
 ## [V4.0.0]
 - Umbenennung von "Auftragsdokumente" zu "Fertigungsportal"
