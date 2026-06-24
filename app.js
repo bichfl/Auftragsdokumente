@@ -1125,7 +1125,7 @@ function showMobileMainMenu() {
       Rückmeldung
     </button>
 
-    <button class="mobile-main-btn" onclick="showQualitaetsmeldungMobile()">
+    <button class="mobile-main-btn" onclick="showQualitaetsmeldung()">
       Qualitätsmeldung
     </button>
   `;
@@ -1186,22 +1186,95 @@ function showRueckmeldung() {
       ← Zurück
     </button>
 
-    <div class="mobile-content-area">
-      Rückmeldung Inhalt folgt...
-    </div>
+    <button class="mobile-doc-btn" onclick="toggleOverlay()">
+      fehlendes Dokument anfordern
+    </button>
+
+    <button class="mobile-doc-btn" onclick="toggleDichtungswechselOverlay(true)">
+      Dichtungswechsel
+    </button>
   `;
 }
 
-function showQualitaetsmeldungMobile() {
+function showQualitaetsmeldung() {
+
   document.getElementById("mobileContent").innerHTML = `
-    <button class="mobile-back-btn" onclick="showMobileMainMenu()">
+    <button class="mobile-back-btn"
+            onclick="showMobileMainMenu()">
       ← Zurück
     </button>
 
-    <div class="mobile-content-area">
-      Qualitätsmeldung Inhalt folgt...
+    <div class="global-qm-container">
+
+      <div class="qm-header-row">
+
+        <input type="text"
+               id="qmPosInputField"
+               placeholder="Pos.Nr.">
+
+        <div class="qm-toggle-container">
+
+          <span id="lblHinweis"
+                data-text="Hinweis"
+                class="qm-label">
+            Hinweis*
+          </span>
+
+          <label class="qm-switch">
+            <input type="checkbox"
+                   id="qmPriorityToggle">
+            <span class="qm-slider"></span>
+          </label>
+
+          <span id="lblHandlungsbedarf"
+                data-text="Handlungsbedarf"
+                class="qm-label">
+            Handlungsbedarf**
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="input-group">
+        <textarea id="qmDescriptionField"
+                  rows="8"
+                  placeholder="Problembeschreibung"></textarea>
+      </div>
+
+      <button class="qm-send-btn"
+              onclick="sendQualitaetsmeldung()">
+        Senden
+      </button>
+
+      <span class="qm-hint-text">
+        * Auftrag läuft - Weiterarbeit möglich
+      </span>
+
+      <span class="qm-hint-text">
+        ** Auftrag steht - Weiterarbeit NICHT möglich
+      </span>
+
     </div>
   `;
+
+  // Umschalter initialisieren
+  const toggle = document.getElementById("qmPriorityToggle");
+  const lblHinweis = document.getElementById("lblHinweis");
+  const lblHandlungsbedarf = document.getElementById("lblHandlungsbedarf");
+
+  function aktualisieren() {
+    if (toggle.checked) {
+      lblHandlungsbedarf.style.fontWeight = "bold";
+      lblHinweis.style.fontWeight = "normal";
+    } else {
+      lblHinweis.style.fontWeight = "bold";
+      lblHandlungsbedarf.style.fontWeight = "normal";
+    }
+  }
+
+  toggle.addEventListener("change", aktualisieren);
+  aktualisieren();
 }
 
 function openMobileDocument(name) {
