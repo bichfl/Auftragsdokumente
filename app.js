@@ -185,11 +185,12 @@ function populateCustomProfileSettings() {
     if (!container) return;
     container.innerHTML = '';
 
-    // Passwortabfrage beim Bearbeiten / Laden der Einstellungen im Overlay
-    const pw = prompt("Bitte Passwort eingeben, um das benutzerdefinierte Profil zu bearbeiten:");
-    if (pw !== "Fertigung2026") { 
-        alert("Falsches Passwort! Bearbeitung gesperrt.");
-        container.innerHTML = '<div style="color:red; padding:10px;">Zugriff verweigert. Falsches Passwort.</div>';
+    // Prüfen, ob das benutzerdefinierte Profil aktuell ausgewählt ist
+    const isMob = document.body.classList.contains('mobile');
+    const sel = document.getElementById(isMob ? 'mobileProfileSelector' : 'desktopProfileSelector');
+    
+    if (!sel || sel.value !== "custom") {
+        container.innerHTML = '<div style="color:#666; padding:10px; font-style:italic;">Bearbeitung gesperrt. Bitte wählen Sie zuerst das benutzerdefinierte Profil aus und authentifizieren Sie sich.</div>';
         return;
     }
 
@@ -238,7 +239,7 @@ function populateCustomProfileSettings() {
         container.appendChild(label);
     });
 
-    // Alle übrigen (nicht aktiven) Buttons anhängen — ungeprüft
+    // Alle übrigen (nicht aktiven) Buttons anhängen
     Array.from(allButtons).forEach(buttonName => {
         if (buttonName === "Fließfertigung") return;
         if (!saved.includes(buttonName)) {
@@ -263,6 +264,7 @@ function populateCustomProfileSettings() {
         }
     });
 }
+
 
 function saveCustomProfile() {
     const items = document.querySelectorAll("#customProfileSettings .draggable-item input[type=checkbox]");
@@ -362,14 +364,14 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
     // Falls das benutzerdefinierte Profil ausgewählt wurde, Passwort abfragen
     if (profileKey === "custom") {
         const pw = prompt("Bitte Passwort für das benutzerdefinierte Profil eingeben:");
-        if (pw !== "Fertigung2026") { 
+        if (pw !== "Fertigung2026") { // Hier dein gewünschtes Passwort eintragen
             alert("Falsches Passwort! Zugriff verweigert.");
             
             // Zurücksetzen auf das erste normale Profil im Selektor
             const selId = isDesktop ? "desktopProfileSelector" : "mobileProfileSelector";
             const sel = document.getElementById(selId);
             if (sel && sel.options.length > 0) {
-                const fallbackValue = sel.options.value;
+                const fallbackValue = sel.options[0].value;
                 sel.value = fallbackValue;
                 localStorage.setItem(
                     isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
@@ -435,11 +437,11 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
             if (name === "Fließfertigung") {
                 url = getFliessfertigungUrl(profileKey);
             } else if (name === "FSF_Beschriftung") {
-                url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/\${input}_FSF_Beschriftung.pdf`;
+                url = `https://sharepoint.com{input}_FSF_Beschriftung.pdf`;
             } else if (name === "FSF_Vorfertigung Etiketten") {
-                url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/\${input}_FSF_Vorfertigung Etiketten.pdf`;
+                url = `https://sharepoint.com{input}_FSF_Vorfertigung Etiketten.pdf`;
             } else {
-                url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/\${input}_\${name}.pdf?csf=1&web=1`;
+                url = `https://sharepoint.com{input}_${name}.pdf?csf=1&web=1`;
             }
 
             if (url) {
@@ -450,6 +452,7 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
         cont.appendChild(btn);
     });
 }
+
 
 function loadMobileProfileButtons() {
     const sel = document.getElementById('mobileProfileSelector');
