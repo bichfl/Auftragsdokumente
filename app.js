@@ -179,16 +179,91 @@ document.addEventListener("DOMContentLoaded", () => {
     populateProfileSelectors();
   });
 }
-	function populateCustomProfileSettings() {
+
+function populateCustomProfileSettings() {
   const container = document.getElementById("customProfileSettings");
   container.innerHTML = '';
 
+  // Passwortabfrage beim Bearbeiten / Laden der Einstellungen
+  const pw = prompt("Bitte Passwort eingeben, um das benutzerdefinierte Profil zu bearbeiten:");
+  if (pw !== "Fertigung2026") { // Hier dasselbe Passwort eintragen
+    alert("Falsches Passwort! Bearbeitung gesperrt.");
+    container.innerHTML = '<div style="color:red; padding:10px;">Zugriff verweigert. Falsches Passwort.</div>';
+    return;
+  }
+
   const allButtons = new Set();
   Object.values(profiles).forEach(p => {
-  if (Array.isArray(p.buttons)) {
-    p.buttons.forEach(b => allButtons.add(b));
-  }
+    if (Array.isArray(p.buttons)) {
+      p.buttons.forEach(b => allButtons.add(b));
+    }
   });
+
+  const raw = localStorage.getItem("customProfileButtons");
+  let saved;
+  if (raw === null) {
+    saved = Array.from(allButtons);
+    localStorage.setItem("customProfileButtons", JSON.stringify(saved));
+  } else {
+    try {
+      saved = JSON.parse(raw);
+      if (!Array.isArray(saved)) saved = [];
+    } catch (e) {
+      saved = [];
+    }
+  }
+
+  // Gespeicherte Buttons anzeigen
+  saved.forEach(buttonName => {
+    if (buttonName === "Fließfertigung") return;
+    
+    const label = document.createElement("div");
+    label.classList.add("draggable-item");
+    label.setAttribute("draggable", "true");
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.value = buttonName;
+    cb.checked = true;
+    cb.addEventListener("change", saveCustomProfile);
+
+    label.appendChild(cb);
+    label.append(" " + buttonName);
+
+    label.addEventListener("dragstart", dragStart);
+    label.addEventListener("dragover", dragOver);
+    label.addEventListener("drop", dropItem);
+
+    container.appendChild(label);
+  });
+
+  // Alle übrigen Buttons anhängen
+  Array.from(allButtons).forEach(buttonName => {
+    if (buttonName === "Fließfertigung") return;
+    
+    if (!saved.includes(buttonName)) {
+      const label = document.createElement("div");
+      label.classList.add("draggable-item");
+      label.setAttribute("draggable", "true");
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.value = buttonName;
+      cb.checked = false;
+      cb.addEventListener("change", saveCustomProfile);
+
+      label.appendChild(cb);
+      label.append(" " + buttonName);
+
+      label.addEventListener("dragstart", dragStart);
+      label.addEventListener("dragover", dragOver);
+      label.addEventListener("drop", dropItem);
+
+      container.appendChild(label);
+    }
+  });
+}
+
 
   // Prüfen ob key existiert. Nur beim ersten Mal initialisieren.
   const raw = localStorage.getItem("customProfileButtons");
@@ -365,6 +440,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
+    // Falls das benutzerdefinierte Profil ausgewählt wurde, Passwort abfragen
+    if (profileKey === "custom") {
+        const pw = prompt("Bitte Passwort für das benutzerdefinierte Profil eingeben:");
+        if (pw !== "Fertigung2026") { // Hier dein gewünschtes Passwort eintragen
+            alert("Falsches Passwort! Zugriff verweigert.");
+            // Zurücksetzen auf das erste normale Profil im Selektor
+            const selId = isDesktop ? "desktopProfileSelector" : "mobileProfileSelector";
+            const sel = document.getElementById(selId);
+            if (sel) {
+                sel.value = sel.options[0].value;
+                localStorage.setItem(
+                    isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
+                    sel.options[0].value
+                );
+                // Erneut laden mit dem Standardprofil
+                loadProfileButtons(sel.options[0].value, inputId, containerId, isDesktop);
+            }
+            return;
+        }
+    }
 
     localStorage.setItem(
         isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
@@ -398,7 +493,6 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
     ];
 
     buttons.forEach(name => {
-
         if (
             name === "Fließfertigung" &&
             !allowedFliessfertigungProfiles.includes(profileKey)
@@ -410,7 +504,6 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
         btn.textContent = name;
 
         btn.onclick = () => {
-
             // MOBILE
             if (!isDesktop) {
                 openMobileDocument(name);
@@ -433,37 +526,24 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
             let url = "";
 
             if (name === "Fließfertigung") {
-
                 url = getFliessfertigungUrl(profileKey);
-
             } else if (name === "FSF_Beschriftung") {
-
-                url =
-                    `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
-
+                url = `https://sharepoint.com{input}_FSF_Beschriftung.pdf`;
             } else if (name === "FSF_Vorfertigung Etiketten") {
-
-                url =
-                    `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
-
+                url = `https://sharepoint.com{input}_FSF_Vorfertigung Etiketten.pdf`;
             } else {
-
-                url =
-                    `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
-
+                url = `https://sharepoint.com{input}_${name}.pdf?csf=1&web=1`;
             }
 
             if (url) {
                 window.open(url, "_blank");
             }
-
         };
 
         cont.appendChild(btn);
-
     });
-
 }
+
 
 
     function loadMobileProfileButtons() {
