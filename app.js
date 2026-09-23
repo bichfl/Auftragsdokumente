@@ -1,99 +1,97 @@
-	function formatLfdNrInput(inputField) {
-	inputField.addEventListener('input', function () {
-		let value = inputField.value;
-		if (/^\d{15}$/.test(value)) {
-			let trimmed = value.replace(/^0+/, '');
-			inputField.value = trimmed.substring(0, 4);
-			}
-		});
-	}
-  
-    function applyButtonStyles(normal, hover, text) {
-      if (normal) document.documentElement.style.setProperty('--button-color', normal);
-      if (hover)  document.documentElement.style.setProperty('--button-hover', hover);
-      if (text)   document.documentElement.style.setProperty('--button-text', text);
-    }
+function formatLfdNrInput(inputField) {
+    inputField.addEventListener('input', function () {
+        let value = inputField.value;
+        if (/^\d{15}$/.test(value)) {
+            let trimmed = value.replace(/^0+/, '');
+            inputField.value = trimmed.substring(0, 4);
+        }
+    });
+}
 
-    function toggleSettings() {
-      const s = document.getElementById("settings-overlay");
-      s.classList.toggle("show");
-    }
+function applyButtonStyles(normal, hover, text) {
+    if (normal) document.documentElement.style.setProperty('--button-color', normal);
+    if (hover)  document.documentElement.style.setProperty('--button-hover', hover);
+    if (text)   document.documentElement.style.setProperty('--button-text', text);
+}
 
-    // Klick außerhalb schließt das Overlay + Reload
-    document.addEventListener("click", function(e) {
-      const s = document.getElementById("settings-overlay");
-      const btn = document.querySelector(".bottom-left-info button");
-      if (s.classList.contains("show") && !s.contains(e.target) && !btn.contains(e.target)) {
+function toggleSettings() {
+    const s = document.getElementById("settings-overlay");
+    s.classList.toggle("show");
+}
+
+// Klick außerhalb schließt das Overlay + Reload
+document.addEventListener("click", function(e) {
+    const s = document.getElementById("settings-overlay");
+    const btn = document.querySelector(".bottom-left-info button");
+    if (s && s.classList.contains("show") && !s.contains(e.target) && !btn.contains(e.target)) {
         s.classList.remove("show");
         location.reload();
-      }
-    });
+    }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
-  const colorPickers = {
-    btnColorPicker: "buttonColor",
-    btnHoverColorPicker: "buttonHoverColor",
-    btnTextColorPicker: "buttonTextColor"
-  };
+    const colorPickers = {
+        btnColorPicker: "buttonColor",
+        btnHoverColorPicker: "buttonHoverColor",
+        btnTextColorPicker: "buttonTextColor"
+    };
 
-  // gespeicherte Werte laden oder Defaults
-  const normal = localStorage.getItem("buttonColor") || "#9b9b9b";
-  const hover  = localStorage.getItem("buttonHoverColor") || "#696969";
-  const text   = localStorage.getItem("buttonTextColor") || "#ffffff";
+    // gespeicherte Werte laden oder Defaults
+    const normal = localStorage.getItem("buttonColor") || "#9b9b9b";
+    const hover  = localStorage.getItem("buttonHoverColor") || "#696969";
+    const text   = localStorage.getItem("buttonTextColor") || "#ffffff";
 
-  document.getElementById("btnColorPicker").value = normal;
-  document.getElementById("btnHoverColorPicker").value = hover;
-  document.getElementById("btnTextColorPicker").value = text;
+    document.getElementById("btnColorPicker").value = normal;
+    document.getElementById("btnHoverColorPicker").value = hover;
+    document.getElementById("btnTextColorPicker").value = text;
 
-  applyButtonStyles(normal, hover, text);
+    applyButtonStyles(normal, hover, text);
 
-  // Änderungen speichern & anwenden
-  Object.entries(colorPickers).forEach(([pickerId, storageKey]) => {
-    const picker = document.getElementById(pickerId);
-    picker.addEventListener("input", () => {
-      const value = picker.value;
-      localStorage.setItem(storageKey, value);
+    // Änderungen speichern & anwenden
+    Object.entries(colorPickers).forEach(([pickerId, storageKey]) => {
+        const picker = document.getElementById(pickerId);
+        picker.addEventListener("input", () => {
+            const value = picker.value;
+            localStorage.setItem(storageKey, value);
 
-      const newNormal = document.getElementById("btnColorPicker").value;
-      const newHover  = document.getElementById("btnHoverColorPicker").value;
-      const newText   = document.getElementById("btnTextColorPicker").value;
+            const newNormal = document.getElementById("btnColorPicker").value;
+            const newHover  = document.getElementById("btnHoverColorPicker").value;
+            const newText   = document.getElementById("btnTextColorPicker").value;
 
-      applyButtonStyles(newNormal, newHover, newText);
+            applyButtonStyles(newNormal, newHover, newText);
+        });
     });
-  });
 
-  // Reset
-      document.getElementById("resetDefaultsBtn").addEventListener("click", () => {
+    // Reset
+    document.getElementById("resetDefaultsBtn").addEventListener("click", () => {
         const defaults = {
-          buttonColor: "#9b9b9b",
-          buttonHoverColor: "#696969",
-          buttonTextColor: "#ffffff"
+            buttonColor: "#9b9b9b",
+            buttonHoverColor: "#696969",
+            buttonTextColor: "#ffffff"
         };
         Object.entries(defaults).forEach(([key, val]) => {
-          localStorage.setItem(key, val);
+            localStorage.setItem(key, val);
         });
         document.getElementById("btnColorPicker").value = defaults.buttonColor;
         document.getElementById("btnHoverColorPicker").value = defaults.buttonHoverColor;
         document.getElementById("btnTextColorPicker").value = defaults.buttonTextColor;
         applyButtonStyles(defaults.buttonColor, defaults.buttonHoverColor, defaults.buttonTextColor);
-      });
     });
+});
 
-
-
-	async function toggleReadmePopup() {
-      const popup = document.getElementById('readme-popup');
-	  popup.style.color = '#000';
-      if (popup.style.display === 'block') {
+async function toggleReadmePopup() {
+    const popup = document.getElementById('readme-popup');
+    popup.style.color = '#000';
+    if (popup.style.display === 'block') {
         popup.style.display = 'none';
         return;
-      }
-      try {
+    }
+    try {
         popup.innerHTML = '<h2>CHANGELOG</h2><div>Lade...</div>';
         popup.style.display = 'block';
 
         // Zeitstempel anhängen, damit der Browser nicht cached
-        const url = 'https://bichfl.github.io/Auftragsdokumente/README.md?t=' + Date.now();
+        const url = 'https://github.io' + Date.now();
 
         const res = await fetch(url);
         if (!res.ok) throw new Error('Fehler beim Laden der README.md');
@@ -101,1339 +99,877 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Inhalt einfügen (HTML-Tags entschärfen)
         popup.innerHTML = '<h2>CHANGELOG</h2><div>' + text.replace(/</g, "&lt;") + '</div>';
-      } catch (err) {
+    } catch (err) {
         popup.innerHTML = '<h2>CHANGELOG</h2><div>Fehler beim Laden: ' + err.message + '</div>';
-      }
     }
+}
 
-    // Klick außerhalb schließt das Popup
-    document.addEventListener('click', function(event) {
-      const popup = document.getElementById('readme-popup');
-      const version = document.querySelector('.version.clickable');
-      if (popup.style.display === 'block' && !popup.contains(event.target) && !version.contains(event.target)) {
+// Klick außerhalb schließt das Popup
+document.addEventListener('click', function(event) {
+    const popup = document.getElementById('readme-popup');
+    const version = document.querySelector('.version.clickable');
+    if (popup && popup.style.display === 'block' && !popup.contains(event.target) && !version.contains(event.target)) {
         popup.style.display = 'none';
-      }
-    });
-	
-	async function fetchJsonMitFallback(u1, u2) {
-      try {
+    }
+});
+
+async function fetchJsonMitFallback(u1, u2) {
+    try {
         const r1 = await fetch(u1);
         if (r1.ok) return await r1.json();
         const r2 = await fetch(u2);
         if (r2.ok) return await r2.json();
         throw new Error('Nicht gefunden');
-      } catch (err) {
+    } catch (err) {
         throw err;
-      }
     }
-	
-    let profiles = {};
-    async function loadProfiles() {
-  try {
-    profiles = await fetchJsonMitFallback(
-      `https://bichfl.github.io/Auftragsdokumente/profile.json?t=${Date.now()}`,
-      `https://bichfl.github.io/Auftragsdokumente/profile.JSON?t=${Date.now()}`
-    );
-  } catch (e) {
-    console.error("Fehler beim Laden der Profile:", e);
-    alert("Profile konnten nicht geladen werden.");
-    return;
-  }
-
-  try {
-    populateProfileSelectors();
-    populateCustomProfileSettings();
-    initUI();
-  } catch (e) {
-    console.error("Fehler nach dem Laden der Profile:", e);
-  }
 }
-	
-    function populateProfileSelectors() {
-  ['mobileProfileSelector', 'desktopProfileSelector'].forEach(id => {
-    const sel = document.getElementById(id);
-    sel.innerHTML = '';
 
-    // Normale Profile
-    Object.entries(profiles).forEach(([key, prof]) => {
-      const opt = document.createElement('option');
-      opt.value = key;
-      opt.textContent = prof.displayName;
-      sel.appendChild(opt);
+let profiles = {};
+async function loadProfiles() {
+    try {
+        profiles = await fetchJsonMitFallback(
+            `https://github.io{Date.now()}`,
+            `https://github.io{Date.now()}`
+        );
+    } catch (e) {
+        console.error("Fehler beim Laden der Profile:", e);
+        alert("Profile konnten nicht geladen werden.");
+        return;
+    }
+
+    try {
+        populateProfileSelectors();
+        populateCustomProfileSettings();
+        initUI();
+    } catch (e) {
+        console.error("Fehler nach dem Laden der Profile:", e);
+    }
+}
+
+function populateProfileSelectors() {
+    ['mobileProfileSelector', 'desktopProfileSelector'].forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+        sel.innerHTML = '';
+
+        // Normale Profile
+        Object.entries(profiles).forEach(([key, prof]) => {
+            const opt = document.createElement('option');
+            opt.value = key;
+            opt.textContent = prof.displayName;
+            sel.appendChild(opt);
+        });
+
+        // Benutzerdefiniertes Profil
+        const opt = document.createElement('option');
+        opt.value = 'custom';
+        const savedName = localStorage.getItem('customProfileName') || 'Benutzerdefiniert';
+        opt.textContent = savedName;
+        sel.appendChild(opt);
     });
 
-    // Benutzerdefiniertes Profil
-    const opt = document.createElement('option');
-    opt.value = 'custom';
-    const savedName = localStorage.getItem('customProfileName') || 'Benutzerdefiniert';
-    opt.textContent = savedName;
-    sel.appendChild(opt);
-  });
-
-  // Name im Overlay setzen
-  const input = document.getElementById('customProfileName');
-  input.value = localStorage.getItem('customProfileName') || 'Benutzerdefiniert';
-  input.addEventListener('input', () => {
-    localStorage.setItem('customProfileName', input.value || 'Benutzerdefiniert');
-    // Selektoren aktualisieren
-    populateProfileSelectors();
-  });
+    // Name im Overlay setzen
+    const input = document.getElementById('customProfileName');
+    if (input) {
+        input.value = localStorage.getItem('customProfileName') || 'Benutzerdefiniert';
+        input.addEventListener('input', () => {
+            localStorage.setItem('customProfileName', input.value || 'Benutzerdefiniert');
+            populateProfileSelectors();
+        });
+    }
 }
 
 function populateCustomProfileSettings() {
-  const container = document.getElementById("customProfileSettings");
-  container.innerHTML = '';
+    const container = document.getElementById("customProfileSettings");
+    if (!container) return;
+    container.innerHTML = '';
 
-  // Passwortabfrage beim Bearbeiten / Laden der Einstellungen
-  const pw = prompt("Bitte Passwort eingeben, um das benutzerdefinierte Profil zu bearbeiten:");
-  if (pw !== "Fertigung2026") { // Hier dasselbe Passwort eintragen
-    alert("Falsches Passwort! Bearbeitung gesperrt.");
-    container.innerHTML = '<div style="color:red; padding:10px;">Zugriff verweigert. Falsches Passwort.</div>';
-    return;
-  }
-
-  const allButtons = new Set();
-  Object.values(profiles).forEach(p => {
-    if (Array.isArray(p.buttons)) {
-      p.buttons.forEach(b => allButtons.add(b));
+    // Passwortabfrage beim Bearbeiten / Laden der Einstellungen im Overlay
+    const pw = prompt("Bitte Passwort eingeben, um das benutzerdefinierte Profil zu bearbeiten:");
+    if (pw !== "Fertigung2026") { 
+        alert("Falsches Passwort! Bearbeitung gesperrt.");
+        container.innerHTML = '<div style="color:red; padding:10px;">Zugriff verweigert. Falsches Passwort.</div>';
+        return;
     }
-  });
 
-  const raw = localStorage.getItem("customProfileButtons");
-  let saved;
-  if (raw === null) {
-    saved = Array.from(allButtons);
-    localStorage.setItem("customProfileButtons", JSON.stringify(saved));
-  } else {
-    try {
-      saved = JSON.parse(raw);
-      if (!Array.isArray(saved)) saved = [];
-    } catch (e) {
-      saved = [];
+    const allButtons = new Set();
+    Object.values(profiles).forEach(p => {
+        if (Array.isArray(p.buttons)) {
+            p.buttons.forEach(b => allButtons.add(b));
+        }
+    });
+
+    const raw = localStorage.getItem("customProfileButtons");
+    let saved;
+    if (raw === null) {
+        saved = Array.from(allButtons);
+        localStorage.setItem("customProfileButtons", JSON.stringify(saved));
+    } else {
+        try {
+            saved = JSON.parse(raw);
+            if (!Array.isArray(saved)) saved = [];
+        } catch (e) {
+            saved = [];
+        }
     }
-  }
 
-  // Gespeicherte Buttons anzeigen
-  saved.forEach(buttonName => {
-    if (buttonName === "Fließfertigung") return;
-    
-    const label = document.createElement("div");
-    label.classList.add("draggable-item");
-    label.setAttribute("draggable", "true");
+    // Gespeicherte (aktivierte) Buttons in der Reihenfolge anzeigen
+    saved.forEach(buttonName => {
+        if (buttonName === "Fließfertigung") return;
+        
+        const label = document.createElement("div");
+        label.classList.add("draggable-item");
+        label.setAttribute("draggable", "true");
 
-    const cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.value = buttonName;
-    cb.checked = true;
-    cb.addEventListener("change", saveCustomProfile);
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.value = buttonName;
+        cb.checked = true;
+        cb.addEventListener("change", saveCustomProfile);
 
-    label.appendChild(cb);
-    label.append(" " + buttonName);
+        label.appendChild(cb);
+        label.append(" " + buttonName);
 
-    label.addEventListener("dragstart", dragStart);
-    label.addEventListener("dragover", dragOver);
-    label.addEventListener("drop", dropItem);
+        label.addEventListener("dragstart", dragStart);
+        label.addEventListener("dragover", dragOver);
+        label.addEventListener("drop", dropItem);
 
-    container.appendChild(label);
-  });
+        container.appendChild(label);
+    });
 
-  // Alle übrigen Buttons anhängen
-  Array.from(allButtons).forEach(buttonName => {
-    if (buttonName === "Fließfertigung") return;
-    
-    if (!saved.includes(buttonName)) {
-      const label = document.createElement("div");
-      label.classList.add("draggable-item");
-      label.setAttribute("draggable", "true");
+    // Alle übrigen (nicht aktiven) Buttons anhängen — ungeprüft
+    Array.from(allButtons).forEach(buttonName => {
+        if (buttonName === "Fließfertigung") return;
+        if (!saved.includes(buttonName)) {
+            const label = document.createElement("div");
+            label.classList.add("draggable-item");
+            label.setAttribute("draggable", "true");
 
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.value = buttonName;
-      cb.checked = false;
-      cb.addEventListener("change", saveCustomProfile);
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.value = buttonName;
+            cb.checked = false;
+            cb.addEventListener("change", saveCustomProfile);
 
-      label.appendChild(cb);
-      label.append(" " + buttonName);
+            label.appendChild(cb);
+            label.append(" " + buttonName);
 
-      label.addEventListener("dragstart", dragStart);
-      label.addEventListener("dragover", dragOver);
-      label.addEventListener("drop", dropItem);
+            label.addEventListener("dragstart", dragStart);
+            label.addEventListener("dragover", dragOver);
+            label.addEventListener("drop", dropItem);
 
-      container.appendChild(label);
-    }
-  });
+            container.appendChild(label);
+        }
+    });
 }
 
-
-  // Prüfen ob key existiert. Nur beim ersten Mal initialisieren.
-  const raw = localStorage.getItem("customProfileButtons");
-  let saved;
-  if (raw === null) {
-    // Erstinitialisierung: alle Buttons in Default-Reihenfolge aktivieren
-    saved = Array.from(allButtons);
-    localStorage.setItem("customProfileButtons", JSON.stringify(saved));
-  } else {
-    try {
-      saved = JSON.parse(raw);
-      if (!Array.isArray(saved)) saved = [];
-    } catch (e) {
-      saved = [];
-    }
-  }
-
-  // gespeicherte (aktivierte) Buttons in der Reihenfolge anzeigen
-  saved.forEach(buttonName  => {
-	if (buttonName  === "Fließfertigung") {
-	  return;
-	}
-    const label = document.createElement("div");
-    label.classList.add("draggable-item");
-    label.setAttribute("draggable", "true");
-
-    const cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.value = buttonName ;
-    cb.checked = true;
-    cb.addEventListener("change", saveCustomProfile);
-
-    label.appendChild(cb);
-    label.append(" " + buttonName );
-
-    label.addEventListener("dragstart", dragStart);
-    label.addEventListener("dragover", dragOver);
-    label.addEventListener("drop", dropItem);
-
-    container.appendChild(label);
-  });
-
-  // alle übrigen (nicht aktiven) Buttons anhängen — ungeprüft
-  Array.from(allButtons).forEach(buttonName  => {
-	if (buttonName  === "Fließfertigung") {
-	  return;
-	}
-    if (!saved.includes(buttonName )) {
-      const label = document.createElement("div");
-      label.classList.add("draggable-item");
-      label.setAttribute("draggable", "true");
-
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.value = buttonName ;
-      cb.checked = false;
-      cb.addEventListener("change", saveCustomProfile);
-
-      label.appendChild(cb);
-      label.append(" " + buttonName );
-
-      label.addEventListener("dragstart", dragStart);
-      label.addEventListener("dragover", dragOver);
-      label.addEventListener("drop", dropItem);
-
-      container.appendChild(label);
-    }
-  });
-}
-
-
-    function saveCustomProfile() {
-      const items = document.querySelectorAll("#customProfileSettings .draggable-item input[type=checkbox]");
-      const selected = Array.from(items)
+function saveCustomProfile() {
+    const items = document.querySelectorAll("#customProfileSettings .draggable-item input[type=checkbox]");
+    const selected = Array.from(items)
         .filter(cb => cb.checked)
         .map(cb => cb.value);
 
-      localStorage.setItem("customProfileButtons", JSON.stringify(selected));
-    }
-
-    let draggedItem = null;
-
-    function dragStart(e) {
-      draggedItem = e.target;
-      e.target.classList.add("dragging");
-      e.dataTransfer.effectAllowed = "move";
-    }
-
-    function dragOver(e) {
-      e.preventDefault();
-      const container = document.getElementById("customProfileSettings");
-      const afterElement = getDragAfterElement(container, e.clientY);
-      if (afterElement == null) {
-        container.appendChild(draggedItem);
-      } else {
-        container.insertBefore(draggedItem, afterElement);
-      }
-    }
-
-    function dropItem(e) {
-      e.preventDefault();
-      draggedItem.classList.remove("dragging");
-      saveCustomProfile();
-    }
-
-    function getDragAfterElement(container, y) {
-      const draggableElements = [...container.querySelectorAll(".draggable-item:not(.dragging)")];
-      return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
-      }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-	
-	function attachRightPanel(isMobile) {
-
-  console.log("attachRightPanel", isMobile);
-
-  const panel =
-    document.querySelector('#sharedRightPanel .right-panel');
-
-  const target = isMobile
-    ? document.getElementById('mobileRightPanelContainer')
-    : document.getElementById('desktopRightPanelContainer');
-
-  console.log(panel);
-  console.log(target);
-
-  if (panel && target) {
-    target.appendChild(panel);
-  }
-}
-	
-    function initUI() {
-  const mobileInput = document.getElementById('mobileInputField');
-  const desktopInput = document.getElementById('desktopInputField');
-
-  if (mobileInput) formatLfdNrInput(mobileInput);
-  if (desktopInput) formatLfdNrInput(desktopInput);
-
-  if (istMobil()) {
-
-    document.body.classList.add('mobile');
-    document.getElementById('mobile-layout').style.display = 'block';
-
-    attachRightPanel(true);
-
-    const sel = document.getElementById('mobileProfileSelector');
-    sel.value =
-      localStorage.getItem('selectedMobileProfile') ||
-      sel.options[0].value;
-
-    loadMobileProfileButtons();
-
-  } else {
-
-    document.body.classList.add('desktop');
-    document.getElementById('desktop-layout').style.display = 'block';
-
-    attachRightPanel(false);
-
-    const sel = document.getElementById('desktopProfileSelector');
-    sel.value =
-      localStorage.getItem('selectedDesktopProfile') ||
-      sel.options[0].value;
-
-    loadDesktopProfileButtons();
-  }
+    localStorage.setItem("customProfileButtons", JSON.stringify(selected));
 }
 
+let draggedItem = null;
 
+function dragStart(e) {
+    draggedItem = e.target;
+    e.target.classList.add("dragging");
+	e.dataTransfer.effectAllowed = "move";
+}
+function dragOver(e) {
+e.preventDefault();
+const container = document.getElementById("customProfileSettings");
+const afterElement = getDragAfterElement(container, e.clientY);
+if (afterElement == null) {
+container.appendChild(draggedItem);
+} else {
+container.insertBefore(draggedItem, afterElement);
+}
+}
+function dropItem(e) {
+e.preventDefault();
+if (draggedItem) {
+draggedItem.classList.remove("dragging");
+}
+saveCustomProfile();
+}
+function getDragAfterElement(container, y) {
+const draggableElements = [...container.querySelectorAll(".draggable-item:not(.dragging)")];
+return draggableElements.reduce((closest, child) => {
+const box = child.getBoundingClientRect();
+const offset = y - box.top - box.height / 2;
+if (offset < 0 && offset > closest.offset) {
+return { offset: offset, element: child };
+} else {
+return closest;
+}
+}, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+function attachRightPanel(isMobile) {
+console.log("attachRightPanel", isMobile);
+const panel = document.querySelector('#sharedRightPanel .right-panel');
+const target = isMobile
+? document.getElementById('mobileRightPanelContainer')
+: document.getElementById('desktopRightPanelContainer');
+console.log(panel);
+console.log(target);
+if (panel && target) {
+target.appendChild(panel);
+}
+}
+function initUI() {
+const mobileInput = document.getElementById('mobileInputField');
+const desktopInput = document.getElementById('desktopInputField');
+if (mobileInput) formatLfdNrInput(mobileInput);
+if (desktopInput) formatLfdNrInput(desktopInput);
+if (istMobil()) {
+document.body.classList.add('mobile');
+document.getElementById('mobile-layout').style.display = 'block';
+attachRightPanel(true);
+const sel = document.getElementById('mobileProfileSelector');
+if (sel && sel.options.length > 0) {
+sel.value = localStorage.getItem('selectedMobileProfile') || sel.options[0].value;
+}
+loadMobileProfileButtons();
+} else {
+document.body.classList.add('desktop');
+document.getElementById('desktop-layout').style.display = 'block';
+attachRightPanel(false);
+const sel = document.getElementById('desktopProfileSelector');
+if (sel && sel.options.length > 0) {
+sel.value = localStorage.getItem('selectedDesktopProfile') || sel.options[0].value;
+}
+loadDesktopProfileButtons();
+}
+}
 function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
-    // Falls das benutzerdefinierte Profil ausgewählt wurde, Passwort abfragen
-    if (profileKey === "custom") {
-        const pw = prompt("Bitte Passwort für das benutzerdefinierte Profil eingeben:");
-        if (pw !== "Fertigung2026") { // Hier dein gewünschtes Passwort eintragen
-            alert("Falsches Passwort! Zugriff verweigert.");
-            
-            // Zurücksetzen auf das erste normale Profil im Selektor
-            const selId = isDesktop ? "desktopProfileSelector" : "mobileProfileSelector";
-            const sel = document.getElementById(selId);
-            if (sel && sel.options.length > 0) {
-                const fallbackValue = sel.options[0].value;
-                sel.value = fallbackValue;
-                localStorage.setItem(
-                    isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
-                    fallbackValue
-                );
-                // Erneut laden mit dem Standardprofil
-                loadProfileButtons(fallbackValue, inputId, containerId, isDesktop);
-            }
-            return;
-        }
-    }
-
-    localStorage.setItem(
-        isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
-        profileKey
-    );
-
-    const cont = document.getElementById(containerId);
-
-    if (!cont) {
-        console.error("Container nicht gefunden:", containerId);
-        return;
-    }
-
-    cont.innerHTML = "";
-
-    let buttons = [];
-
-    if (profileKey === "custom") {
-        buttons = JSON.parse(localStorage.getItem("customProfileButtons") || "[]");
-    } else {
-        const prof = profiles[profileKey];
-        if (!prof) return;
-
-        buttons = Array.isArray(prof.buttons) ? prof.buttons : [];
-    }
-
-    const allowedFliessfertigungProfiles = [
-        "profile2",
-        "profile3",
-        "profile4"
-    ];
-
-    buttons.forEach(name => {
-        if (
-            name === "Fließfertigung" &&
-            !allowedFliessfertigungProfiles.includes(profileKey)
-        ) {
-            return;
-        }
-
-        const btn = document.createElement("button");
-        btn.textContent = name;
-
-        btn.onclick = () => {
-            // MOBILE
-            if (!isDesktop) {
-                openMobileDocument(name);
-                return;
-            }
-
-            // DESKTOP
-            const input = document.getElementById(inputId).value.trim();
-
-            if (name.toLowerCase() === "anschlusspläne") {
-                toggleAnschlussplaeneOverlay(true);
-                return;
-            }
-
-            if (name.toLowerCase() === "dichtungswechsel") {
-                toggleDichtungswechselOverlay(true);
-                return;
-            }
-
-            let url = "";
-
-            if (name === "Fließfertigung") {
-                url = getFliessfertigungUrl(profileKey);
-            } else if (name === "FSF_Beschriftung") {
-                url = `https://sharepoint.com{input}_FSF_Beschriftung.pdf`;
-            } else if (name === "FSF_Vorfertigung Etiketten") {
-                url = `https://sharepoint.com{input}_FSF_Vorfertigung Etiketten.pdf`;
-            } else {
-                url = `https://sharepoint.com{input}_${name}.pdf?csf=1&web=1`;
-            }
-
-            if (url) {
-                window.open(url, "_blank");
-            }
-        };
-
-        cont.appendChild(btn);
-    });
-}
-
-
-
-
-    function loadMobileProfileButtons() {
-      loadProfileButtons(document.getElementById('mobileProfileSelector').value,
-        'mobileInputField', 'mobileButtonContainer', false);
-    }
-    function loadDesktopProfileButtons() {
-      loadProfileButtons(document.getElementById('desktopProfileSelector').value,
-        'desktopInputField', 'desktopButtonContainer', true);
-    }
-    async function suchAnschlussplaene() {
-      const nr = document.getElementById('anschlussSuche').value.trim();
-      if (!nr) return alert('Bitte eine Artikelnummer eingeben.');
-      const t = Date.now();
-      try {
-        const daten = await fetchJsonMitFallback(
-          `https://bichfl.github.io/Auftragsdokumente/PIN-Belegung.json?t=${t}`,
-          `https://bichfl.github.io/Auftragsdokumente/PIN-Belegung.JSON?t=${t}`
-        );
-        const ein = daten.find(d => d.ArtNR === nr);
-        if (!ein) return alert('Artikelnummer nicht gefunden.');
-        const pdfUrl = `https://peneder.sharepoint.com/:b:/r//sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/PIN-Belegung/${ein.Pfad}/${encodeURIComponent(ein.Dokument)}.pdf#zoom=500`;
-        window.open(pdfUrl,'_blank');
-      } catch(e){ alert(e.message); }
-    }
-    function toggleOverlay() {
-  const o = document.getElementById('overlay');
-
-  if (!o.classList.contains('show')) {
-    populateOverlayButtons();
-    o.style.display = 'flex';
-    requestAnimationFrame(() => {
-      o.classList.add('show');
-    });
-  } else {
-    o.classList.remove('show');
-    setTimeout(() => {
-      o.style.display = 'none';
-    }, 400);
-  }
-}
-    function populateOverlayButtons() {
-      const con = document.querySelector('.overlay-buttons');
-      con.innerHTML='';
-      const isMob = document.body.classList.contains('mobile');
-      const sel = document.getElementById(isMob ? 'mobileProfileSelector' : 'desktopProfileSelector');
-      const profileKey = sel.value;
-      let buttons = [];
-      if (profileKey === "custom") {
-        buttons = JSON.parse(localStorage.getItem("customProfileButtons") || "[]");
-      } else {
-        buttons = profiles[profileKey].buttons;
-      }
-	  const allowedFliessfertigungProfiles = ["profile2","profile3","profile4"];
-      buttons.forEach(name => {
-		if (name === "Fließfertigung" && !allowedFliessfertigungProfiles.includes(profileKey)) {
-		  return;
-		}
-        const b = document.createElement('button');
-        b.textContent = name;
-        b.onclick = () => openAccessMail(name);
-        con.appendChild(b);
-      });
-    }
-    function openAccessMail(btnName) {
-  // 1. Die laufende Nummer korrekt auslesen
-  const nrElement = getLaufendeNummer();
-  // Falls es ein HTML-Input ist .value nutzen, andernfalls direkt den Wert nehmen
-  const nr = (nrElement && nrElement.value ? nrElement.value : nrElement || "").toString().trim();
-  
-  // 2. Positionsnummer auslesen
-  const posInput = document.getElementById('posInputField');
-  const pos = posInput ? posInput.value.trim() : "";
-  
-  let fehler = [];
-
-  // Validierung: Prüfen ob die Pflichtfelder befüllt sind
-  if (!nr) fehler.push("Laufende Nummer");
-  if (!pos) fehler.push("Positionsnummer");
-
-  // Wenn Felder fehlen: Fehlermeldung anzeigen und abbrechen
-  if (fehler.length > 0) {
-    alert("Bitte folgende Felder ausfüllen:\n\n- " + fehler.join("\n- "));
-    return; 
-  }
-
-  // 3. E-Mail generieren (wird erst ausgeführt, wenn nr und pos befüllt sind)
-  const subj = encodeURIComponent('fehlende Dokumente zu ' + nr);
-  const body = encodeURIComponent(
-    `Zur laufenden Nummer "${nr}", Position "${pos}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.`
-  );
-  
-  const url = `https://outlook.office365.com/mail/deeplink/compose?to=ok.alu@peneder.com&subject=${subj}&body=${body}`;
-	  window.open(url, '_blank');
-	}
-
-    function getLaufendeNummer() {
-      const mi = document.getElementById('mobileInputField');
-      return mi.offsetParent !== null ? mi.value : document.getElementById('desktopInputField').value;
-    }
-    function istMobil() {
-      const ua = navigator.userAgent;
-      const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-      const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      const small = window.innerWidth <= 768;
-      return [mobileUA, touch, small].filter(Boolean).length >= 2;
-    }
-    function getFormattedDate() {
-      const d = new Date();
-      return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
-    }
-    function getFliessfertigungUrl(profile) {
-      const date = getFormattedDate();
-      const base = 'https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/Fließfertigung/';
-      switch(profile) {
-        case 'profile2': return `${base}Lager/${date}.pdf?csf=1&web=1`;
-        case 'profile3': return `${base}Stabbearbeitung/${date}.pdf?csf=1&web=1`;
-        case 'profile4': return `${base}Stabbearbeitung/${date}.pdf?csf=1&web=1`;
-        case 'profile5': return `${base}Türstabmontage/${date}.pdf?csf=1&web=1`;
-        case 'profile6': return `${base}Verklebung/${date}.pdf?csf=1&web=1`;
-        case 'profile7': return `${base}Zusammenbau/${date}.pdf?csf=1&web=1`;
-        case 'profile8': return `${base}Verglasung/${date}.pdf?csf=1&web=1`;
-        case 'profile9': return `${base}Sonder/${date}.pdf?csf=1&web=1`;
-        default: return null;
-      }
-    }
-	function toggleAnschlussplaeneOverlay(show) {
-	  const o = document.getElementById('anschlussplaene-overlay');
-	  if (show) {
-		o.style.display = 'flex';
-		requestAnimationFrame(() => {
-		  o.classList.add('show');
-		});
-	  } else {
-		o.classList.remove('show');
-		setTimeout(() => {
-		  o.style.display = 'none';
-		}, 400);
-	  }
-	}
-    function closeAnschlussplaeneOverlay() {
-      toggleAnschlussplaeneOverlay(false);
-    }
-    document.addEventListener('click', event => {
-      const o = document.getElementById('overlay');
-      // Falls der Button, der das Overlay öffnet, eine bestimmte Klasse oder ID hat, hier prüfen.
-      // Die CSS-Klasse "show" stellt sicher, dass das Overlay gerade offen ist.
-      if (o && o.classList.contains('show') && !o.contains(event.target)) {
-        // Überprüfen, ob der Klick auf einen Button ging, der das Popup öffnet (damit es nicht sofort wieder schließt)
-        const openBtnMobile = document.getElementById('mobileButtonContainer');
-        const openBtnDesktop = document.getElementById('desktopButtonContainer');
-        
-        if ((openBtnMobile && openBtnMobile.contains(event.target)) || (openBtnDesktop && openBtnDesktop.contains(event.target))) {
-          return; // Klick kam von den normalen Profil-Buttons, breche ab
-        }
-        
-        toggleOverlay();
-      }
-    });
-    document.addEventListener('click', event => {
-	  const popup = document.getElementById('anschlussplaene-overlay');
-
-	  if (
-		popup.classList.contains('show') &&
-		!popup.contains(event.target)
-	  ) {
-		toggleAnschlussplaeneOverlay(false);
-	  }
-	});
-
-    document.addEventListener('DOMContentLoaded', loadProfiles);
-	
-	let changelogClickCount = 0;
-  let clickTimeout;
-
-  document.addEventListener("click", function(e) {
-    if (e.target.closest("#readme-popup h2")) {
-      changelogClickCount++;
-      clearTimeout(clickTimeout);
-      clickTimeout = setTimeout(() => { changelogClickCount = 0; }, 2000);
-
-      if (changelogClickCount >= 8) {
-        showEasterEgg();
-        changelogClickCount = 0;
-      }
-    } else if (!e.target.closest("#readme-popup")) {
-      changelogClickCount = 0;
-    }
-  });
-  
-  function toggleDichtungswechselOverlay(show) {
-    const o = document.getElementById('dichtungswechsel-overlay');
-	if (show) {
-      o.style.display = 'flex';
-	  requestAnimationFrame(() => {
-        o.classList.add('show');
-      });
-	} else {
-      o.classList.remove('show');
-      setTimeout(() => {
-        o.style.display = 'none';
-      }, 400);
-    }
-  }
-
-  function closeDichtungswechselOverlay() {
-	  const posInput = document.getElementById("pos");
-	  const serieSelect = document.getElementById("serieSelect");
-	  const daSelect = document.getElementById("daSelect");
-	  const diSelect = document.getElementById("diSelect");
-	  const eiSelect = document.getElementById("eiSelect");
-	  posInput.value = "";
-	  serieSelect.value = "";
-	  serieSelect.disabled = true;
-	  daSelect.innerHTML = '<option value="">Dichtung außen</option>';
-	  daSelect.disabled = true;
-	  diSelect.innerHTML = '<option value="">Dichtung innen</option>';
-	  diSelect.disabled = true;
-	  eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
-	  eiSelect.disabled = true;
-	  toggleDichtungswechselOverlay(false);
-	}
-  
-  document.addEventListener('click', event => {
-    const popup = document.getElementById('dichtungswechsel-overlay');
-
-    if (
-	  popup.classList.contains('show') &&
-      !popup.contains(event.target)
-    ) {
-      closeDichtungswechselOverlay();
-    }
-  });
-
-  function showEasterEgg() {
-  const popup = document.getElementById('readme-popup');
-
-  // Hintergrundfarbe merken
-  const popupBackground = window.getComputedStyle(popup).backgroundColor;
-
-  // Größe & Stil anpassen, Position bleibt
-  popup.style.width = '800px';
-  popup.style.height = 'auto';
-  popup.style.maxWidth = 'none';
-
-  // Spielfeld HTML einfügen
-  popup.innerHTML = `
-    <style>
-      * { box-sizing: border-box; }
-
-      #game {
-        position: relative;
-        width: 650px;
-        height: 200px;
-        border: 3px solid var(--button-color); /* optional: Rahmen auch grau */
-        overflow: hidden;
-        background: ${popupBackground};
-        margin: 10px auto;
-      }
-
-      #player {
-        position: absolute;
-        width: 40px;
-        height: 40px;
-        background: var(--button-color); /* grau wie Buttons */
-        bottom: 0;
-        left: 50px;
-        transition: bottom 0.3s, height 0.1s;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      #player .logo { width: 16px; height: 16px; }
-
-      .obstacle {
-        position: absolute;
-        right: -30px;
-        animation-name: moveLeft;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        background: var(--button-color); /* grau wie Buttons */
-      }
-
-      @keyframes moveLeft {
-        from { right: -30px; }
-        to { right: 100%; }
-      }
-
-      /* --- Wichtig: höhere Spezifität, damit globale Button-Regeln NICHT gewinnen --- */
-      #readme-popup .controls {
-        margin-top: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        text-align: center;
-        flex-wrap: nowrap;
-      }
-
-      #readme-popup .controls button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: auto !important;         /* globale width:100% überstimmen */
-        padding: 20px 30px !important;  /* höher/breiter */
-        font-size: 28px !important;     /* größere Pfeile */
-        line-height: 1;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        background-color: var(--button-color);
-        color: var(--button-text);
-        transition: background-color 0.3s;
-      }
-
-      #readme-popup .controls button:hover {
-        background-color: var(--button-hover);
-      }
-
-      #score {
-        margin-top: 10px;
-        font-size: 18px;
-        text-align: center;
-        color: black;
-      }
-    </style>
-
-    <div id="game">
-      <div id="player">
-        <img src="https://www.peneder.com/assets/favicons/favicon-16x16.png" alt="Logo" class="logo">
-      </div>
-    </div>
-
-    <div class="controls">
-      <button onclick="jump()">↑</button>
-      <button onclick="duck()">↓</button>
-    </div>
-
-    <div id="score">Punkte: 0</div>
-  `;
-
-  popup.style.display = 'block';
-
-  // Spiellogik starten
-  initGame();
-}
-
-
-
-function initGame() {
-  const player = document.getElementById("player");
-  const game = document.getElementById("game");
-  const scoreDisplay = document.getElementById("score");
-
-  let isJumping = false;
-  let isDucking = false;
-  let score = 0;
-
-  window.jump = function() {
-    if (isJumping || isDucking) return;
-    isJumping = true;
-    player.style.bottom = "100px";
-    setTimeout(() => {
-      player.style.bottom = "0";
-      setTimeout(() => { isJumping = false; }, 300);
-    }, 300);
-  };
-
-  window.duck = function() {
-    if (isJumping || isDucking) return;
-    isDucking = true;
-    player.style.height = "20px";
-    player.style.alignItems = "flex-end";
-    setTimeout(() => {
-      player.style.height = "40px";
-      player.style.alignItems = "center";
-      isDucking = false;
-    }, 500);
-  };
-
-  function getSpeed() {
-    const baseDuration = 3.0;
-    const minDuration = 1.2;
-    const speedUp = Math.min(score * 0.05, baseDuration - minDuration);
-    return (baseDuration - speedUp).toFixed(2) + 's';
-  }
-
-  function spawnObstacle() {
-    const obs = document.createElement("div");
-    obs.classList.add("obstacle");
-
-    const isHigh = Math.random() < 0.5;
-    if (isHigh) {
-      obs.style.height = "30px";
-      obs.style.width = "30px";
-      obs.style.bottom = "25px";
-      obs.style.background = "var(--button-color)";
-    } else {
-      obs.style.height = "30px";
-      obs.style.width = "20px";
-      obs.style.bottom = "0";
-      obs.style.background = "var(--button-color)";
-    }
-
-    obs.style.animationDuration = getSpeed();
-    game.appendChild(obs);
-
-    const obsInterval = setInterval(() => {
-      const obsRect = obs.getBoundingClientRect();
-      const playerRect = player.getBoundingClientRect();
-
-      const verticalOverlap = playerRect.bottom > obsRect.top && playerRect.top < obsRect.bottom;
-      const horizontalOverlap = obsRect.left < playerRect.right && obsRect.right > playerRect.left;
-
-      if (horizontalOverlap && verticalOverlap) {
-        alert("Game Over! Dein Punktestand: " + score);
-        location.reload();
-      }
-    }, 20);
-
-    obs.addEventListener("animationend", () => {
-      clearInterval(obsInterval);
-      obs.remove();
-      score++;
-      scoreDisplay.textContent = "Punkte: " + score;
-    });
-  }
-
-  function startObstacleLoop() {
-    const minDelay = 2000;
-    const maxDelay = 3500;
-    function loop() {
-      spawnObstacle();
-      const nextDelay = Math.random() * (maxDelay - minDelay) + minDelay;
-      setTimeout(loop, nextDelay);
-    }
-    loop();
-  }
-
-  document.addEventListener("keydown", (e) => {
-    if (e.code === "ArrowUp") jump();
-    if (e.code === "ArrowDown") duck();
-  });
-
-  startObstacleLoop();
-}
-
-// ------------------------------
-// DICHTUNGSWECHSEL LOGIK
-// ------------------------------
-
-let dichtungen = {};
-
-async function loadGaskets() {
-  const urlJSON = "https://bichfl.github.io/Auftragsdokumente/gaskets.JSON?t=" + Date.now();
-  const urljson = "https://bichfl.github.io/Auftragsdokumente/gaskets.json?t=" + Date.now();
-
-  try {
-    let res = await fetch(urlJSON);
-    if (!res.ok) res = await fetch(urljson);
-
-    dichtungen = await res.json();
-    populateSerieDropdown();
-  } catch (e) {
-    console.error(e);
-    alert("Fehler beim Laden der Dichtungsdaten!");
-  }
-}
-
-function populateSerieDropdown() {
-  const serieSelect = document.getElementById("serieSelect");
-  if (!serieSelect) return;
-
-  serieSelect.innerHTML = '<option value="" selected>Serie wählen</option>';
-
-  Object.keys(dichtungen).forEach(serie => {
-    const opt = document.createElement("option");
-    opt.value = serie;
-    opt.textContent = serie;
-    serieSelect.appendChild(opt);
-  });
-}
-
-// Event Listener erst nach DOM laden
-document.addEventListener("DOMContentLoaded", () => {
-
-  const posInput = document.getElementById("pos");
-  const serieSelect = document.getElementById("serieSelect");
-  const daSelect = document.getElementById("daSelect");
-  const diSelect = document.getElementById("diSelect");
-  const eiSelect = document.getElementById("eiSelect");
-
-  if (!posInput) return; // wichtig!
-
-  loadGaskets();
-
-  posInput.addEventListener("input", () => {
-    const filled = posInput.value.trim() !== "";
-    serieSelect.disabled = !filled;
-
-    if (!filled) {
-      serieSelect.value = "";
-      daSelect.disabled = true;
-      diSelect.disabled = true;
-      eiSelect.disabled = true;
-    }
-  });
-
-  serieSelect.addEventListener("change", () => {
-    daSelect.innerHTML = '<option value="">Dichtung außen</option>';
-    diSelect.innerHTML = '<option value="">Dichtung innen</option>';
-    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
-
-    daSelect.disabled = false;
-    diSelect.disabled = true;
-    eiSelect.disabled = true;
-
-    const serie = serieSelect.value;
-    if (!serie) return;
-
-    Object.keys(dichtungen[serie]).forEach(da => {
-      const opt = document.createElement("option");
-      opt.value = da;
-      opt.textContent = da;
-      daSelect.appendChild(opt);
-    });
-  });
-
-  daSelect.addEventListener("change", () => {
-    diSelect.innerHTML = '<option value="">Dichtung innen</option>';
-    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
-
-    diSelect.disabled = false;
-    eiSelect.disabled = true;
-
-    const serie = serieSelect.value;
-    const da = daSelect.value;
-
-    Object.keys(dichtungen[serie][da]).forEach(di => {
-      const opt = document.createElement("option");
-      opt.value = di;
-      opt.textContent = di;
-      diSelect.appendChild(opt);
-    });
-  });
-
-  diSelect.addEventListener("change", () => {
-    eiSelect.innerHTML = '<option value="">Ersatzdichtung innen</option>';
-    eiSelect.disabled = false;
-
-    const serie = serieSelect.value;
-    const da = daSelect.value;
-    const di = diSelect.value;
-
-    dichtungen[serie][da][di].forEach(ei => {
-      const opt = document.createElement("option");
-      opt.value = ei;
-      opt.textContent = ei;
-      eiSelect.appendChild(opt);
-    });
-  });
-
-});
-
-// Mail senden
-function senden() {
-  const nr = getLaufendeNummer().trim();
-  const pos = document.getElementById("pos").value.trim();
-  const serie = document.getElementById("serieSelect").value.trim();
-  const da = document.getElementById("daSelect").value.trim();
-  const di = document.getElementById("diSelect").value.trim();
-  const ei = document.getElementById("eiSelect").value.trim();
-
-  let fehler = [];
-
-  if (!nr) fehler.push("Laufende Nummer");
-  if (!pos) fehler.push("Positionsnummer");
-  if (!serie) fehler.push("Serie");
-  if (!da) fehler.push("Dichtung außen");
-  if (!di) fehler.push("Dichtung innen");
-  if (!ei) fehler.push("Ersatzdichtung innen");
-
-  if (fehler.length > 0) {
-    alert("Bitte folgende Felder ausfüllen:\n\n- " + fehler.join("\n- "));
-    return; // <-- wichtig: nur return
-  }
-
-  // erst hier Mail erzeugen
-  const recipients = "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
-
-  const subject = encodeURIComponent("Verglasungsdichtung innen geändert");
-
-  const body = encodeURIComponent(
-	`Hallo,\n\n` +
-	`bei laufender Nummer ${nr}, Position ${pos} wurde eine andere Dichtung verwendet als in LogiKal generiert.\n\n` +
-	`Dichtung lt. LogiKal: ${di}\n` +
-	`verwendete Dichtung: ${ei}\n\n` +
-	`Warenwirtschaft: Dichtung für Seitenteile im Montagepaket tauschen\n` +
-	`OK.-Büro: Buchung im Infor korrigieren`
-  );	
-
-  window.open(
-    `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`,
-    "_blank"
-  );
-}
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const toggleField = document.getElementById("qmPriorityToggle");
-    
-    // Die beiden Label-Texte anhand ihrer IDs greifen
-    const labelHinweis = document.getElementById("lblHinweis");
-    const labelHandlungsbedarf = document.getElementById("lblHandlungsbedarf");
-
-    if (toggleField && labelHinweis && labelHandlungsbedarf) {
-        function aktualisiereFettdruck() {
-            if (toggleField.checked) {
-                // Handlungsbedarf ist aktiv (Regler rechts)
-                labelHandlungsbedarf.style.fontWeight = "bold";
-                labelHinweis.style.fontWeight = "normal";
-            } else {
-                // Hinweis ist aktiv (Regler links)
-                labelHandlungsbedarf.style.fontWeight = "normal";
-                labelHinweis.style.fontWeight = "bold";
-            }
-        }
-
-        // Auf Änderungen des Schiebereglers reagieren
-        toggleField.addEventListener("change", aktualisiereFettdruck);
-
-        // Initialen Zustand beim Laden der Anwendung setzen
-        aktualisiereFettdruck();
-    }
-});
-
-
-function sendQualitaetsmeldung() {
-    // 1. Eingabefelder für laufende Nummer abfragen (Desktop oder Mobil)
-    const desktopInput = document.getElementById("desktopInputField");
-    const mobileInput = document.getElementById("mobileInputField");
-    
-    let lfdNr = "";
-    if (desktopInput && desktopInput.value.trim()) {
-        lfdNr = desktopInput.value.trim();
-    } else if (mobileInput && mobileInput.value.trim()) {
-        lfdNr = mobileInput.value.trim();
-    }
-
-    // Andere Felder auslesen
-    const posNrField = document.getElementById("qmPosInputField");
-    const errorField = document.getElementById("qmDescriptionField");
-    const toggleField = document.getElementById("qmPriorityToggle");
-
-    const posNr = posNrField ? posNrField.value.trim() : "";
-    const error = errorField ? errorField.value.trim() : "";
-
-    // 2. Status und Betreff-Präfix anhand des Schiebereglers bestimmen
-    let statusText = "Hinweis";
-    let betreffPrefix = "Hinweismeldung";
-
-    if (toggleField && toggleField.checked) {
-        statusText = "Handlungsbedarf";
-        betreffPrefix = "Handlungsbedarf";
-    }
-
-    // 3. Validierung der Pflichtfelder
-    let fehler = [];
-    if (!lfdNr) fehler.push("Laufende Nummer");
-    if (!posNr) fehler.push("Positionsnummer");
-    if (!error) fehler.push("Problembeschreibung");
-
-    if (fehler.length > 0) {
-        alert("Folgende Daten fehlen noch:\n\n- " + fehler.join("\n- "));
-        return;
-    }
-
-    // 4. E-Mail Parameter vorbereiten
-    const recipients = "qualitaet@peneder.com";
-
-    // Betreff: Nutzt jetzt die neuen Bezeichnungen
-    const subject = encodeURIComponent(`ALU - [${betreffPrefix}] - ${lfdNr} - Fehlermeldung Fertigung`);
-    
-    // Mailtext
-    const body = encodeURIComponent(
-        `Hallo,\n\n` +
-        `in der Fertigung ist ein Problem aufgetreten.\n\n` +
-        `Status: ${betreffPrefix}\n` +
-        `Auftrag: ${lfdNr}\n` +
-		`Pos.Nr.: ${posNr}\n\n` +
-        `Problembeschreibung:\n${error}\n\n`
-    );
-
-    window.open(
-        `https://outlook.office365.com/mail/deeplink/compose?to=${recipients}&subject=${subject}&body=${body}`,
-        "_blank"
-    );
-}
-
-
-function showMobileMainMenu() {
-  document.getElementById("mobileContent").innerHTML = `
-    <button class="mobile-main-btn" onclick="showAuftragsdokumente()">
-      Auftragsdokumente
-    </button>
-
-    <button class="mobile-main-btn" onclick="showRueckmeldung()">
-      Rückmeldung
-    </button>
-
-    <button class="mobile-main-btn" onclick="showQualitaetsmeldung()">
-      Qualitätsmeldung
-    </button>
-  `;
-}
-
-function showAuftragsdokumente() {
-
-    document.getElementById("mobileContent").innerHTML = `
-        <button class="mobile-back-btn"
-                onclick="showMobileMainMenu()">
-            ← Zurück
-        </button>
-
-        <div id="mobileContent">
-		  <div id="mobileButtonContainer"></div>
-		</div>
-    `;
-
-    // Profilbuttons mit der bestehenden Funktion erzeugen
-    const profile =
-    localStorage.getItem("selectedMobileProfile") ||
-    document.getElementById("mobileProfileSelector").value;
-
-loadProfileButtons(
-    profile,
-    "mobileInputField",
-    "mobileButtonContainer",
-    false
+// Falls das benutzerdefinierte Profil ausgewählt wurde, Passwort abfragen
+if (profileKey === "custom") {
+const pw = prompt("Bitte Passwort für das benutzerdefinierte Profil eingeben:");
+if (pw !== "Fertigung2026") {
+alert("Falsches Passwort! Zugriff verweigert.");
+// Zurücksetzen auf das erste normale Profil im Selektor
+const selId = isDesktop ? "desktopProfileSelector" : "mobileProfileSelector";
+const sel = document.getElementById(selId);
+if (sel && sel.options.length > 0) {
+const fallbackValue = sel.options[0].value;
+sel.value = fallbackValue;
+localStorage.setItem(
+isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
+fallbackValue
 );
-
-    // Buttons für die mobile Ansicht anpassen
-    document.querySelectorAll("#mobileButtonContainer button").forEach(btn => {
-        btn.classList.add("mobile-doc-btn");
-    });
+// Erneut laden mit dem Standardprofil
+loadProfileButtons(fallbackValue, inputId, containerId, isDesktop);
 }
-
+return;
+}
+}
+localStorage.setItem(
+isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
+profileKey
+);
+const cont = document.getElementById(containerId);
+if (!cont) {
+console.error("Container nicht gefunden:", containerId);
+return;
+}
+cont.innerHTML = "";
+let buttons = [];
+if (profileKey === "custom") {
+buttons = JSON.parse(localStorage.getItem("customProfileButtons") || "[]");
+} else {
+const prof = profiles[profileKey];
+if (!prof) return;
+buttons = Array.isArray(prof.buttons) ? prof.buttons : [];
+}
+const allowedFliessfertigungProfiles = ["profile2", "profile3", "profile4"];
+buttons.forEach(name => {
+if (name === "Fließfertigung" && !allowedFliessfertigungProfiles.includes(profileKey)) {
+return;
+}
+const btn = document.createElement("button");
+btn.textContent = name;
+btn.onclick = () => {
+if (!isDesktop) {
+openMobileDocument(name);
+return;
+}
+const input = document.getElementById(inputId).value.trim();
+if (name.toLowerCase() === "anschlusspläne") {
+toggleAnschlussplaeneOverlay(true);
+return;
+}
+if (name.toLowerCase() === "dichtungswechsel") {
+toggleDichtungswechselOverlay(true);
+return;
+}
+let url = "";
+if (name === "Fließfertigung") {
+url = getFliessfertigungUrl(profileKey);
+} else if (name === "FSF_Beschriftung") {
+url = https://sharepoint.com{input}_FSF_Beschriftung.pdf;
+} else if (name === "FSF_Vorfertigung Etiketten") {
+url = https://sharepoint.com{input}_FSF_Vorfertigung Etiketten.pdf;
+} else {
+url = https://sharepoint.com{input}_${name}.pdf?csf=1&web=1;
+}
+if (url) {
+window.open(url, "_blank");
+}
+};
+cont.appendChild(btn);
+});
+}
+function loadMobileProfileButtons() {
+const sel = document.getElementById('mobileProfileSelector');
+if (sel) loadProfileButtons(sel.value, 'mobileInputField', 'mobileButtonContainer', false);
+}
+function loadDesktopProfileButtons() {
+const sel = document.getElementById('desktopProfileSelector');
+if (sel) loadProfileButtons(sel.value, 'desktopInputField', 'desktopButtonContainer', true);
+}
+async function suchAnschlussplaene() {
+const nr = document.getElementById('anschlussSuche').value.trim();
+if (!nr) return alert('Bitte eine Artikelnummer eingeben.');
+const t = Date.now();
+try {
+const daten = await fetchJsonMitFallback(
+https://github.io{t},
+https://github.io{t}
+);
+const ein = daten.find(d => d.ArtNR === nr);
+if (!ein) return alert('Artikelnummer nicht gefunden.');
+const pdfUrl = https://sharepoint.com{ein.Pfad}/${encodeURIComponent(ein.Dokument)}.pdf#zoom=500;
+window.open(pdfUrl,'_blank');
+} catch(e){ alert(e.message); }
+}
+function toggleOverlay() {
+const o = document.getElementById('overlay');
+if (!o) return;
+if (!o.classList.contains('show')) {
+populateOverlayButtons();
+o.style.display = 'flex';
+requestAnimationFrame(() => {
+o.classList.add('show');
+});
+} else {
+o.classList.remove('show');
+setTimeout(() => {
+o.style.display = 'none';
+}, 400);
+}
+}
+function populateOverlayButtons() {
+const con = document.querySelector('.overlay-buttons');
+if (!con) return;
+con.innerHTML='';
+const isMob = document.body.classList.contains('mobile');
+const sel = document.getElementById(isMob ? 'mobileProfileSelector' : 'desktopProfileSelector');
+if (!sel) return;
+const profileKey = sel.value;
+let buttons = [];
+if (profileKey === "custom") {
+buttons = JSON.parse(localStorage.getItem("customProfileButtons") || "[]");
+} else {
+buttons = profiles[profileKey] ? profiles[profileKey].buttons : [];
+}
+const allowedFliessfertigungProfiles = ["profile2","profile3","profile4"];
+buttons.forEach(name => {
+if (name === "Fließfertigung" && !allowedFliessfertigungProfiles.includes(profileKey)) {
+return;
+}
+const b = document.createElement('button');
+b.textContent = name;
+b.onclick = () => openAccessMail(name);
+con.appendChild(b);
+});
+}
+function openAccessMail(btnName) {
+const nrElement = getLaufendeNummer();
+const nr = (nrElement && nrElement.value ? nrElement.value : nrElement || "").toString().trim();
+const posInput = document.getElementById('posInputField');
+const pos = posInput ? posInput.value.trim() : "";
+let fehler = [];
+if (!nr) fehler.push("Laufende Nummer");
+if (!pos) fehler.push("Positionsnummer");
+if (fehler.length > 0) {
+alert("Bitte folgende Felder ausfüllen:\n\n- " + fehler.join("\n- "));
+return;
+}
+const subj = encodeURIComponent('fehlende Dokumente zu ' + nr);
+const body = encodeURIComponent(
+Zur laufenden Nummer "${nr}", Position "${pos}" fehlt folgendes Dokument:\n\n"${btnName}"\n\nBitte legt das Dokument ab.
+);
+const url = https://office365.com{subj}&body=${body};
+window.open(url, '_blank');
+}
+function getLaufendeNummer() {
+const mi = document.getElementById('mobileInputField');
+return (mi && mi.offsetParent !== null) ? mi.value : document.getElementById('desktopInputField').value;
+}
+function istMobil() {
+const ua = navigator.userAgent;
+const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+const small = window.innerWidth <= 768;
+return [mobileUA, touch, small].filter(Boolean).length >= 2;
+}
+function getFormattedDate() {
+const d = new Date();
+return ${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()};
+}
+function getFliessfertigungUrl(profile) {
+const date = getFormattedDate();
+const base = 'sharepoint.com';
+switch(profile) {
+case 'profile2': return ${base}Lager/${date}.pdf?csf=1&web=1;
+case 'profile3': return ${base}Stabbearbeitung/${date}.pdf?csf=1&web=1;
+case 'profile4': return ${base}Stabbearbeitung/${date}.pdf?csf=1&web=1;
+case 'profile5': return ${base}Türstabmontage/${date}.pdf?csf=1&web=1;
+case 'profile6': return ${base}Verklebung/${date}.pdf?csf=1&web=1;
+case 'profile7': return ${base}Zusammenbau/${date}.pdf?csf=1&web=1;
+case 'profile8': return ${base}Verglasung/${date}.pdf?csf=1&web=1;
+case 'profile9': return ${base}Sonder/${date}.pdf?csf=1&web=1;
+default: return null;
+}
+}
+function toggleAnschlussplaeneOverlay(show) {
+const o = document.getElementById('anschlussplaene-overlay');
+if (!o) return;
+if (show) {
+o.style.display = 'flex';
+requestAnimationFrame(() => {
+o.classList.add('show');
+});
+} else {
+o.classList.remove('show');
+setTimeout(() => {
+o.style.display = 'none';
+}, 400);
+}
+}
+function closeAnschlussplaeneOverlay() {
+toggleAnschlussplaeneOverlay(false);
+}
+document.addEventListener('click', event => {
+const o = document.getElementById('overlay');
+if (o && o.classList.contains('show') && !o.contains(event.target)) {
+const openBtnMobile = document.getElementById('mobileButtonContainer');
+const openBtnDesktop = document.getElementById('desktopButtonContainer');
+if ((openBtnMobile && openBtnMobile.contains(event.target)) || (openBtnDesktop && openBtnDesktop.contains(event.target))) {
+return;
+}
+toggleOverlay();
+}
+});
+document.addEventListener('click', event => {
+const popup = document.getElementById('anschlussplaene-overlay');
+if (popup && popup.classList.contains('show') && !popup.contains(event.target)) {
+toggleAnschlussplaeneOverlay(false);
+}
+});
+document.addEventListener('DOMContentLoaded', loadProfiles);
+let changelogClickCount = 0;
+let clickTimeout;
+document.addEventListener("click", function(e) {
+if (e.target.closest("#readme-popup h2")) {
+changelogClickCount++;
+clearTimeout(clickTimeout);
+clickTimeout = setTimeout(() => { changelogClickCount = 0; }, 2000);
+if (changelogClickCount >= 8) {
+showEasterEgg();
+changelogClickCount = 0;
+}
+} else if (!e.target.closest("#readme-popup")) {
+changelogClickCount = 0;
+}
+});
+function toggleDichtungswechselOverlay(show) {
+const o = document.getElementById('dichtungswechsel-overlay');
+if (!o) return;
+if (show) {
+o.style.display = 'flex';
+requestAnimationFrame(() => {
+o.classList.add('show');
+});
+} else {
+o.classList.remove('show');
+setTimeout(() => {
+o.style.display = 'none';
+}, 400);
+}
+}
+function closeDichtungswechselOverlay() {
+const posInput = document.getElementById("pos");
+const serieSelect = document.getElementById("serieSelect");
+const daSelect = document.getElementById("daSelect");
+const diSelect = document.getElementById("diSelect");
+const eiSelect = document.getElementById("eiSelect");
+if (posInput) posInput.value = "";
+if (serieSelect) { serieSelect.value = ""; serieSelect.disabled = true; }
+if (daSelect) { daSelect.innerHTML = 'Dichtung außen'; daSelect.disabled = true; }
+if (diSelect) { diSelect.innerHTML = 'Dichtung innen'; diSelect.disabled = true; }
+if (eiSelect) { eiSelect.innerHTML = 'Ersatzdichtung innen'; eiSelect.disabled = true; }
+toggleDichtungswechselOverlay(false);
+}
+document.addEventListener('click', event => {
+const popup = document.getElementById('dichtungswechsel-overlay');
+if (popup && popup.classList.contains('show') && !popup.contains(event.target)) {
+closeDichtungswechselOverlay();
+}
+});
+function showEasterEgg() {
+const popup = document.getElementById('readme-popup');
+if (!popup) return;
+const popupBackground = window.getComputedStyle(popup).backgroundColor;
+popup.style.width = '800px';
+popup.style.height = 'auto';
+popup.style.maxWidth = 'none';
+popup.innerHTML = <style> * { box-sizing: border-box; } #game { position: relative; width: 650px; height: 200px; border: 3px solid var(--button-color); overflow: hidden; background: ${popupBackground}; margin: 10px auto; } #player { position: absolute; width: 40px; height: 40px; background: var(--button-color); bottom: 0; left: 50px; transition: bottom 0.3s, height 0.1s; display: flex; justify-content: center; align-items: center; } #player .logo { width: 16px; height: 16px; } .obstacle { position: absolute; right: -30px; animation-name: moveLeft; animation-timing-function: linear; animation-fill-mode: forwards; background: var(--button-color); } @keyframes moveLeft { from { right: -30px; } to { right: 100%; } } #readme-popup .controls { margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 12px; text-align: center; flex-wrap: nowrap; } #readme-popup .controls button { display: inline-flex; align-items: center; justify-content: center; width: auto !important; padding: 20px 30px !important; font-size: 28px !important; line-height: 1; border: none; border-radius: 6px; cursor: pointer; background-color: var(--button-color); color: var(--button-text); transition: background-color 0.3s; } #readme-popup .controls button:hover { background-color: var(--button-hover); } #score { margin-top: 10px; font-size: 18px; text-align: center; color: black; } </style> <div id="game"> <div id="player"> <img src="https://peneder.com" alt="Logo" class="logo"> </div> </div> <div class="controls"> <button onclick="jump()">↑</button> <button onclick="duck()">↓</button> </div> <div id="score">Punkte: 0</div>;
+popup.style.display = 'block';
+initGame();
+}
+function initGame() {
+const player = document.getElementById("player");
+const game = document.getElementById("game");
+const scoreDisplay = document.getElementById("score");
+let isJumping = false;
+let isDucking = false;
+let score = 0;
+window.jump = function() {
+if (isJumping || isDucking) return;
+isJumping = true;
+player.style.bottom = "100px";
+setTimeout(() => {
+player.style.bottom = "0";
+setTimeout(() => { isJumping = false; }, 300);
+}, 300);
+};
+window.duck = function() {
+if (isJumping || isDucking) return;
+isDucking = true;
+player.style.height = "20px";
+player.style.alignItems = "flex-end";
+setTimeout(() => {
+player.style.height = "40px";
+player.style.alignItems = "center";
+isDucking = false;
+}, 500);
+};
+function getSpeed() {
+const baseDuration = 3.0;
+const minDuration = 1.2;
+const speedUp = Math.min(score * 0.05, baseDuration - minDuration);
+return (baseDuration - speedUp).toFixed(2) + 's';
+}
+function spawnObstacle() {
+const obs = document.createElement("div");
+obs.classList.add("obstacle");
+const isHigh = Math.random() < 0.5;
+if (isHigh) {
+obs.style.height = "30px";
+obs.style.width = "30px";
+obs.style.bottom = "25px";
+obs.style.background = "var(--button-color)";
+} else {
+obs.style.height = "30px";
+obs.style.width = "20px";
+obs.style.bottom = "0";
+obs.style.background = "var(--button-color)";
+}
+obs.style.animationDuration = getSpeed();
+game.appendChild(obs);
+const obsInterval = setInterval(() => {
+const obsRect = obs.getBoundingClientRect();
+const playerRect = player.getBoundingClientRect();
+const verticalOverlap = playerRect.bottom > obsRect.top && playerRect.top < obsRect.bottom;
+const horizontalOverlap = obsRect.left < playerRect.right && obsRect.right > playerRect.left;
+if (horizontalOverlap && verticalOverlap) {
+alert("Game Over! Dein Punktestand: " + score);
+location.reload();
+}
+}, 20);
+obs.addEventListener("animationend", () => {
+clearInterval(obsInterval);
+obs.remove();
+score++;
+if (scoreDisplay) scoreDisplay.textContent = "Punkte: " + score;
+});
+}
+function startObstacleLoop() {
+const minDelay = 2000;
+const maxDelay = 3500;
+function loop() {
+if (document.getElementById("game")) {
+spawnObstacle();
+const nextDelay = Math.random() * (maxDelay - minDelay) + minDelay;
+setTimeout(loop, nextDelay);
+}
+}
+loop();
+}
+document.addEventListener("keydown", (e) => {
+if (e.code === "ArrowUp") jump();
+if (e.code === "ArrowDown") duck();
+});
+startObstacleLoop();
+}
+let dichtungen = {};
+async function loadGaskets() {
+const urlJSON = "github.io" + Date.now();
+const urljson = "github.io" + Date.now();
+try {
+let res = await fetch(urlJSON);
+if (!res.ok) res = await fetch(urljson);
+dichtungen = await res.json();
+populateSerieDropdown();
+} catch (e) {
+console.error(e);
+alert("Fehler beim Laden der Dichtungsdaten!");
+}
+}
+function populateSerieDropdown() {
+const serieSelect = document.getElementById("serieSelect");
+if (!serieSelect) return;
+serieSelect.innerHTML = 'Serie wählen';
+Object.keys(dichtungen).forEach(serie => {
+const opt = document.createElement("option");
+opt.value = serie;
+opt.textContent = serie;
+serieSelect.appendChild(opt);
+});
+}
+document.addEventListener("DOMContentLoaded", () => {
+const posInput = document.getElementById("pos");
+const serieSelect = document.getElementById("serieSelect");
+const daSelect = document.getElementById("daSelect");
+const diSelect = document.getElementById("diSelect");
+const eiSelect = document.getElementById("eiSelect");
+if (!posInput) return;
+loadGaskets();
+posInput.addEventListener("input", () => {
+const filled = posInput.value.trim() !== "";
+serieSelect.disabled = !filled;
+if (!filled) {
+serieSelect.value = "";
+daSelect.disabled = true;
+diSelect.disabled = true;
+eiSelect.disabled = true;
+}
+});
+serieSelect.addEventListener("change", () => {
+daSelect.innerHTML = 'Dichtung außen';
+diSelect.innerHTML = 'Dichtung innen';
+eiSelect.innerHTML = 'Ersatzdichtung innen';
+daSelect.disabled = false;
+diSelect.disabled = true;
+eiSelect.disabled = true;
+const serie = serieSelect.value;
+if (!serie) return;
+Object.keys(dichtungen[serie]).forEach(da => {
+const opt = document.createElement("option");
+opt.value = da;
+opt.textContent = da;
+daSelect.appendChild(opt);
+});
+});
+daSelect.addEventListener("change", () => {
+diSelect.innerHTML = 'Dichtung innen';
+eiSelect.innerHTML = 'Ersatzdichtung innen';
+diSelect.disabled = false;
+eiSelect.disabled = true;
+const serie = serieSelect.value;
+const da = daSelect.value;
+Object.keys(dichtungen[serie][da]).forEach(di => {
+const opt = document.createElement("option");
+opt.value = di;
+opt.textContent = di;
+diSelect.appendChild(opt);
+});
+});
+diSelect.addEventListener("change", () => {
+eiSelect.innerHTML = 'Ersatzdichtung innen';
+eiSelect.disabled = false;
+const serie = serieSelect.value;
+const da = daSelect.value;
+const di = diSelect.value;
+dichtungen[serie][da][di].forEach(ei => {
+const opt = document.createElement("option");
+opt.value = ei;
+opt.textContent = ei;
+eiSelect.appendChild(opt);
+});
+});
+});
+function senden() {
+const nr = getLaufendeNummer().trim();
+const pos = document.getElementById("pos").value.trim();
+const serie = document.getElementById("serieSelect").value.trim();
+const da = document.getElementById("daSelect").value.trim();
+const di = document.getElementById("diSelect").value.trim();
+const ei = document.getElementById("eiSelect").value.trim();
+let fehler = [];
+if (!nr) fehler.push("Laufende Nummer");
+if (!pos) fehler.push("Positionsnummer");
+if (!serie) fehler.push("Serie");
+if (!da) fehler.push("Dichtung außen");
+if (!di) fehler.push("Dichtung innen");
+if (!ei) fehler.push("Ersatzdichtung innen");
+if (fehler.length > 0) {
+alert("Bitte folgende Felder ausfüllen:\n\n- " + fehler.join("\n- "));
+return;
+}
+const recipients = "ok.alu@peneder.com,logikalsupport@peneder.com,lager_aluglas@peneder.com";
+const subject = encodeURIComponent("Verglasungsdichtung innen geändert");
+const body = encodeURIComponent(
+Hallo,\n\n +
+bei laufender Nummer ${nr}, Position ${pos} wurde eine andere Dichtung verwendet als in LogiKal generiert.\n\n +
+Dichtung lt. LogiKal: ${di}\n +
+verwendete Dichtung: ${ei}\n\n +
+Warenwirtschaft: Dichtung für Seitenteile im Montagepaket tauschen\n +
+OK.-Büro: Buchung im Infor korrigieren
+);
+window.open(
+https://office365.com{recipients}&subject=${subject}&body=${body},
+"_blank"
+);
+}
+document.addEventListener("DOMContentLoaded", () => {
+const toggleField = document.getElementById("qmPriorityToggle");
+const labelHinweis = document.getElementById("lblHinweis");
+const labelHandlungsbedarf = document.getElementById("lblHandlungsbedarf");
+if (toggleField && labelHinweis && labelHandlungsbedarf) {
+function aktualisiereFettdruck() {
+if (toggleField.checked) {
+labelHandlungsbedarf.style.fontWeight = "bold";
+labelHinweis.style.fontWeight = "normal";
+} else {
+labelHandlungsbedarf.style.fontWeight = "normal";
+labelHinweis.style.fontWeight = "bold";
+}
+}
+toggleField.addEventListener("change", aktualisiereFettdruck);
+aktualisiereFettdruck();
+}
+});
+function sendQualitaetsmeldung() {
+const desktopInput = document.getElementById("desktopInputField");
+const mobileInput = document.getElementById("mobileInputField");
+let lfdNr = "";
+if (desktopInput && desktopInput.value.trim()) {
+lfdNr = desktopInput.value.trim();
+} else if (mobileInput && mobileInput.value.trim()) {
+lfdNr = mobileInput.value.trim();
+}
+const posNrField = document.getElementById("qmPosInputField");
+const errorField = document.getElementById("qmDescriptionField");
+const toggleField = document.getElementById("qmPriorityToggle");
+const posNr = posNrField ? posNrField.value.trim() : "";
+const error = errorField ? errorField.value.trim() : "";
+let betreffPrefix = "Hinweismeldung";
+if (toggleField && toggleField.checked) {
+betreffPrefix = "Handlungsbedarf";
+}
+let fehler = [];
+if (!lfdNr) fehler.push("Laufende Nummer");
+if (!posNr) fehler.push("Positionsnummer");
+if (!error) fehler.push("Problembeschreibung");
+if (fehler.length > 0) {
+alert("Folgende Daten fehlen noch:\n\n- " + fehler.join("\n- "));
+return;
+}
+const recipients = "qualitaet@peneder.com";
+const subject = encodeURIComponent(ALU - [${betreffPrefix}] - ${lfdNr} - Fehlermeldung Fertigung);
+const body = encodeURIComponent(
+Hallo,\n\n +
+in der Fertigung ist ein Problem aufgetreten.\n\n +
+Status: ${betreffPrefix}\n +
+Auftrag: ${lfdNr}\n +
+Pos.Nr.: ${posNr}\n\n +
+Problembeschreibung:\n${error}\n\n
+);
+window.open(
+https://office365.com{recipients}&subject=${subject}&body=${body},
+"_blank"
+);
+}
+function showMobileMainMenu() {
+document.getElementById("mobileContent").innerHTML = <button class="mobile-main-btn" onclick="showAuftragsdokumente()"> Auftragsdokumente </button> <button class="mobile-main-btn" onclick="showRueckmeldung()"> Rückmeldung </button> <button class="mobile-main-btn" onclick="showQualitaetsmeldung()"> Qualitätsmeldung </button>;
+}
+function showAuftragsdokumente() {
+document.getElementById("mobileContent").innerHTML = <button class="mobile-back-btn" onclick="showMobileMainMenu()"> ← Zurück </button> <div id="mobileContent"> <div id="mobileButtonContainer"></div> </div>;
+const profile = localStorage.getItem("selectedMobileProfile") || document.getElementById("mobileProfileSelector").value;
+loadProfileButtons(profile, "mobileInputField", "mobileButtonContainer", false);
+document.querySelectorAll("#mobileButtonContainer button").forEach(btn => {
+btn.classList.add("mobile-doc-btn");
+});
+}
 function showRueckmeldung() {
-  document.getElementById("mobileContent").innerHTML = `
-    <button class="mobile-back-btn" onclick="showMobileMainMenu()">
-      ← Zurück
-    </button>
-
-    <button class="mobile-doc-btn" onclick="toggleOverlay()">
-      fehlendes Dokument anfordern
-    </button>
-
-    <button class="mobile-doc-btn" onclick="toggleDichtungswechselOverlay(true)">
-      Dichtungswechsel
-    </button>
-  `;
+document.getElementById("mobileContent").innerHTML = <button class="mobile-back-btn" onclick="showMobileMainMenu()"> ← Zurück </button> <button class="mobile-doc-btn" onclick="toggleOverlay()"> fehlendes Dokument anfordern </button> <button class="mobile-doc-btn" onclick="toggleDichtungswechselOverlay(true)"> Dichtungswechsel </button>;
 }
-
 function showQualitaetsmeldung() {
+document.getElementById("mobileContent").innerHTML = `
 
-  document.getElementById("mobileContent").innerHTML = `
-    <button class="mobile-back-btn"
-            onclick="showMobileMainMenu()">
-      ← Zurück
-    </button>
+← Zurück
 
-    <div class="global-qm-container">
 
-      <div class="qm-header-row">
 
-        <input type="text"
-               id="qmPosInputField"
-               placeholder="Pos.Nr.">
 
-        <div class="qm-toggle-container">
 
-          <span id="lblHinweis"
-                data-text="Hinweis"
-                class="qm-label">
-            Hinweis*
-          </span>
+Hinweis*
+Handlungsbedarf**
 
-          <label class="qm-switch">
-            <input type="checkbox"
-                   id="qmPriorityToggle">
-            <span class="qm-slider"></span>
-          </label>
 
-          <span id="lblHandlungsbedarf"
-                data-text="Handlungsbedarf"
-                class="qm-label">
-            Handlungsbedarf**
-          </span>
 
-        </div>
 
-      </div>
 
-      <div class="input-group">
-        <textarea id="qmDescriptionField"
-                  rows="8"
-                  placeholder="Problembeschreibung"></textarea>
-      </div>
+Senden
+* Auftrag läuft - Weiterarbeit möglich
+** Auftrag steht - Weiterarbeit NICHT möglich
 
-      <button class="qm-send-btn"
-              onclick="sendQualitaetsmeldung()">
-        Senden
-      </button>
-
-      <span class="qm-hint-text">
-        * Auftrag läuft - Weiterarbeit möglich
-      </span>
-
-      <span class="qm-hint-text">
-        ** Auftrag steht - Weiterarbeit NICHT möglich
-      </span>
-
-    </div>
-  `;
-
-  // Umschalter initialisieren
-  const toggle = document.getElementById("qmPriorityToggle");
-  const lblHinweis = document.getElementById("lblHinweis");
-  const lblHandlungsbedarf = document.getElementById("lblHandlungsbedarf");
-
-  function aktualisieren() {
-    if (toggle.checked) {
-      lblHandlungsbedarf.style.fontWeight = "bold";
-      lblHinweis.style.fontWeight = "normal";
-    } else {
-      lblHinweis.style.fontWeight = "bold";
-      lblHandlungsbedarf.style.fontWeight = "normal";
-    }
-  }
-
-  toggle.addEventListener("change", aktualisieren);
-  aktualisieren();
+`;
+const toggle = document.getElementById("qmPriorityToggle");
+const lblHinweis = document.getElementById("lblHinweis");
+const lblHandlungsbedarf = document.getElementById("lblHandlungsbedarf");
+function aktualisieren() {
+if (toggle.checked) {
+lblHandlungsbedarf.style.fontWeight = "bold";
+lblHinweis.style.fontWeight = "normal";
+} else {
+lblHinweis.style.fontWeight = "bold";
+lblHandlungsbedarf.style.fontWeight = "normal";
 }
-
+}
+toggle.addEventListener("change", aktualisieren);
+aktualisieren();
+}
 function openMobileDocument(name) {
-
-  const input =
-    document.getElementById('mobileInputField')
-      .value.trim();
-
-  if (name.trim().toLowerCase() === 'anschlusspläne') {
-    toggleAnschlussplaeneOverlay(true);
-    return;
-  }
-
-  if (name.trim().toLowerCase() === 'dichtungswechsel') {
-    toggleDichtungswechselOverlay(true);
-    return;
-  }
-
-  const profileKey =
-    document.getElementById('mobileProfileSelector').value;
-
-  let url;
-
-  if (name === 'Fließfertigung') {
-
-    url = getFliessfertigungUrl(profileKey);
-
-  } else if (name === 'FSF_Beschriftung') {
-
-    url =
-      `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
-
-  } else if (name === 'FSF_Vorfertigung Etiketten') {
-
-    url =
-      `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
-
-  } else {
-
-    url =
-      `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
-
-  }
-
-  if (url) {
-    window.open(url, '_blank');
-  }
+const input = document.getElementById('mobileInputField').value.trim();
+if (name.trim().toLowerCase() === 'anschlusspläne') {
+toggleAnschlussplaeneOverlay(true);
+return;
 }
+if (name.trim().toLowerCase() === 'dichtungswechsel') {
+toggleDichtungswechselOverlay(true);
+return;
+}
+const profileKey = document.getElementById('mobileProfileSelector').value;
+let url;
+if (name === 'Fließfertigung') {
+url = getFliessfertigungUrl(profileKey);
+} else if (name === 'FSF_Beschriftung') {
+url = https://sharepoint.com{input}_FSF_Beschriftung.pdf;
+} else if (name === 'FSF_Vorfertigung Etiketten') {
+url = https://sharepoint.com{input}_FSF_Vorfertigung Etiketten.pdf;
+} else {
+url = https://sharepoint.com{input}_${name}.pdf?csf=1&web=1;
+}
+if (url) {
+window.open(url, '_blank');
+}
+}
+
