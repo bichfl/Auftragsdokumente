@@ -445,17 +445,19 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
         const pw = prompt("Bitte Passwort für das benutzerdefinierte Profil eingeben:");
         if (pw !== "Fertigung2026") { // Hier dein gewünschtes Passwort eintragen
             alert("Falsches Passwort! Zugriff verweigert.");
+            
             // Zurücksetzen auf das erste normale Profil im Selektor
             const selId = isDesktop ? "desktopProfileSelector" : "mobileProfileSelector";
             const sel = document.getElementById(selId);
-            if (sel) {
-                sel.value = sel.options[0].value;
+            if (sel && sel.options.length > 0) {
+                const fallbackValue = sel.options[0].value;
+                sel.value = fallbackValue;
                 localStorage.setItem(
                     isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
-                    sel.options[0].value
+                    fallbackValue
                 );
                 // Erneut laden mit dem Standardprofil
-                loadProfileButtons(sel.options[0].value, inputId, containerId, isDesktop);
+                loadProfileButtons(fallbackValue, inputId, containerId, isDesktop);
             }
             return;
         }
@@ -543,6 +545,7 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
         cont.appendChild(btn);
     });
 }
+
 
 
 
