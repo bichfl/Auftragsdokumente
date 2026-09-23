@@ -1,3 +1,6 @@
+## [V4.0.2]
+- Benutzerdefinierte Profile ab sofort Passwort geschützt
+
 ## [V4.0.1]
 - Anpassungen des mobilen Layouts für Smartphones
 
