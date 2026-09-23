@@ -185,15 +185,6 @@ function populateCustomProfileSettings() {
     if (!container) return;
     container.innerHTML = '';
 
-    // Prüfen, ob das benutzerdefinierte Profil aktuell ausgewählt ist
-    const isMob = document.body.classList.contains('mobile');
-    const sel = document.getElementById(isMob ? 'mobileProfileSelector' : 'desktopProfileSelector');
-    
-    if (!sel || sel.value !== "custom") {
-        container.innerHTML = '<div style="color:#666; padding:10px; font-style:italic;">Bearbeitung gesperrt. Bitte wählen Sie zuerst das benutzerdefinierte Profil aus und authentifizieren Sie sich.</div>';
-        return;
-    }
-
     const allButtons = new Set();
     Object.values(profiles).forEach(p => {
         if (Array.isArray(p.buttons)) {
