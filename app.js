@@ -365,24 +365,36 @@ function populateCustomProfileSettings() {
 function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
     // Falls das benutzerdefinierte Profil ausgewählt wurde, Passwort abfragen
     if (profileKey === "custom") {
-        const pw = prompt("Bitte Passwort für das benutzerdefinierte Profil eingeben:");
-        if (pw !== "Fertigung2026") { // Hier dein gewünschtes Passwort eintragen
-            alert("Falsches Passwort! Zugriff verweigert.");
+        const korrektesPasswort = "Fertigung2026"; // Hier dein gewünschtes Passwort eintragen
+        
+        // Zuerst im localStorage nachsehen, ob das richtige Passwort bereits gespeichert ist
+        let pw = localStorage.getItem("customProfilePassword");
+
+        // Wenn kein Passwort gespeichert ist oder das gespeicherte Passwort falsch ist, abfragen
+        if (pw !== korrektesPasswort) {
+            pw = prompt("Bitte Passwort für das benutzerdefinierte Profil eingeben:");
             
-            // Zurücksetzen auf das erste normale Profil im Selektor
-            const selId = isDesktop ? "desktopProfileSelector" : "mobileProfileSelector";
-            const sel = document.getElementById(selId);
-            if (sel && sel.options.length > 0) {
-                const fallbackValue = sel.options[0].value;
-                sel.value = fallbackValue;
-                localStorage.setItem(
-                    isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
-                    fallbackValue
-                );
-                // Erneut laden mit dem Standardprofil
-                loadProfileButtons(fallbackValue, inputId, containerId, isDesktop);
+            if (pw === korrektesPasswort) {
+                // Wenn die Eingabe korrekt war, im localStorage für das nächste Mal merken
+                localStorage.setItem("customProfilePassword", pw);
+            } else {
+                alert("Falsches Passwort! Zugriff verweigert.");
+                
+                // Zurücksetzen auf das erste normale Profil im Selektor
+                const selId = isDesktop ? "desktopProfileSelector" : "mobileProfileSelector";
+                const sel = document.getElementById(selId);
+                if (sel && sel.options.length > 0) {
+                    const fallbackValue = sel.options[0].value;
+                    sel.value = fallbackValue;
+                    localStorage.setItem(
+                        isDesktop ? "selectedDesktopProfile" : "selectedMobileProfile",
+                        fallbackValue
+                    );
+                    // Erneut laden mit dem Standardprofil
+                    loadProfileButtons(fallbackValue, inputId, containerId, isDesktop);
+                }
+                return;
             }
-            return;
         }
     }
 
@@ -439,11 +451,11 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
             if (name === "Fließfertigung") {
                 url = getFliessfertigungUrl(profileKey);
             } else if (name === "FSF_Beschriftung") {
-                url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Beschriftung.pdf`;
+                url = `https://sharepoint.com{input}_FSF_Beschriftung.pdf`;
             } else if (name === "FSF_Vorfertigung Etiketten") {
-                url = `https://peneder.sharepoint.com/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_FSF_Vorfertigung Etiketten.pdf`;
+                url = `https://sharepoint.com{input}_FSF_Vorfertigung Etiketten.pdf`;
             } else {
-                url = `https://peneder.sharepoint.com/:b:/r/sites/FSF-AluAuftragsdokumente/Freigegebene%20Dokumente/${input}_${name}.pdf?csf=1&web=1`;
+                url = `https://sharepoint.com{input}_${name}.pdf?csf=1&web=1`;
             }
 
             if (url) {
