@@ -72,16 +72,22 @@
     ]
   },
   "profile4": {
-    "displayName": "Bearbeitungszentrum",
+    "displayName": "SBZ122",
     "buttons": [
-      "Fließfertigung",
       "Schnittkonstruktion",
       "FSF_Stueckl. p. Pos",
-      "FSF_Begleitplan_V2106_SBZ122",
-      "FSF_Begleitplan_V2106_SBZ140"
+      "FSF_Begleitplan_V2106_SBZ122"
     ]
   },
   "profile5": {
+    "displayName": "SBZ140",
+    "buttons": [
+      "Schnittkonstruktion",
+      "FSF_Stueckl. p. Pos",
+      "FSF_Begleitplan_V2106_SBZ140"
+    ]
+  },
+  "profile6": {
     "displayName": "Tuerstabmontage",
     "buttons": [
       "Fließfertigung",
@@ -91,7 +97,7 @@
       "Anschlusspläne"
     ]
   },
-  "profile6": {
+  "profile7": {
     "displayName": "Verklebung",
     "buttons": [
       "Schnittkonstruktion",
@@ -101,7 +107,7 @@
       "Beschriftung_Palette"
     ]
   },
-  "profile7": {
+  "profile8": {
     "displayName": "Zusammenbau",
     "buttons": [
       "Schnittkonstruktion",
@@ -112,7 +118,7 @@
       "Anschlusspläne"
     ]
   },
-  "profile8": {
+  "profile9": {
     "displayName": "Verglasung",
     "buttons": [
       "Schnittkonstruktion",
@@ -129,7 +135,7 @@
       "Beschriftung_Palette"
     ]
   },
-  "profile9": {
+  "profile10": {
     "displayName": "Sonderarbeitsplatz",
     "buttons": [
       "Schnittkonstruktion",
