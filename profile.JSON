@@ -28,6 +28,7 @@
       "Beschriftung_Palette",
       "FSF_Vorkommissionierung_mit_Fuellung",
       "FSF_Laengen_Stoßgriff",
+      "FSF_Beschr. Fertigungswagen",
       "Anschlusspläne"
     ]
   },
@@ -60,7 +61,7 @@
       "FSF_Vorfertigung_Beschlaege",
       "FSF_Vorfertigung_Bodendichtungen",
       "FSF_Vorfertigung Etiketten",
-      "FSF_Beschriftung",
+      "FSF_Beschr. Fertigungswagen",
       "FSF_Zuschnittliste HIGHLINEslide ohne Beschichtung"
     ]
   },
