@@ -131,8 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function loadProfiles() {
   try {
     profiles = await fetchJsonMitFallback(
-      `https://bichfl.github.io/Auftragsdokumente/profile.json?t=${Date.now()}`,
-      `https://bichfl.github.io/Auftragsdokumente/profile.JSON?t=${Date.now()}`
+      `https://bichfl.github.io/Auftragsdokumente/profiles.json?t=${Date.now()}`,
+      `https://bichfl.github.io/Auftragsdokumente/profiles.JSON?t=${Date.now()}`
     );
   } catch (e) {
     console.error("Fehler beim Laden der Profile:", e);
