@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.style.display = 'block';
 
         // Zeitstempel anhängen, damit der Browser nicht cached
-        const url = 'https://bichfl.github.io/Auftragsdokumente/README.md?t=' + Date.now();
+        const url = 'README.md?t=' + Date.now();
 
         const res = await fetch(url);
         if (!res.ok) throw new Error('Fehler beim Laden der README.md');
