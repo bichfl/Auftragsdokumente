@@ -1,4 +1,5 @@
-	function formatLfdNrInput(inputField) {
+// Copyright (c) 2026 Florian Bichl. All rights reserved. Developed privately
+function formatLfdNrInput(inputField) {
 	inputField.addEventListener('input', function () {
 		let value = inputField.value;
 		if (/^\d{15}$/.test(value)) {
