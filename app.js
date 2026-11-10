@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.style.display = 'block';
 
         // Zeitstempel anhängen, damit der Browser nicht cached
-        const url = 'README.md?t=' + Date.now();
+        const url = 'https://bichfl.github.io/Auftragsdokumente/README.md?t=' + Date.now();
 
         const res = await fetch(url);
         if (!res.ok) throw new Error('Fehler beim Laden der README.md');
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let profiles = {};
     async function loadProfiles() {
   try {
-    profiles = await fetch("profiles.JSON?t=" + Date.now())
+    profiles = await fetch("https://bichfl.github.io/Auftragsdokumente/profiles.JSON?t=" + Date.now())
   .then(r => {
     if (!r.ok) throw new Error("Profile konnten nicht geladen werden.");
     return r.json();
@@ -484,8 +484,8 @@ function loadProfileButtons(profileKey, inputId, containerId, isDesktop) {
       const t = Date.now();
       try {
         const daten = await fetchJsonMitFallback(
-          `PIN-Belegung.json?t=${t}`,
-          `PIN-Belegung.JSON?t=${t}`
+          `https://bichfl.github.io/Auftragsdokumente/PIN-Belegung.json?t=${t}`,
+          `https://bichfl.github.io/Auftragsdokumente/PIN-Belegung.JSON?t=${t}`
         );
         const ein = daten.find(d => d.ArtNR === nr);
         if (!ein) return alert('Artikelnummer nicht gefunden.');
@@ -922,8 +922,8 @@ function initGame() {
 let dichtungen = {};
 
 async function loadGaskets() {
-  const urlJSON = "gaskets.JSON?t=" + Date.now();
-  const urljson = "gaskets.json?t=" + Date.now();
+  const urlJSON = "https://bichfl.github.io/Auftragsdokumente/gaskets.JSON?t=" + Date.now();
+  const urljson = "https://bichfl.github.io/Auftragsdokumente/gaskets.json?t=" + Date.now();
 
   try {
     let res = await fetch(urlJSON);
