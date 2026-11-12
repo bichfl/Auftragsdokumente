@@ -126,7 +126,8 @@
       "FSF_Paneelfertigung",
       "FSF_Endkontrolle",
       "Anschlusspläne",
-      "Beschriftung_Palette"
+      "Beschriftung_Palette",
+      "Fertigungsauftrag"
     ]
   },
   "profile10": {
